@@ -1,0 +1,16 @@
+
+#DEFINITIONS
+
+Integer         = "an integer" | [0-9]+
+
+#GRAMMAR
+
+line            = claimId location size
+
+claimId         = "#" Integer c_claimId
+
+location        = "@" Integer c_left "," Integer c_top
+
+size            = ":" Integer c_width "x" Integer c_height
+
+#END

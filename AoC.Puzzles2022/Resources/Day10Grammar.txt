@@ -1,0 +1,16 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+String          = "a string" | '[.]*'
+Integer         = "an integer" | (\+|-)?[0-9]+
+Real            = "a real number" | (\+|-)?[0-9]+\.[0-9]+
+
+#GRAMMAR
+
+line            = "noop" c_noop
+                | "addx" arg c_addx
+
+arg             = "-" Integer c_negateArg
+                | Integer
+#END

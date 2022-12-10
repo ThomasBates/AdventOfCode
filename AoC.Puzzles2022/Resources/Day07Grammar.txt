@@ -1,0 +1,27 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+String          = "a string" | '[.]*'
+Integer         = "an integer" | (\+|-)?[0-9]+
+Real            = "a real number" | [0-9]+\.[0-9]+
+
+#GRAMMAR
+
+line            = "$" command
+                | "dir" Id c_dir
+                | Integer filename c_file
+
+command         = "cd" directory
+                | "ls" c_ls
+
+filename        = Id extension
+                
+extension       = 
+                | "." Id c_extension
+
+directory       = "/" c_cdRoot
+                | "." "." c_cdParent
+                | Id c_cdChild
+
+#END
