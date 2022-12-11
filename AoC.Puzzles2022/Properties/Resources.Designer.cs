@@ -892,14 +892,15 @@ namespace AoC.Puzzles2022.Properties {
         ///
         ///program         = line moreLines
         ///
-        ///line            = &quot;noop&quot; c_noop
-        ///                | &quot;addx&quot; arg t_integer c_addx
-        ///
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///arg             = &quot;-&quot; Integer c_negateArg
+        ///line            = &quot;noop&quot; c_noop
+        ///                | &quot;addx&quot; arg t_integer c_addx
+        ///
+        ///arg             = &quot;-&quot; Integer c_negate
         ///                | Integer
+        ///
         ///#END
         ///.
         /// </summary>
@@ -980,6 +981,55 @@ namespace AoC.Puzzles2022.Properties {
         internal static string Day10PuzzleInputs {
             get {
                 return ResourceManager.GetString("Day10PuzzleInputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day11ExampleInputs {
+            get {
+                return ResourceManager.GetString("Day11ExampleInputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;noop&quot; c_noop
+        ///                | &quot;addx&quot; arg t_integer c_addx
+        ///
+        ///arg             = &quot;-&quot; Integer c_negate
+        ///                | Integer
+        ///
+        ///#END
+        ///.
+        /// </summary>
+        internal static string Day11Grammar {
+            get {
+                return ResourceManager.GetString("Day11Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day11PuzzleInputs {
+            get {
+                return ResourceManager.GetString("Day11PuzzleInputs", resourceCulture);
             }
         }
     }

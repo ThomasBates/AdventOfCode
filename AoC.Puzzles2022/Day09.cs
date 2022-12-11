@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
