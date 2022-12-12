@@ -193,6 +193,15 @@
   <data name="Day10PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Day00ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day00exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day00Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day00grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day00PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day00puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Day11ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day11exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

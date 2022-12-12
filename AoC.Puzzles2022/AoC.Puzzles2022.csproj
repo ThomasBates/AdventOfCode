@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Day01.cs" />
+    <Compile Include="Day00.cs" />
     <Compile Include="Day12.cs" />
     <Compile Include="Day11.cs" />
     <Compile Include="ParserHelper.cs" />
@@ -172,6 +173,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day12PuzzleInputs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day00PuzzleInputs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day00ExampleInputs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day00Grammar.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
