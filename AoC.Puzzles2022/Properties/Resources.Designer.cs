@@ -985,7 +985,29 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Monkey 0:
+        ///  Starting items: 79, 98
+        ///  Operation: new = old * 19
+        ///  Test: divisible by 23
+        ///    If true: throw to monkey 2
+        ///    If false: throw to monkey 3
+        ///
+        ///Monkey 1:
+        ///  Starting items: 54, 65, 75, 74
+        ///  Operation: new = old + 6
+        ///  Test: divisible by 19
+        ///    If true: throw to monkey 2
+        ///    If false: throw to monkey 0
+        ///
+        ///Monkey 2:
+        ///  Starting items: 79, 60, 97
+        ///  Operation: new = old * old
+        ///  Test: divisible by 13
+        ///    If true: throw to monkey 1
+        ///    If false: throw to monkey 3
+        ///
+        ///Monkey 3:
+        ///  Starting item [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day11ExampleInputs {
             get {
@@ -1009,14 +1031,10 @@ namespace AoC.Puzzles2022.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;noop&quot; c_noop
-        ///                | &quot;addx&quot; arg t_integer c_addx
-        ///
-        ///arg             = &quot;-&quot; Integer c_negate
-        ///                | Integer
-        ///
-        ///#END
-        ///.
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day11Grammar {
             get {
@@ -1025,11 +1043,57 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Monkey 0:
+        ///  Starting items: 65, 58, 93, 57, 66
+        ///  Operation: new = old * 7
+        ///  Test: divisible by 19
+        ///    If true: throw to monkey 6
+        ///    If false: throw to monkey 4
+        ///
+        ///Monkey 1:
+        ///  Starting items: 76, 97, 58, 72, 57, 92, 82
+        ///  Operation: new = old + 4
+        ///  Test: divisible by 3
+        ///    If true: throw to monkey 7
+        ///    If false: throw to monkey 5
+        ///
+        ///Monkey 2:
+        ///  Starting items: 90, 89, 96
+        ///  Operation: new = old * 5
+        ///  Test: divisible by 13
+        ///    If true: throw to monkey 5
+        ///    If false: throw to monkey 1
+        ///
+        ///Monkey [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day11PuzzleInputs {
             get {
                 return ResourceManager.GetString("Day11PuzzleInputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sabqponm
+        ///abcryxxl
+        ///accszExk
+        ///acctuvwj
+        ///abdefghi.
+        /// </summary>
+        internal static string Day12ExampleInputs {
+            get {
+                return ResourceManager.GetString("Day12ExampleInputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to abccccaaaaaaaaaaaaaccaaaaaaaacccccccccaaaaaaaaccccccccaaacaaacccccccaaaaaaccccccccccccccccccccccaaaacccccccccccacccccccccccccccccccccccccccccccccccccccccccccccaaaa
+        ///abccccaaaaacaaaaaaccccaaaaaaccccccccccaaaaaaacccccccccaaaaaaacccccaaaaaaaaaacccccccccccccccccccaaaaaacccccccccaaaaaaaaccccccccccccccccccccccccccccccccccccccccaaaaa
+        ///abcccaaaaaccaaaaaaccccaaaaaaccccccaacccaaaaaacccccccccaaaaaacccaaaaaaaaaaaaaaacaaccacccccccccccaaaaaaccccccccccaaaaaacccccccccccccccccccccccccccccccccccccccccaaaaa
+        ///abccccccaaccaaaaa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day12PuzzleInputs {
+            get {
+                return ResourceManager.GetString("Day12PuzzleInputs", resourceCulture);
             }
         }
     }
