@@ -77,6 +77,9 @@ namespace AoC.Puzzles2022
 					{
 						case "s_scope":
 							break;
+						default:
+							output.AppendLine($"Unknown token: {token}");
+							break;
 					}
 				},
 				(token, valueStack) =>
@@ -85,6 +88,9 @@ namespace AoC.Puzzles2022
 					{
 						case "t_type":
 							break;
+						default:
+							output.AppendLine($"Unknown token: {token}");
+							break;
 					}
 				},
 				(token, valueStack) =>
@@ -92,6 +98,9 @@ namespace AoC.Puzzles2022
 					switch (token)
 					{
 						case "c_code":
+							break;
+						default:
+							output.AppendLine($"Unknown token: {token}");
 							break;
 					}
 				});

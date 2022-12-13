@@ -1141,5 +1141,85 @@ namespace AoC.Puzzles2022.Properties {
                 return ResourceManager.GetString("Day12PuzzleInputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [1,1,3,1,1]
+        ///[1,1,5,1,1]
+        ///
+        ///[[1],[2,3,4]]
+        ///[[1],4]
+        ///
+        ///[9]
+        ///[[8,7,6]]
+        ///
+        ///[[4,4],4,4]
+        ///[[4,4],4,4,4]
+        ///
+        ///[7,7,7,7]
+        ///[7,7,7]
+        ///
+        ///[]
+        ///[3]
+        ///
+        ///[[[]]]
+        ///[[]]
+        ///
+        ///[1,[2,[3,[4,[5,6,7]]]],8,9]
+        ///[1,[2,[3,[4,[5,6,0]]]],8,9].
+        /// </summary>
+        internal static string Day13ExampleInputs {
+            get {
+                return ResourceManager.GetString("Day13ExampleInputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day13Grammar {
+            get {
+                return ResourceManager.GetString("Day13Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [[4,3,4,[2]]]
+        ///[[],[6,7,1,0],[0,9],[3,[0],2],[4,[[2,7]]]]
+        ///
+        ///[[7,1],[9,5,8,10],[[[5,1,0,10],[10,9,2,5]],4,5,2,2]]
+        ///[[9],[1,8,3],[],[9,[1,3,0,[10]]]]
+        ///
+        ///[[8,10,[[8,5,8,6,10],[],[]],2,8],[]]
+        ///[[1,[[],4],[],[[7,1,2,2,2],[9,4,2]]],[],[]]
+        ///
+        ///[[[9,4],10,5,[7,[10,8,7],0,[6,1,6,8],[0,5,0,7]],6]]
+        ///[[],[5,10,[[8,6,0],[4,0,6,7,4],[7,3,7,8]],[],[[9,8,5],6]],[8,7,[2,10],[5]]]
+        ///
+        ///[[7],[[[10],[2,7,6,3,7],[10,6,9,8,4],9],[[3,8,6,4,0],[10,10,5],0,[],4],9,[6,2,6,9],[[3,2],2,[10,1],[10,10,4],[6,0]]],[9,9]]
+        ///[[[0,7,1,[0,5,5]], [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day13PuzzleInputs {
+            get {
+                return ResourceManager.GetString("Day13PuzzleInputs", resourceCulture);
+            }
+        }
     }
 }

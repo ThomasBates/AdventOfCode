@@ -63,6 +63,9 @@ namespace AoC.Puzzles2022
 					case 's': scopeControllerAction?.Invoke(e.Token, valueStack); break;
 					case 't': typeCheckerAction?.Invoke(e.Token, valueStack); break;
 					case 'c': codeGeneratorAction(e.Token, valueStack); break;
+					default:
+						output.AppendLine($"Unknown token: {e.Token}");
+						break;
 				}
 			}
 		}
