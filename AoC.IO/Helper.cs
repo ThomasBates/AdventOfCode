@@ -69,7 +69,7 @@ namespace AoC.IO
 
 			Directory.CreateDirectory(path);
 
-			var filename = Path.Combine(path, $"AoC-Input-{year}-{day:00}.txt");
+			var filename = Path.Combine(path, $"AoC-Input-{year}-12-{day:00}.txt");
 
 			if (!File.Exists(filename))
 			{

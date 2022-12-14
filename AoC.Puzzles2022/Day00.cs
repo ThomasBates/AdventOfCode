@@ -43,7 +43,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			StringBuilder output = new();
 
 			LoadDataFromInput(input, output);
 
@@ -54,7 +54,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			StringBuilder output = new();
 
 			LoadDataFromInput(input, output);
 
