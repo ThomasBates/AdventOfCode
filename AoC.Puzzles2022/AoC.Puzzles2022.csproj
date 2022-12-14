@@ -86,46 +86,25 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day01PuzzleInputs.txt" />
+    <None Include="Resources\Day01Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day02PuzzleInputs.txt" />
+    <None Include="Resources\Day02Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day01ExampleInputs.txt" />
+    <None Include="Resources\Day03Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day02ExampleInputs.txt" />
+    <None Include="Resources\Day04Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day03ExampleInputs.txt" />
+    <None Include="Resources\Day05Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day03PuzzleInputs.txt" />
+    <None Include="Resources\Day06Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day04ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day04PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day05ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day05PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day06PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day06ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day07ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day07PuzzleInputs.txt" />
+    <None Include="Resources\Day07Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day07Grammar.txt" />
@@ -134,25 +113,16 @@
     <None Include="Resources\Day07Grammar2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day08ExampleInputs.txt" />
+    <None Include="Resources\Day08Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day08PuzzleInputs.txt" />
+    <None Include="Resources\Day09Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day09ExampleInputs.txt" />
+    <None Include="Resources\Day09Inputs2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day09PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day09ExampleInputs2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day10ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day10PuzzleInputs.txt" />
+    <None Include="Resources\Day10Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day10Grammar.txt" />
@@ -161,34 +131,22 @@
     <None Include="Resources\Day10Grammar2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day11ExampleInputs.txt" />
+    <None Include="Resources\Day11Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day11Grammar.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day11PuzzleInputs.txt" />
+    <None Include="Resources\Day12Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day12ExampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day12PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day00PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day00ExampleInputs.txt" />
+    <None Include="Resources\Day00Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day00Grammar.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day13PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day13ExampleInputs.txt" />
+    <None Include="Resources\Day13Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day13Grammar.txt" />

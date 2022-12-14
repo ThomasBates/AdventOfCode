@@ -5,19 +5,14 @@ namespace AoC.Puzzle
 {
 	public interface IPuzzle
 	{
-		string Name
-		{
-			get;
-		}
+		int Year { get; }
 
-		Dictionary<string, string> Inputs
-		{
-			get;
-		}
+		int Day { get; }
 
-		Dictionary<string, Func<string, string>> Solvers
-		{
-			get;
-		}
+		string Name { get; }
+
+		Dictionary<string, string> Inputs { get; }
+
+		Dictionary<string, Func<string, string>> Solvers { get; }
 	}
 }

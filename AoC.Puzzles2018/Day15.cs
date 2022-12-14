@@ -20,10 +20,11 @@ namespace AoC.Puzzles2018
 	{
 		#region IPuzzle Properties
 
-		public string Name
-		{
-			get;
-		}
+		public int Year => 2018;
+
+		public int Day => 15;
+
+		public string Name => $"Day {Day:00}";
 
 		public Dictionary<string, string> Inputs
 		{
@@ -41,18 +42,16 @@ namespace AoC.Puzzles2018
 
 		public Day15()
 		{
-			Name = "Day 15";
-
-			Inputs.Add("Sample Inputs 01", Resources.Day15SampleInputs01);
-			Inputs.Add("Sample Inputs 02", Resources.Day15SampleInputs02);
-			Inputs.Add("Sample Inputs 03", Resources.Day15SampleInputs03);
-			Inputs.Add("Sample Inputs 04", Resources.Day15SampleInputs04);
-			Inputs.Add("Sample Inputs 05", Resources.Day15SampleInputs05);
-			Inputs.Add("Sample Inputs 06", Resources.Day15SampleInputs06);
-			Inputs.Add("Sample Inputs 07", Resources.Day15SampleInputs07);
-			Inputs.Add("Sample Inputs 08", Resources.Day15SampleInputs08);
-			Inputs.Add("Sample Inputs 09", Resources.Day15SampleInputs09);
-			Inputs.Add("Puzzle Inputs", Resources.Day15PuzzleInputs);
+			Inputs.Add("Example Inputs 01", Resources.Day15Inputs01);
+			Inputs.Add("Example Inputs 02", Resources.Day15Inputs02);
+			Inputs.Add("Example Inputs 03", Resources.Day15Inputs03);
+			Inputs.Add("Example Inputs 04", Resources.Day15Inputs04);
+			Inputs.Add("Example Inputs 05", Resources.Day15Inputs05);
+			Inputs.Add("Example Inputs 06", Resources.Day15Inputs06);
+			Inputs.Add("Example Inputs 07", Resources.Day15Inputs07);
+			Inputs.Add("Example Inputs 08", Resources.Day15Inputs08);
+			Inputs.Add("Example Inputs 09", Resources.Day15Inputs09);
+			Inputs.Add("Puzzle Inputs", "");
 
 			Solvers.Add("Solve Part 1", SolvePart1);
 			Solvers.Add("Solve Part 2", SolvePart2);

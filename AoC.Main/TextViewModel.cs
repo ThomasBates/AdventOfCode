@@ -33,7 +33,7 @@ namespace AoC.Main
 					return;
 				}
 				_text = value;
-				NotifyPropertyChanged(nameof(Text));
+				NotifyPropertyChanged();
 			}
 		}
 	}

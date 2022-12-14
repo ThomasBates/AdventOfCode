@@ -118,71 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Day01PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Day01PuzzleInputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day00Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day00grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day01ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Day01ExampleInputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day00Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day00inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day02PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Day02PuzzleInputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  <data name="Day01Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day01inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day02ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Day02ExampleInputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
+  <data name="Day02Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day02inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day03ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day03exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day03Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day03inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day03PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day03puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day04Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day04inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day04ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day04exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day05Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day05inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day04PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day04puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day05ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day05exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day05PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day05puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day06ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day06exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day06PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day06puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day07ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day07exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day06Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day06inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day07Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day07grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day07PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day07puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-8859-1</value>
-  </data>
   <data name="Day07Grammar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day07grammar2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day08ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day08exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day07Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day07inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day08PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day08puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day08Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day08inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day09ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day09exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day09Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day09inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day09ExampleInputs2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day09exampleinputs2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day09PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day09puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day10ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day10exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day09Inputs2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day09inputs2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day10Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -190,40 +166,22 @@
   <data name="Day10Grammar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10grammar2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day10PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day10puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day00ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day00exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day00Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day00grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day00PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day00puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day11ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day11exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day10Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day10inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day11Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day11grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day11PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day11puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day11Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day11inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day12ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day12exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day12PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day12puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day13ExampleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day13exampleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day12Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day12inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day13Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day13grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day13PuzzleInputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day13puzzleinputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Day13Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day13inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

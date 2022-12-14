@@ -1,0 +1,12 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Authors>Thomas Bates</Authors>
+    <Company>TurboButterfly</Company>
+  </PropertyGroup>
+ 
+</Project>

@@ -16,14 +16,15 @@ using AoC.Puzzles2018.Properties;
 namespace AoC.Puzzles2018
 {
 	[Export(typeof(IPuzzle))]
-	public class Day20 : IPuzzle
+	internal class Day20 : IPuzzle
 	{
 		#region IPuzzle Properties
 
-		public string Name
-		{
-			get;
-		}
+		public int Year => 2018;
+
+		public int Day => 20;
+
+		public string Name => $"Day {Day:00}";
 
 		public Dictionary<string, string> Inputs
 		{
@@ -41,14 +42,12 @@ namespace AoC.Puzzles2018
 
 		public Day20()
 		{
-			Name = "Day 20";
-
-			Inputs.Add("Sample Inputs 01", Resources.Day20SampleInputs01);
-			Inputs.Add("Sample Inputs 02", Resources.Day20SampleInputs02);
-			Inputs.Add("Sample Inputs 03", Resources.Day20SampleInputs03);
-			Inputs.Add("Sample Inputs 04", Resources.Day20SampleInputs04);
-			Inputs.Add("Sample Inputs 05", Resources.Day20SampleInputs05);
-			Inputs.Add("Puzzle Inputs", Resources.Day20PuzzleInputs);
+			Inputs.Add("Example Inputs 01", Resources.Day20Inputs01);
+			Inputs.Add("Example Inputs 02", Resources.Day20Inputs02);
+			Inputs.Add("Example Inputs 03", Resources.Day20Inputs03);
+			Inputs.Add("Example Inputs 04", Resources.Day20Inputs04);
+			Inputs.Add("Example Inputs 05", Resources.Day20Inputs05);
+			Inputs.Add("Puzzle Inputs", "");
 
 			Solvers.Add("Solve Part 1", SolvePart1);
 			//Solvers.Add("Solve Part 2", SolvePart2);

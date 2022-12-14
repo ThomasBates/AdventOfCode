@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E7AC743-6940-4CA8-93AB-972E1D8B0128}</ProjectGuid>
+    <ProjectGuid>{3D6F947D-A40E-47D1-B1C5-90883E5FA4C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AoC.Puzzles2018</RootNamespace>
@@ -100,178 +100,112 @@
     <None Include="Resources\Day04Grammar.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day01PuzzleInputs.txt" />
+    <None Include="Resources\Day07Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day02PuzzleInputs.txt" />
+    <None Include="Resources\Day08Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day03PuzzleInputs.txt" />
+    <None Include="Resources\Day06Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day04PuzzleInputs.txt" />
+    <None Include="Resources\Day01Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day05PuzzleInputs.txt" />
+    <None Include="Resources\Day02Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day06PuzzleInputs.txt" />
+    <None Include="Resources\Day03Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day07PuzzleInputs.txt" />
+    <None Include="Resources\Day04Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day07SampleInputs.txt" />
+    <None Include="Resources\Day05Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day08SampleInputs.txt" />
+    <None Include="Resources\Day09Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day08PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day06SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day01SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day02SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day03SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day04SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day05SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day09PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day09SampleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day10PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day10SampleInputs.txt" />
+    <None Include="Resources\Day10Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day10Grammar.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day11PuzzleInputs.txt" />
+    <None Include="Resources\Day11Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day11SampleInputs.txt" />
+    <None Include="Resources\Day00Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day00PuzzleInputs.txt" />
+    <None Include="Resources\Day12Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day00SampleInputs.txt" />
+    <None Include="Resources\Day13Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day12SampleInputs.txt" />
+    <None Include="Resources\Day13Inputs2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day12PuzzleInputs.txt" />
+    <None Include="Resources\Day14Inputs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day13PuzzleInputs.txt" />
+    <None Include="Resources\Day14Inputs2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day13SampleInputs.txt" />
+    <None Include="Resources\Day15Inputs01.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day13SampleInputs2.txt" />
+    <None Include="Resources\Day15Inputs02.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day14SampleInput.txt" />
+    <None Include="Resources\Day15Inputs03.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day14PuzzleInputs.txt" />
+    <None Include="Resources\Day15Inputs04.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day14SampleInputs2.txt" />
+    <None Include="Resources\Day15Inputs05.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15PuzzleInputs.txt" />
+    <None Include="Resources\Day15Inputs06.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs01.txt" />
+    <None Include="Resources\Day15Inputs07.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs02.txt" />
+    <None Include="Resources\Day15Inputs08.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs03.txt" />
+    <None Include="Resources\Day15Inputs09.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs04.txt" />
+    <None Include="Resources\Day17Inputs01.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs05.txt" />
+    <None Include="Resources\Day18Inputs01.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs06.txt" />
+    <None Include="Resources\Day18Inputs02.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs07.txt" />
+    <None Include="Resources\Day19Inputs01.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs08.txt" />
+    <None Include="Resources\Day20Inputs01.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day15SampleInputs09.txt" />
+    <None Include="Resources\Day20Inputs02.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day16PuzzleInputs.txt" />
+    <None Include="Resources\Day20Inputs03.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day17PuzzleInputs.txt" />
+    <None Include="Resources\Day20Inputs04.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Day17SampleInputs01.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day18PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day18SampleInputs01.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day18SampleInputs02.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day19PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day19SampleInputs01.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day19PuzzleInputsOptimized.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20PuzzleInputs.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20SampleInputs01.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20SampleInputs02.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20SampleInputs03.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20SampleInputs04.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Day20SampleInputs05.txt" />
+    <None Include="Resources\Day20Inputs05.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

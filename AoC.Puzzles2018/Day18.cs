@@ -20,10 +20,11 @@ namespace AoC.Puzzles2018
 	{
 		#region IPuzzle Properties
 
-		public string Name
-		{
-			get;
-		}
+		public int Year => 2018;
+
+		public int Day => 18;
+
+		public string Name => $"Day {Day:00}";
 
 		public Dictionary<string, string> Inputs
 		{
@@ -41,11 +42,9 @@ namespace AoC.Puzzles2018
 
 		public Day18()
 		{
-			Name = "Day 18";
-
-			Inputs.Add("Sample Inputs 01", Resources.Day18SampleInputs01);
-			Inputs.Add("Sample Inputs 02", Resources.Day18SampleInputs02);
-			Inputs.Add("Puzzle Inputs", Resources.Day18PuzzleInputs);
+			Inputs.Add("Example Inputs 01", Resources.Day18Inputs01);
+			Inputs.Add("Example Inputs 02", Resources.Day18Inputs02);
+			Inputs.Add("Puzzle Inputs", "");
 
 			Solvers.Add("Solve Part 1", SolvePart1);
 			Solvers.Add("Solve Part 2", SolvePart2);

@@ -15,13 +15,17 @@ namespace AoC.Puzzles2022
 	{
 		#region IPuzzle Properties
 
-		public string Name => "Day 09";
+		public int Year => 2022;
+
+		public int Day => 9;
+
+		public string Name => $"Day {Day:00}";
 
 		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
 		{
-			{"Example Inputs", Resources.Day09ExampleInputs},
-			{"Example Inputs (2)", Resources.Day09ExampleInputs2},
-			{"Puzzle Inputs",  Resources.Day09PuzzleInputs}
+			{"Example Inputs (1)", Resources.Day09Inputs},
+			{"Example Inputs (2)", Resources.Day09Inputs2},
+			{"Puzzle Inputs",  ""}
 		};
 
 		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>()

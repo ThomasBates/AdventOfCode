@@ -108,6 +108,10 @@
       <Project>{8f4a30b8-a970-458c-a5d5-cbbcbe50f7c7}</Project>
       <Name>AoC.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AoC.Puzzles2018\AoC.Puzzles2018.csproj">
+      <Project>{3d6f947d-a40e-47d1-b1c5-90883e5fa4c3}</Project>
+      <Name>AoC.Puzzles2018</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AoC.Puzzles2022\AoC.Puzzles2022.csproj">
       <Project>{5e7ac743-6940-4ca8-93ab-972e1d8b0128}</Project>
       <Name>AoC.Puzzles2022</Name>
