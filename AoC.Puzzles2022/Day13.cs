@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+
+using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
 
@@ -19,13 +21,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day13Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>();
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
 		#endregion IPuzzle Properties
 
@@ -119,7 +121,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var allPackets = new List<PacketElement>();
 
@@ -152,7 +154,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var allPackets = new List<PacketElement>();
 
@@ -184,7 +186,7 @@ namespace AoC.Puzzles2022
 			var packetStack = new Stack<PacketElement>();
 			PacketElement openList = null;
 
-			ParserHelper.RunParser(input, output, Resources.Day13Grammar,
+			Helper.RunParser(input, Resources.Day13Grammar,
 				null,
 				null,
 				(token, valueStack) =>
@@ -223,6 +225,10 @@ namespace AoC.Puzzles2022
 							output.AppendLine($"Unknown token: {token}");
 							break;
 					}
+				},
+				(severity, category, message) =>
+				{
+					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 
 		}

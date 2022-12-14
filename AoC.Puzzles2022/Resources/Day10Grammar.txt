@@ -8,9 +8,15 @@ Real            = "a real number" | (\+|-)?[0-9]+\.[0-9]+
 
 #GRAMMAR
 
-line            = "noop" c_noop
-                | "addx" arg c_addx
+program         = line moreLines
 
-arg             = "-" Integer c_negateArg
+moreLines       =
+                | line moreLines
+
+line            = "noop" c_noop
+                | "addx" arg t_integer c_addx
+
+arg             = "-" Integer c_negate
                 | Integer
+
 #END

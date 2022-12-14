@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Text;
+
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
@@ -20,13 +21,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day12Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>();
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
 		#endregion IPuzzle Properties
 
@@ -36,10 +37,10 @@ namespace AoC.Puzzles2022
 			Solvers.Add("Part 2", SolvePart2);
 		}
 
-		private readonly List<char[]> map = new List<char[]>();
-		private readonly Dictionary<Point, List<Point>> transitions = new Dictionary<Point, List<Point>>();
-		private readonly Dictionary<Point, List<Point>> reverse = new Dictionary<Point, List<Point>>();
-		private readonly List<Point> allStarts = new List<Point>();
+		private readonly List<char[]> map = new();
+		private readonly Dictionary<Point, List<Point>> transitions = new();
+		private readonly Dictionary<Point, List<Point>> reverse = new();
+		private readonly List<Point> allStarts = new();
 
 		private int _maxX;
 		private int _maxY;
@@ -48,7 +49,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			map.Clear();
 			transitions.Clear();
@@ -66,7 +67,7 @@ namespace AoC.Puzzles2022
 
 			if (path == null)
 			{
-				output.AppendLine("Path length = 0");
+				output.AppendLine("No path");
 			}
 			else
 			{
@@ -87,7 +88,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			map.Clear();
 			transitions.Clear();
@@ -196,7 +197,7 @@ namespace AoC.Puzzles2022
 			}
 
 			distance[source.X, source.Y] = 0;
-			Point? current = new Point(source.X, source.Y);
+			Point? current = new(source.X, source.Y);
 
 			while (true)
 			{
@@ -239,7 +240,7 @@ namespace AoC.Puzzles2022
 			}
 
 			distance[source.X, source.Y] = 0;
-			Point? current = new Point(source.X, source.Y);
+			Point? current = new(source.X, source.Y);
 
 			while (true)
 			{

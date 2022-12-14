@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
@@ -21,13 +20,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day06Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>()
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
 		{
 			{ "Part 1", SolvePart1 },
 			{ "Part 2", SolvePart2 }
@@ -37,7 +36,7 @@ namespace AoC.Puzzles2022
 
 		public static string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			Helper.TraverseInputLines(input, line =>
 			{
@@ -66,7 +65,7 @@ namespace AoC.Puzzles2022
 
 		public static string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			Helper.TraverseInputLines(input, line =>
 			{

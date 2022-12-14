@@ -55,7 +55,7 @@ namespace AoC.Puzzles2018
 
 		#endregion Constructors
 
-		List<string> _allPaths;
+		//List<string> _allPaths;
 
 		string _paths;
 		char[,] _map;
@@ -104,10 +104,10 @@ namespace AoC.Puzzles2018
 
 			if (openIndex < 0 && closeIndex < 0)
 			{
-				if (!_allPaths.Contains(_paths))
-				{
-					_allPaths.Add(_paths);
-				}
+				//if (!_allPaths.Contains(_paths))
+				//{
+				//	_allPaths.Add(_paths);
+				//}
 				return;
 			}
 
@@ -160,7 +160,7 @@ namespace AoC.Puzzles2018
 			Map(x, y, 'X');
 			BuildRoom(x,y);
 
-			StringBuilder path = new StringBuilder();
+			var path = new StringBuilder();
 			path.Append(paths[0]);
 
 			//int pathIndex = 1;
@@ -481,7 +481,7 @@ namespace AoC.Puzzles2018
 		//	Already processed the leading '('.
 		private void BranchPath(string paths, int pathIndex, int x, int y, StringBuilder path, StringBuilder result)
 		{
-			StringBuilder branchPath = new StringBuilder(path.ToString());
+			var branchPath = new StringBuilder(path.ToString());
 			FollowPath(paths, pathIndex, x, y, branchPath, result);
 
 			int level = 0;
@@ -524,11 +524,6 @@ namespace AoC.Puzzles2018
 			Map(x, y, '.');
 		}
 
-		char Map(int x, int y)
-		{
-			return _map[x, y + 1];
-		}
-
 		void Map(int x, int y, char c, char t = (char)0)
 		{
 			if (x < 0 || x >= 400 || y < 0 || y >= 400)
@@ -544,16 +539,6 @@ namespace AoC.Puzzles2018
 			_maxX = Math.Max(_maxX, x);
 			_minY = Math.Min(_minY, y);
 			_maxY = Math.Max(_maxY, y);
-		}
-
-		int Steps(int x, int y)
-		{
-			if (x < 0 || x >= 400 || y < 0 || y >= 400)
-			{
-				return 0;
-			}
-
-			return _steps[x, y];
 		}
 
 		void Steps(int x, int y, int steps)

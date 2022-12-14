@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
@@ -21,14 +22,14 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs (1)", Resources.Day09Inputs},
 			{"Example Inputs (2)", Resources.Day09Inputs2},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>()
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
 		{
 			{ "Part 1 (a)", SolvePart1a },
 			{ "Part 2 (a)", SolvePart2a },
@@ -40,7 +41,7 @@ namespace AoC.Puzzles2022
 
 		private static string SolvePart1a(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var forest = new List<string>();
 			var tailSpots = new HashSet<string>();
@@ -113,7 +114,7 @@ namespace AoC.Puzzles2022
 
 		private static string SolvePart2a(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var forest = new List<string>();
 			var tailSpots = new HashSet<string>();
@@ -129,7 +130,7 @@ namespace AoC.Puzzles2022
 				output.AppendLine(line);
 				var parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-				Point dir = new Point(0, 0);
+				var dir = new Point(0, 0);
 				switch (parts[0])
 				{
 					case "U": dir.Y = 1; break;
@@ -217,7 +218,7 @@ namespace AoC.Puzzles2022
 
 		private static string SolveRope(string input, int length)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var forest = new List<string>();
 			var tailSpots = new HashSet<string>();
@@ -233,7 +234,7 @@ namespace AoC.Puzzles2022
 				output.AppendLine(line);
 				var parts = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-				Point dir = new Point(0, 0);
+				var dir = new Point(0, 0);
 				switch (parts[0])
 				{
 					case "U": dir.Y = 1; break;

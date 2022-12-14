@@ -85,23 +85,22 @@ namespace AoC.Puzzles2018
 			_guardEvents.Clear();
 			_valueStack.Clear();
 
-			using (var _grammar = new L2Grammar())
-			using (var _parser = new L2Parser(_grammar))
-			{
-				_grammar.ReadGrammar(Resources.Day04Grammar);
-				_parser.ValueEmitted += Parser_ValueEmitted;
-				_parser.TokenEmitted += Parser_TokenEmitted;
+			var _grammar = new L2Grammar();
+			var _parser = new L2Parser(_grammar);
 
-				Helper.TraverseInputLines(input, line =>
+			_grammar.ReadGrammarDefinition(Resources.Day04Grammar);
+			_parser.OnValueEmitted += Parser_ValueEmitted;
+			_parser.OnTokenEmitted += Parser_TokenEmitted;
+
+			Helper.TraverseInputLines(input, line =>
+			{
+				if (!String.IsNullOrWhiteSpace(line))
 				{
-					if (!String.IsNullOrWhiteSpace(line))
-					{
-						_guardEvent = new GuardEvent();
-						_parser.Parse(line);
-						_guardEvents.Add(_guardEvent);
-					}
-				});
-			}
+					_guardEvent = new GuardEvent();
+					_parser.Parse(line);
+					_guardEvents.Add(_guardEvent);
+				}
+			});
 
 			_guardEvents.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
 
@@ -192,23 +191,22 @@ namespace AoC.Puzzles2018
 			_guardEvents.Clear();
 			_valueStack.Clear();
 
-			using (var _grammar = new L2Grammar())
-			using (var _parser = new L2Parser(_grammar))
-			{
-				_grammar.ReadGrammar(Resources.Day04Grammar);
-				_parser.ValueEmitted += Parser_ValueEmitted;
-				_parser.TokenEmitted += Parser_TokenEmitted;
+			var _grammar = new L2Grammar();
+			var _parser = new L2Parser(_grammar);
 
-				Helper.TraverseInputLines(input, line =>
+			_grammar.ReadGrammarDefinition(Resources.Day04Grammar);
+			_parser.OnValueEmitted += Parser_ValueEmitted;
+			_parser.OnTokenEmitted += Parser_TokenEmitted;
+
+			Helper.TraverseInputLines(input, line =>
+			{
+				if (!String.IsNullOrWhiteSpace(line))
 				{
-					if (!String.IsNullOrWhiteSpace(line))
-					{
-						_guardEvent = new GuardEvent();
-						_parser.Parse(line);
-						_guardEvents.Add(_guardEvent);
-					}
-				});
-			}
+					_guardEvent = new GuardEvent();
+					_parser.Parse(line);
+					_guardEvents.Add(_guardEvent);
+				}
+			});
 
 			_guardEvents.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
 
@@ -295,7 +293,7 @@ namespace AoC.Puzzles2018
 		/// <param name="e">The <see cref="Dynamic.Parser.ParserEventArgs"/> instance containing the event data.</param>
 		void Parser_TokenEmitted(object sender, ParserEventArgs e)
 		{
-			//Debug.Print("Filter", e.Token);
+			//DebugPrint("Filter", e.Token);
 
 			if (string.IsNullOrEmpty(e.Token))
 				return;

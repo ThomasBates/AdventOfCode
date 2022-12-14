@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+
+using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
 
@@ -19,13 +21,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day11Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>()
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
 		{
 			{ "Part 1", SolvePart1 },
 			{ "Part 2", SolvePart2 }
@@ -35,7 +37,7 @@ namespace AoC.Puzzles2022
 
 		private class Monkey
 		{
-			public Queue<ulong> ItemsQueue = new Queue<ulong>();
+			public Queue<ulong> ItemsQueue = new();
 			public string Operation;
 			public bool IsOperandOld;
 			public ulong Operand;
@@ -47,7 +49,7 @@ namespace AoC.Puzzles2022
 
 		private static string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var monkeys = new List<Monkey>();
 
@@ -60,7 +62,7 @@ namespace AoC.Puzzles2022
 
 		private static string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			var monkeys = new List<Monkey>();
 
@@ -77,7 +79,7 @@ namespace AoC.Puzzles2022
 		{
 			Monkey monkey = null;
 
-			ParserHelper.RunParser(input, output, Resources.Day11Grammar,
+			Helper.RunParser(input, Resources.Day11Grammar,
 				(token, valueStack) =>
 				{
 					switch (token)
@@ -119,6 +121,10 @@ namespace AoC.Puzzles2022
 							monkey.FalseTarget = int.Parse(valueStack.Pop());
 							break;
 					}
+				},
+				(severity, category, message) =>
+				{
+					output.AppendLine($"[ {severity,-7} ] - [ {category,-15} ] - {message}");
 				});
 		}
 

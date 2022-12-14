@@ -49,6 +49,12 @@
     <Compile Include="SegmentList\MergingSegmentList.cs" />
     <Compile Include="SegmentList\SegmentListItem.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AoC.Parser\AoC.Parser.csproj">
+      <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
+      <Name>AoC.Parser</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

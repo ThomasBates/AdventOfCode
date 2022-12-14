@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
@@ -22,13 +21,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day14Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>();
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
 		#endregion IPuzzle Properties
 
@@ -54,22 +53,22 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart1(string input)
 		{
-			StringBuilder output = new();
+			var output = new StringBuilder();
 
 			LoadDataFromInput(input, output, false);
 
-			SimulateFallingSand(input, output);
+			SimulateFallingSand(output);
 
 			return output.ToString();
 		}
 
 		private string SolvePart2(string input)
 		{
-			StringBuilder output = new();
+			var output = new StringBuilder();
 
 			LoadDataFromInput(input, output, true);
 
-			SimulateFallingSand(input, output);
+			SimulateFallingSand(output);
 
 			return output.ToString();
 		}
@@ -109,9 +108,11 @@ namespace AoC.Puzzles2022
 				minX = Math.Min(minX, 500 - (maxY - minY) - 2);
 				maxX = Math.Max(maxX, 500 + (maxY - minY) + 2);
 
-				var path = new List<Point>();
-				path.Add(new Point(minX, maxY));
-				path.Add(new Point(maxX, maxY));
+				var path = new List<Point>
+				{
+					new Point(minX, maxY),
+					new Point(maxX, maxY)
+				};
 
 				paths.Add(path);
 			}
@@ -183,7 +184,7 @@ namespace AoC.Puzzles2022
 			}
 		}
 
-		private void SimulateFallingSand(string input, StringBuilder output)
+		private void SimulateFallingSand(StringBuilder output)
 		{
 
 			var source = new Point(500 - minX, 0 - minY);

@@ -200,6 +200,11 @@ namespace AoC.Puzzles2022.Properties {
         ///
         ///#GRAMMAR
         ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
         ///line            = &quot;$&quot; command
         ///                | &quot;dir&quot; Id c_dir
         ///                | Integer filename c_file
@@ -207,43 +212,11 @@ namespace AoC.Puzzles2022.Properties {
         ///command         = &quot;cd&quot; directory
         ///                | &quot;ls&quot; c_ls
         ///
-        ///filename        = Id extension
-        ///                
-        ///extension       = 
-        ///                | &quot;.&quot; Id c_extension [rest of string was truncated]&quot;;.
+        ///filename        [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day07Grammar {
             get {
                 return ResourceManager.GetString("Day07Grammar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 
-        ///#DEFINITIONS
-        ///
-        ///FileName        = &quot;a file name&quot; | [_A-Za-z][_A-Za-z0-9]*(\.)?[_A-Za-z][_A-Za-z0-9]*
-        ///Number          = &quot;a number&quot; | (\+|-)?[0-9]+
-        ///
-        ///#GRAMMAR
-        ///
-        ///line            = &quot;$&quot; command
-        ///                | &quot;dir&quot; FileName c_dir
-        ///                | Number FileName c_file
-        ///
-        ///command         = &quot;cd&quot; directory
-        ///                | &quot;ls&quot; c_ls
-        ///
-        ///directory       = &quot;/&quot; c_cdRoot
-        ///                | &quot;.&quot; &quot;.&quot; c_cdParent
-        ///                | FileName c_cdChild
-        ///
-        ///#END
-        ///.
-        /// </summary>
-        internal static string Day07Grammar2 {
-            get {
-                return ResourceManager.GetString("Day07Grammar2", resourceCulture);
             }
         }
         
@@ -334,31 +307,6 @@ namespace AoC.Puzzles2022.Properties {
         ///
         ///#GRAMMAR
         ///
-        ///line            = &quot;noop&quot; c_noop
-        ///                | &quot;addx&quot; arg c_addx
-        ///
-        ///arg             = &quot;-&quot; Integer c_negateArg
-        ///                | Integer
-        ///#END
-        ///.
-        /// </summary>
-        internal static string Day10Grammar {
-            get {
-                return ResourceManager.GetString("Day10Grammar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 
-        ///#DEFINITIONS
-        ///
-        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
-        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
-        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
-        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
-        ///
-        ///#GRAMMAR
-        ///
         ///program         = line moreLines
         ///
         ///moreLines       =
@@ -373,9 +321,9 @@ namespace AoC.Puzzles2022.Properties {
         ///#END
         ///.
         /// </summary>
-        internal static string Day10Grammar2 {
+        internal static string Day10Grammar {
             get {
-                return ResourceManager.GetString("Day10Grammar2", resourceCulture);
+                return ResourceManager.GetString("Day10Grammar", resourceCulture);
             }
         }
         
@@ -586,7 +534,8 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 498,4 -&gt; 498,6 -&gt; 496,6
+        ///503,4 -&gt; 502,4 -&gt; 502,9 -&gt; 494,9.
         /// </summary>
         internal static string Day14Inputs {
             get {

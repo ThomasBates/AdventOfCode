@@ -32,8 +32,10 @@ namespace AoC.Main
 
 		private readonly Dictionary<int, List<TextViewModel>> puzzleYearDays = new();
 
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
 		[ImportMany(typeof(IPuzzle))]
 		private IEnumerable<IPuzzle> puzzleDays;
+#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
 
 		public MainViewModel()
 		{

@@ -67,20 +67,19 @@ namespace AoC.Puzzles2018
 			_points.Clear();
 			_valueStack.Clear();
 
-			using (var _grammar = new L2Grammar())
-			using (var _parser = new L2Parser(_grammar))
-			{
-				_grammar.ReadGrammar(Resources.Day10Grammar);
-				_parser.ValueEmitted += Parser_ValueEmitted;
-				_parser.TokenEmitted += Parser_TokenEmitted;
+			var _grammar = new L2Grammar();
+			var _parser = new L2Parser(_grammar);
 
-				Helper.TraverseInputLines(input, (Action<string>)(line =>
-				{
-					_point = new Point();
-					_parser.Parse(line);
-					_points.Add(_point);
-				}));
-			}
+			_grammar.ReadGrammarDefinition(Resources.Day10Grammar);
+			_parser.OnValueEmitted += Parser_ValueEmitted;
+			_parser.OnTokenEmitted += Parser_TokenEmitted;
+
+			Helper.TraverseInputLines(input, (Action<string>)(line =>
+			{
+				_point = new Point();
+				_parser.Parse(line);
+				_points.Add(_point);
+			}));
 		}
 
 		private void LoadPointsFromInput_Regex(string input)

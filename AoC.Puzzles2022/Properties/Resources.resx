@@ -145,9 +145,6 @@
   <data name="Day07Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day07grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Day07Grammar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day07grammar2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="Day07Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day07inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -162,9 +159,6 @@
   </data>
   <data name="Day10Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Day10Grammar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\day10grammar2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day10Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

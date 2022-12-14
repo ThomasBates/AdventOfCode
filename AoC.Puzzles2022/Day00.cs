@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+
 using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
@@ -21,13 +20,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day00Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>();
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
 		#endregion IPuzzle Properties
 
@@ -43,7 +42,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart1(string input)
 		{
-			StringBuilder output = new();
+			var output = new StringBuilder();
 
 			LoadDataFromInput(input, output);
 
@@ -54,7 +53,7 @@ namespace AoC.Puzzles2022
 
 		private string SolvePart2(string input)
 		{
-			StringBuilder output = new();
+			var output = new StringBuilder();
 
 			LoadDataFromInput(input, output);
 
@@ -73,8 +72,7 @@ namespace AoC.Puzzles2022
 			{
 			});
 
-
-			ParserHelper.RunParser(input, output, Resources.Day00Grammar,
+			Helper.RunParser(input, Resources.Day00Grammar,
 				(token, valueStack) =>
 				{
 					switch (token)
@@ -107,6 +105,10 @@ namespace AoC.Puzzles2022
 							output.AppendLine($"Unknown token: {token}");
 							break;
 					}
+				},
+				(severity, category, message) =>
+				{
+					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 
 		}

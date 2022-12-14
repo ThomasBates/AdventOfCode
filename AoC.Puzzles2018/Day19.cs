@@ -182,8 +182,6 @@ namespace AoC.Puzzles2018
 
 		private void RunProgram(int[] registers, StringBuilder result)
 		{
-			int lastA = 0;
-
 			long clock = 0;
 			while (true)
 			{

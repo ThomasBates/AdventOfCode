@@ -100,20 +100,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IL2Grammar.cs" />
+    <Compile Include="_Events\ParserLogEventArgs.cs" />
     <Compile Include="_Events\ParserEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Classes\L2Grammar.cs" />
-    <Compile Include="_Classes\L2GrammarBase.cs" />
+    <Compile Include="Interfaces\IGrammar.cs" />
     <Compile Include="_Classes\L2Parser.cs" />
-    <Compile Include="_Classes\L2ParserBase.cs" />
+    <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="_Exceptions\GrammarException.cs" />
     <Compile Include="_Exceptions\ParserException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Dynamic.Debug\Dynamic.Debug.csproj">
-      <Project>{43C0DD48-093E-4024-A468-CCCD0327E3E2}</Project>
-      <Name>Dynamic.Debug</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

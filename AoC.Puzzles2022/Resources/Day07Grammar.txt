@@ -8,6 +8,11 @@ Real            = "a real number" | [0-9]+\.[0-9]+
 
 #GRAMMAR
 
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
 line            = "$" command
                 | "dir" Id c_dir
                 | Integer filename c_file

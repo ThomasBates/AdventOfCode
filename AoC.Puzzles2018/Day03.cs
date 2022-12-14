@@ -74,20 +74,19 @@ namespace AoC.Puzzles2018
 			_claims.Clear();
 			_valueStack.Clear();
 
-			using (var _grammar = new L2Grammar())
-			using (var _parser = new L2Parser(_grammar))
-			{
-				_grammar.ReadGrammar(Resources.Day03Grammar);
-				_parser.ValueEmitted += Parser_ValueEmitted;
-				_parser.TokenEmitted += Parser_TokenEmitted;
+			var _grammar = new L2Grammar();
+			var _parser = new L2Parser(_grammar);
 
-				Helper.TraverseInputLines(input, line =>
-				{
-					_claimInfo = new ClaimInfo();
-					_parser.Parse(line);
-					_claims.Add(_claimInfo);
-				});
-			}
+			_grammar.ReadGrammarDefinition(Resources.Day03Grammar);
+			_parser.OnValueEmitted += Parser_ValueEmitted;
+			_parser.OnTokenEmitted += Parser_TokenEmitted;
+
+			Helper.TraverseInputLines(input, line =>
+			{
+				_claimInfo = new ClaimInfo();
+				_parser.Parse(line);
+				_claims.Add(_claimInfo);
+			});
 
 
 			const int fabricSize = 1000;
@@ -133,20 +132,19 @@ namespace AoC.Puzzles2018
 			_claims.Clear();
 			_valueStack.Clear();
 
-			using (var _grammar = new L2Grammar())
-			using (var _parser = new L2Parser(_grammar))
-			{
-				_grammar.ReadGrammar(Resources.Day03Grammar);
-				_parser.ValueEmitted += Parser_ValueEmitted;
-				_parser.TokenEmitted += Parser_TokenEmitted;
+			var _grammar = new L2Grammar();
+			var _parser = new L2Parser(_grammar);
 
-				Helper.TraverseInputLines(input, line =>
-				{
-					_claimInfo = new ClaimInfo();
-					_parser.Parse(line);
-					_claims.Add(_claimInfo);
-				});
-			}
+			_grammar.ReadGrammarDefinition(Resources.Day03Grammar);
+			_parser.OnValueEmitted += Parser_ValueEmitted;
+			_parser.OnTokenEmitted += Parser_TokenEmitted;
+
+			Helper.TraverseInputLines(input, line =>
+			{
+				_claimInfo = new ClaimInfo();
+				_parser.Parse(line);
+				_claims.Add(_claimInfo);
+			});
 
 			var result = new StringBuilder();
 
@@ -192,9 +190,9 @@ namespace AoC.Puzzles2018
 		/// <author>Thomas_Bates</author>
 		void Parser_ValueEmitted(object sender, ParserEventArgs e)
 		{
-			//Debug.Print("Filter", "\"" + e.Value + "\"");
+			//DebugPrint("Filter", "\"" + e.Value + "\"");
 			_valueStack.Push(e.Value);
-			//DebugShowValueStack();
+			DebugShowValueStack();
 		}
 
 		/// <summary>
@@ -206,7 +204,7 @@ namespace AoC.Puzzles2018
 		/// <author>Thomas_Bates</author>
 		void Parser_TokenEmitted(object sender, ParserEventArgs e)
 		{
-			//Debug.Print("Filter", e.Token);
+			//DebugPrint("Filter", e.Token);
 
 			if (string.IsNullOrEmpty(e.Token))
 				return;
@@ -338,7 +336,7 @@ namespace AoC.Puzzles2018
 					values = ", " + values;
 				values = "\"" + value + "\"" + values;
 			}
-			//Debug.Print("Filter", "stack:  " + values);
+			//DebugPrint("Filter", "stack:  " + values);
 		}
 
 		#endregion

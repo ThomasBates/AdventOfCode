@@ -10,7 +10,7 @@ namespace AoC.Parser
     /// </summary>
     /// <created>18/02/2009</created>
     /// <author>Thomas_Bates</author>
-    public class L2Grammar : L2GrammarBase, IDisposable
+    public class L2Grammar : IL2Grammar
     {
         private const string EOF = "EOF";
         private const string EndOfFile = "End of file";
@@ -35,31 +35,36 @@ namespace AoC.Parser
         private Stack<int> _followerParseTokenStack = new Stack<int>();
 
 
-        #region Constructors
+		#region Constructors
 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="L2Grammar"/> class.
-        /// </summary>
-        /// <created>19/02/2009</created>
-        /// <author>Thomas_Bates</author>
-        public L2Grammar()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="L2Grammar"/> class.
+		/// </summary>
+		/// <created>19/02/2009</created>
+		/// <author>Thomas_Bates</author>
+		public L2Grammar()
         {
             AddGrammarDefinition(EOF, EndOfFile, EOF);
         }
 
+		#endregion
+		#region IGrammar Events
 
-        #endregion
-        #region Properties
+		/// <summary>
+		/// Occurs when log message emitted.
+		/// </summary>
+		public event EventHandler<ParserLogEventArgs> OnLogMessageEmitted;
 
+		#endregion
+		#region Properties
 
-        /// <summary>
-        /// Gets the definitions.
-        /// </summary>
-        /// <value>The definitions.</value>
-        /// <created>20/02/2009</created>
-        /// <author>Thomas_Bates</author>
-        public Dictionary<string, string> Definitions
+		/// <summary>
+		/// Gets the definitions.
+		/// </summary>
+		/// <value>The definitions.</value>
+		/// <created>20/02/2009</created>
+		/// <author>Thomas_Bates</author>
+		public Dictionary<string, string> Definitions
         {
             get { return _definitions; }
         }
@@ -174,7 +179,6 @@ namespace AoC.Parser
             get { return _directors; }
         }
 
-
         #endregion
         #region Initialization Methods
 
@@ -182,12 +186,12 @@ namespace AoC.Parser
         /// <summary>
         /// Reads the grammar string.
         /// </summary>
-        /// <param name="grammar">The grammar.</param>
+        /// <param name="grammarDefinition">The grammar.</param>
         /// <created>19/02/2009</created>
         /// <author>Thomas_Bates</author>
-        public void ReadGrammar(string grammar)
+        public void ReadGrammarDefinition(string grammarDefinition)
         {
-            byte[] buffer = Encoding.UTF8.GetBytes(grammar);
+            byte[] buffer = Encoding.UTF8.GetBytes(grammarDefinition);
             MemoryStream stream = new MemoryStream(buffer);
             ReadGrammar(stream);
         }
@@ -195,17 +199,17 @@ namespace AoC.Parser
         /// <summary>
         /// Reads the grammar stream.
         /// </summary>
-        /// <param name="grammar">The grammar.</param>
+        /// <param name="grammarStream">The grammar.</param>
         /// <created>19/02/2009</created>
         /// <author>Thomas_Bates</author>
-        public void ReadGrammar(Stream grammar)
+        public void ReadGrammar(Stream grammarStream)
         {
             bool fDefinitions = false;
             bool fGrammar = false;
             bool fFinished = false;
 
-            grammar.Position = 0;
-            string line = ReadGrammarLine(grammar);
+            grammarStream.Position = 0;
+            string line = ReadGrammarLine(grammarStream);
             while (!fFinished)
             {
                 if (line.Equals("#DEFINITIONS", StringComparison.OrdinalIgnoreCase))
@@ -228,12 +232,12 @@ namespace AoC.Parser
                 {
                     AddGrammarDefinition(line);
                 }
-                if (grammar.Position >= grammar.Length)
+                if (grammarStream.Position >= grammarStream.Length)
                 {
                     fFinished = true;
                 }
 
-                line = ReadGrammarLine(grammar);
+                line = ReadGrammarLine(grammarStream);
             }
 
             InitializeGrammar();
@@ -563,8 +567,8 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         protected virtual void CalculateDirectors()
         {
-            //Debug.Print("Grammar1", "CalculateDirectors ...");
-            //Debug.Indent("Grammar1");
+            DebugPrint("Grammar1", "CalculateDirectors ...");
+            DebugIndent();
 
             _directors = new List<string>[_firstTokenList.Count];
             for (int i = 0; i < _firstTokenList.Count; i++)
@@ -577,8 +581,8 @@ namespace AoC.Parser
                 CalcParseDirectors(i);
             }
 
-            //Debug.Unindent("Grammar1");
-            //Debug.Print("Grammar1", "... CalculateDirectors");
+            DebugUnindent();
+            DebugPrint("Grammar1", "... CalculateDirectors");
         }
 
         /// <summary>
@@ -589,8 +593,8 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         protected virtual void CalcParseDirectors(int parseTokenIndex)
         {
-            //Debug.Print("Grammar1", "CalcParseDirectors({0}) ...", _parseTokens[parseTokenIndex]);
-            //Debug.Indent("Grammar1");
+            DebugPrint("Grammar1", $"CalcParseDirectors({_parseTokens[parseTokenIndex]}) ...");
+            DebugIndent();
 
             DebugShowStack("if (_directorParseTokenStack.Contains(parseTokenIndex))", "_directorParseTokenStack", _directorParseTokenStack);
 
@@ -636,8 +640,8 @@ namespace AoC.Parser
                 throw new GrammarException("Internal Stack Error.");
             }
 
-            //Debug.Unindent("Grammar1");
-            //Debug.Print("Grammar1", "... CalcParseDirectors({0})", _parseTokens[parseTokenIndex]);
+            DebugUnindent();
+            DebugPrint("Grammar1", "... CalcParseDirectors({_parseTokens[parseTokenIndex]})");
         }
 
         /// <summary>
@@ -649,8 +653,8 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         protected virtual void AddDirectors(int productionIndex, int parseTokenIndex)
         {
-            //Debug.Print("Grammar1", "AddDirectors({0}, {1}) ...", productionIndex, _parseTokens[parseTokenIndex]);
-            //Debug.Indent("Grammar1");
+            DebugPrint("Grammar1", $"AddFollowers({productionIndex}, {_parseTokens[parseTokenIndex]}) ...");
+            DebugIndent();
 
             //  Make sure the specified parse token's director set has been calculated.
             CalcParseDirectors(parseTokenIndex);
@@ -670,8 +674,8 @@ namespace AoC.Parser
                 }
             }
 
-            //Debug.Unindent("Grammar1");
-            //Debug.Print("Grammar1", "... AddDirectors({0}, {1})", productionIndex, _parseTokens[parseTokenIndex]);
+            DebugUnindent();
+            DebugPrint("Grammar1", $"... AddDirectors({productionIndex}, {_parseTokens[parseTokenIndex]})");
         }
 
         /// <summary>
@@ -683,8 +687,8 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         protected virtual void AddFollowers(int productionIndex, int parseTokenIndex)
         {
-            //Debug.Print("Grammar1", "AddFollowers({0}, {1}) ...", productionIndex, _parseTokens[parseTokenIndex]);
-            //Debug.Indent("Grammar1");
+            DebugPrint("Grammar1", $"AddFollowers({productionIndex}, {_parseTokens[parseTokenIndex]}) ...");
+            DebugIndent();
             try
             {
                 DebugShowStack("if (_followerParseTokenStack.Contains(parseTokenIndex))", "_followerParseTokenStack", _followerParseTokenStack);
@@ -759,8 +763,8 @@ namespace AoC.Parser
             }
             finally
             {
-                //Debug.Unindent("Grammar1");
-                //Debug.Print("Grammar1", "... AddFollowers({0}, {1})", productionIndex, _parseTokens[parseTokenIndex]);
+                DebugUnindent();
+                DebugPrint("Grammar1", "... AddFollowers({productionIndex}, {_parseTokens[parseTokenIndex]})");
             }
         }
 
@@ -768,6 +772,25 @@ namespace AoC.Parser
         #endregion
         #region Private Debug Methods
 
+        private string indent = "";
+
+        private void DebugPrint(string category, string message)
+        {
+            OnLogMessageEmitted?.Invoke(this, new ParserLogEventArgs("Debug", category, indent + message));
+        }
+
+        private void DebugIndent()
+        {
+            indent = "  " + indent;
+        }
+
+        private void DebugUnindent()
+        {
+            if (indent.Length > 2)
+                indent = indent.Substring(2);
+            else
+                indent = string.Empty;
+        }
 
         /// <summary>
         /// Writes the specified stack to the debug file.
@@ -789,8 +812,8 @@ namespace AoC.Parser
                     if (!string.IsNullOrEmpty(tokens)) tokens = ", " + tokens;
                     tokens = token + tokens;
                 }
-                //Debug.Print("Grammar1", caption);
-                //Debug.Print("Grammar1", "  " + stackName + ":  " + tokens);
+                DebugPrint("Grammar1", caption);
+                DebugPrint("Grammar1", "  " + stackName + ":  " + tokens);
             }
         }
 
@@ -810,12 +833,12 @@ namespace AoC.Parser
                 DebugDumpList("Grammar Code Tokens", _codeTokens);
                 DebugDumpList("For each parse token, the first production number is as follows:", _firstProdList);
 
-                //Debug.Print("Grammar2", "Director Sets");
+                DebugPrint("Grammar2", "Director Sets");
                 for (int i = 0; i < _directors.Length; i++)
                 {
                     DebugDumpList(i, _directors[i]);
                 }
-                //Debug.Print("Grammar2", "");
+                DebugPrint("Grammar2", "");
 
                 DebugDumpList("For each production, the first token is in the following position:", _firstTokenList);
             }
@@ -830,12 +853,12 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         private void DebugDumpList(string caption, List<string> list)
         {
-            //Debug.Print("Grammar2", caption);
+            DebugPrint("Grammar2", caption);
             foreach (string token in list)
             {
-                //Debug.Print("Grammar2", "  " + token);
+                DebugPrint("Grammar2", "  " + token);
             }
-            //Debug.Print("Grammar2", "");
+            DebugPrint("Grammar2", "");
         }
 
         /// <summary>
@@ -847,15 +870,15 @@ namespace AoC.Parser
         /// <author>Thomas_Bates</author>
         private void DebugDumpList(string caption, List<int> list)
         {
-            //Debug.Print("Grammar2", caption);
+            DebugPrint("Grammar2", caption);
             string line = string.Empty;
             foreach (int index in list)
             {
                 if (!string.IsNullOrEmpty(line)) line += ", ";
                 line += index.ToString();
             }
-            //Debug.Print("Grammar2", "  " + line);
-            //Debug.Print("Grammar2", "");
+            DebugPrint("Grammar2", "  " + line);
+            DebugPrint("Grammar2", "");
         }
 
         /// <summary>
@@ -873,30 +896,10 @@ namespace AoC.Parser
                 if (!string.IsNullOrEmpty(line)) line += ", ";
                 line += "\"" + token + "\"";
             }
-            //Debug.Print("Grammar2", "  " + index + ":  " + line);
+            DebugPrint("Grammar2", "  " + index + ":  " + line);
         }
 
 
         #endregion
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _definitions.Clear();
-            _patterns.Clear();
-            _grammar.Clear();
-            _intrinsics.Clear();
-            _keywords.Clear();
-            _symbols.Clear();
-            _parseTokens.Clear();
-            _codeTokens.Clear();
-            _allTokens.Clear();
-            _firstProdList.Clear();
-            _firstTokenList.Clear();
-            _directorParseTokenStack.Clear();
-            _followerParseTokenStack.Clear();
-        }
     }
 }

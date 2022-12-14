@@ -21,13 +21,13 @@ namespace AoC.Puzzles2022
 
 		public string Name => $"Day {Day:00}";
 
-		public Dictionary<string, string> Inputs { get; } = new Dictionary<string, string>()
+		public Dictionary<string, string> Inputs { get; } = new()
 		{
 			{"Example Inputs", Resources.Day03Inputs},
 			{"Puzzle Inputs",  ""}
 		};
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new Dictionary<string, Func<string, string>>()
+		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
 		{
 			{ "Part 1", SolvePart1 },
 			{ "Part 2", SolvePart2 }
@@ -37,7 +37,7 @@ namespace AoC.Puzzles2022
 
 		public static string SolvePart1(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			int total = 0;
 
@@ -75,7 +75,7 @@ namespace AoC.Puzzles2022
 
 		public static string SolvePart2(string input)
 		{
-			StringBuilder output = new StringBuilder();
+			var output = new StringBuilder();
 
 			int total = 0;
 			var group = new List<HashSet<char>>();

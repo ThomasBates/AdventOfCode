@@ -13,19 +13,19 @@ namespace AoC.Parser
     /// </summary>
     /// <created>19/02/2009</created>
     /// <author>Thomas_Bates</author>
-    public class L2Parser : L2ParserBase, IDisposable
+    public class L2Parser : IParser
     {
+        private readonly IL2Grammar Grammar;
+
         private int _line = 0;
         private int _column = 0;
         private char _nextChar;
         private string _nextValue = string.Empty;
         private string _scanToken = string.Empty;
 
-        private Stack<string> _parseStack = new Stack<string>();
-
+        private readonly Stack<string> _parseStack = new();
 
         #region Constructors
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="L2Parser"/> class.
@@ -33,63 +33,52 @@ namespace AoC.Parser
         /// <param name="grammar">The grammar.</param>
         /// <created>19/02/2009</created>
         /// <author>Thomas_Bates</author>
-        public L2Parser(L2GrammarBase grammar)
-            : base(grammar)
+        public L2Parser(IL2Grammar grammar)
         {
+            this.Grammar = grammar;
         }
 
+		#endregion Constructors
+		#region IParser Events
 
-        #endregion
-        #region Properties
+		/// <summary>
+		/// Occurs when [intrinsic token emitted].
+		/// </summary>
+		public event EventHandler<ParserEventArgs> OnValueEmitted;
 
+		/// <summary>
+		/// Occurs when [code token emitted].
+		/// </summary>
+		public event EventHandler<ParserEventArgs> OnTokenEmitted;
 
-        /// <summary>
-        /// Gets the grammar.
-        /// </summary>
-        /// <value>The grammar.</value>
-        /// <created>19/02/2009</created>
-        /// <author>Thomas_Bates</author>
-        protected new L2Grammar Grammar
-        {
-            get { return base.Grammar as L2Grammar; }
-        }
+		/// <summary>
+		/// Occurs when log message emitted.
+		/// </summary>
+		public event EventHandler<ParserLogEventArgs> OnLogMessageEmitted;
 
+		#endregion IParser Events
+		#region IParser Methods
 
-        #endregion
-        #region Property Accessor Methods
+		/// <summary>
+		/// Parses the specified input.
+		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <created>19/02/2009</created>
+		/// <author>Thomas_Bates</author>
+		public virtual void Parse(string input)
+		{
+			byte[] buffer = Encoding.UTF8.GetBytes(input);
+			var stream = new MemoryStream(buffer);
+			Parse(stream);
+		}
 
-
-        #endregion
-        #region Initialization Methods
-
-
-        /// <summary>
-        /// Creates the grammar.
-        /// </summary>
-        /// <returns>The created grammar.</returns>
-        /// <created>19/02/2009</created>
-        /// <author>Thomas_Bates</author>
-        protected override L2GrammarBase CreateGrammar()
-        {
-            return new L2Grammar();
-        }
-
-
-        #endregion
-        #region Event Handler Methods
-
-
-        #endregion
-        #region Public Access Methods
-
-
-        /// <summary>
-        /// Parses the specified input stream.
-        /// </summary>
-        /// <param name="input">The input stream.</param>
-        /// <created>20/02/2009</created>
-        /// <author>Thomas_Bates</author>
-        public override void Parse(Stream input)
+		/// <summary>
+		/// Parses the specified input stream.
+		/// </summary>
+		/// <param name="input">The input stream.</param>
+		/// <created>20/02/2009</created>
+		/// <author>Thomas_Bates</author>
+		public void Parse(Stream input)
         {
             string token;
 
@@ -140,8 +129,8 @@ namespace AoC.Parser
                 }
                 else if (Grammar.CodeTokens.Contains(token))
                 {
-                    //Debug.Print("Parser", token);
-                    OnTokenEmitted(new ParserEventArgs(token, _nextValue));
+                    DebugPrint("Parser", $"token emitted: {token}");
+                    OnTokenEmitted?.Invoke(this, new ParserEventArgs(token, _nextValue));
                 }
                 else
                 {
@@ -160,8 +149,8 @@ namespace AoC.Parser
                     {
                         if (Grammar.Intrinsics.IndexOf(token) != 0)
                         {
-                            //Debug.Print("Parser", "{0}", _nextValue);
-                            OnValueEmitted(new ParserEventArgs(token, _nextValue));
+                            DebugPrint("Parser", $"value emitted: {_nextValue}");
+                            OnValueEmitted?.Invoke(this, new ParserEventArgs(token, _nextValue));
                             Scan(input);
                         }
                     }
@@ -176,8 +165,8 @@ namespace AoC.Parser
         }
 
 
-        #endregion
-        #region Local Support Methods
+        #endregion IParser Methods
+        #region Private Methods
 
 
         /// <summary>
@@ -186,7 +175,7 @@ namespace AoC.Parser
         /// <param name="input">The input stream.</param>
         /// <created>20/02/2009</created>
         /// <author>Thomas_Bates</author>
-        protected virtual void Scan(Stream input)
+        private void Scan(Stream input)
         {
             //  Precondition:  c = next character (unprocessed)
 
@@ -221,18 +210,20 @@ namespace AoC.Parser
 
                     while (_nextChar != 26)
                     {
-                        //c = GetChar(input);
                         testValue += _nextChar;
 
                         int count = 0;
-                        foreach (string token in Grammar.Patterns.Keys)
+                        if (" \t\r\n".IndexOf(_nextChar) < 0)
                         {
-                            string pattern = Grammar.Patterns[token];
-                            if (Regex.IsMatch(testValue, "^" + pattern + "$"))
+                            foreach (string token in Grammar.Patterns.Keys)
                             {
-                                lastToken = token;
-                                lastValue = testValue;
-                                count++;
+                                string pattern = Grammar.Patterns[token];
+                                if (Regex.IsMatch(testValue, "^" + pattern + "$"))
+                                {
+                                    lastToken = token;
+                                    lastValue = testValue;
+                                    count++;
+                                }
                             }
                         }
                         if (count == 0)  //  Current test failed
@@ -293,15 +284,11 @@ namespace AoC.Parser
             return (char)b;
         }
 
+		private void DebugPrint(string category, string message)
+		{
+			OnLogMessageEmitted?.Invoke(this, new ParserLogEventArgs("Debug", category, message));
+		}
 
-        #endregion
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _parseStack.Clear();
-        }
-    }
+		#endregion
+	}
 }
