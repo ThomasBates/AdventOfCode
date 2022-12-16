@@ -544,11 +544,56 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Sensor at x=2, y=18: closest beacon is at x=-2, y=15
+        ///Sensor at x=9, y=16: closest beacon is at x=10, y=16
+        ///Sensor at x=13, y=2: closest beacon is at x=15, y=3
+        ///Sensor at x=12, y=14: closest beacon is at x=10, y=16
+        ///Sensor at x=10, y=20: closest beacon is at x=10, y=16
+        ///Sensor at x=14, y=17: closest beacon is at x=10, y=16
+        ///Sensor at x=8, y=7: closest beacon is at x=2, y=10
+        ///Sensor at x=2, y=0: closest beacon is at x=2, y=10
+        ///Sensor at x=0, y=11: closest beacon is at x=2, y=10
+        ///Sensor at x=20, y=14: closest [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day15Inputs {
             get {
                 return ResourceManager.GetString("Day15Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day16Grammar {
+            get {
+                return ResourceManager.GetString("Day16Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day16Inputs {
+            get {
+                return ResourceManager.GetString("Day16Inputs", resourceCulture);
             }
         }
     }

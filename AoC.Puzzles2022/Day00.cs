@@ -7,110 +7,117 @@ using AoC.IO;
 using AoC.Puzzle;
 using AoC.Puzzles2022.Properties;
 
-namespace AoC.Puzzles2022
+namespace AoC.Puzzles2022;
+
+[Export(typeof(IPuzzle))]
+public class Day00 : IPuzzle
 {
-	[Export(typeof(IPuzzle))]
-	public class Day00 : IPuzzle
+	#region IPuzzle Properties
+
+	public int Year => 2022;
+
+	public int Day => 0;
+
+	public string Name => $"Day {Day:00}";
+
+	public Dictionary<string, string> Inputs { get; } = new()
 	{
-		#region IPuzzle Properties
+		{"Example Inputs", Resources.Day00Inputs},
+		{"Puzzle Inputs",  ""}
+	};
 
-		public int Year => 2022;
+	public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
-		public int Day => 0;
+	#endregion IPuzzle Properties
 
-		public string Name => $"Day {Day:00}";
+	#region Constructors
 
-		public Dictionary<string, string> Inputs { get; } = new()
+	public Day00()
+	{
+		Solvers.Add("Solve Part 1", SolvePart1);
+		Solvers.Add("Solve Part 2", SolvePart2);
+	}
+
+	#endregion Constructors
+
+	private string SolvePart1(string input)
+	{
+		var output = new StringBuilder();
+
+		LoadDataFromInput(input, output);
+
+		ProcessDataForPart1(output);
+
+		return output.ToString();
+	}
+
+	private string SolvePart2(string input)
+	{
+		var output = new StringBuilder();
+
+		LoadDataFromInput(input, output);
+
+		ProcessDataForPart2(output);
+
+		return output.ToString();
+	}
+
+	private void LoadDataFromInput(string input, StringBuilder output)
+	{
+		Helper.TraverseInputTokens(input, value =>
 		{
-			{"Example Inputs", Resources.Day00Inputs},
-			{"Puzzle Inputs",  ""}
-		};
+		});
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new();
-
-		#endregion IPuzzle Properties
-
-		#region Constructors
-
-		public Day00()
+		Helper.TraverseInputLines(input, line =>
 		{
-			Solvers.Add("Solve Part 1", SolvePart1);
-			Solvers.Add("Solve Part 2", SolvePart2);
-		}
+		});
 
-		#endregion Constructors
-
-		private string SolvePart1(string input)
-		{
-			var output = new StringBuilder();
-
-			LoadDataFromInput(input, output);
-
-			//
-
-			return output.ToString();
-		}
-
-		private string SolvePart2(string input)
-		{
-			var output = new StringBuilder();
-
-			LoadDataFromInput(input, output);
-
-			//
-
-			return output.ToString();
-		}
-
-		private void LoadDataFromInput(string input, StringBuilder output)
-		{
-			Helper.TraverseInputTokens(input, value =>
+		Helper.RunParser(input, Resources.Day00Grammar,
+			(token, valueStack) =>
 			{
+				switch (token)
+				{
+					case "s_scope":
+						break;
+					default:
+						output.AppendLine($"Unknown token: {token}");
+						break;
+				}
+			},
+			(token, valueStack) =>
+			{
+				switch (token)
+				{
+					case "t_type":
+						break;
+					default:
+						output.AppendLine($"Unknown token: {token}");
+						break;
+				}
+			},
+			(token, valueStack) =>
+			{
+				switch (token)
+				{
+					case "c_code":
+						break;
+					default:
+						output.AppendLine($"Unknown token: {token}");
+						break;
+				}
+			},
+			(severity, category, message) =>
+			{
+				output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 			});
 
-			Helper.TraverseInputLines(input, line =>
-			{
-			});
+	}
 
-			Helper.RunParser(input, Resources.Day00Grammar,
-				(token, valueStack) =>
-				{
-					switch (token)
-					{
-						case "s_scope":
-							break;
-						default:
-							output.AppendLine($"Unknown token: {token}");
-							break;
-					}
-				},
-				(token, valueStack) =>
-				{
-					switch (token)
-					{
-						case "t_type":
-							break;
-						default:
-							output.AppendLine($"Unknown token: {token}");
-							break;
-					}
-				},
-				(token, valueStack) =>
-				{
-					switch (token)
-					{
-						case "c_code":
-							break;
-						default:
-							output.AppendLine($"Unknown token: {token}");
-							break;
-					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
-				});
+	private void ProcessDataForPart1(StringBuilder output)
+	{
+	}
 
-		}
+	private void ProcessDataForPart2(StringBuilder output)
+	{
 	}
 }
