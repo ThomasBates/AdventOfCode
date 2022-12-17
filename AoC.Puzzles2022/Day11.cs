@@ -79,7 +79,7 @@ namespace AoC.Puzzles2022
 		{
 			Monkey monkey = null;
 
-			Helper.RunParser(input, Resources.Day11Grammar,
+			Helper.ParseInput(input, Resources.Day11Grammar,
 				(token, valueStack) =>
 				{
 					switch (token)

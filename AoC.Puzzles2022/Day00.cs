@@ -62,7 +62,7 @@ public class Day00 : IPuzzle
 		return output.ToString();
 	}
 
-	private void LoadDataFromInput(string input, StringBuilder output)
+	private void LoadDataFromInput(string input, StringBuilder output = null)
 	{
 		Helper.TraverseInputTokens(input, value =>
 		{
@@ -72,7 +72,7 @@ public class Day00 : IPuzzle
 		{
 		});
 
-		Helper.RunParser(input, Resources.Day00Grammar,
+		Helper.ParseInput(input, Resources.Day00Grammar,
 			(token, valueStack) =>
 			{
 				switch (token)
@@ -80,7 +80,7 @@ public class Day00 : IPuzzle
 					case "s_scope":
 						break;
 					default:
-						output.AppendLine($"Unknown token: {token}");
+						output?.AppendLine($"Unknown token: {token}");
 						break;
 				}
 			},
@@ -91,7 +91,7 @@ public class Day00 : IPuzzle
 					case "t_type":
 						break;
 					default:
-						output.AppendLine($"Unknown token: {token}");
+						output?.AppendLine($"Unknown token: {token}");
 						break;
 				}
 			},
@@ -102,22 +102,22 @@ public class Day00 : IPuzzle
 					case "c_code":
 						break;
 					default:
-						output.AppendLine($"Unknown token: {token}");
+						output?.AppendLine($"Unknown token: {token}");
 						break;
 				}
 			},
 			(severity, category, message) =>
 			{
-				output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
+				output?.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 			});
 
 	}
 
-	private void ProcessDataForPart1(StringBuilder output)
+	private void ProcessDataForPart1(StringBuilder output = null)
 	{
 	}
 
-	private void ProcessDataForPart2(StringBuilder output)
+	private void ProcessDataForPart2(StringBuilder output = null)
 	{
 	}
 }

@@ -88,7 +88,7 @@ namespace AoC.Puzzles2022
 		{
 			var currentDirectory = root;
 
-			Helper.RunParser(input, Resources.Day07Grammar,
+			Helper.ParseInput(input, Resources.Day07Grammar,
 				null,
 				null,
 				(token, valueStack) =>

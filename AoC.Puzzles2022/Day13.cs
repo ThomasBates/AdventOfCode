@@ -186,7 +186,7 @@ namespace AoC.Puzzles2022
 			var packetStack = new Stack<PacketElement>();
 			PacketElement openList = null;
 
-			Helper.RunParser(input, Resources.Day13Grammar,
+			Helper.ParseInput(input, Resources.Day13Grammar,
 				null,
 				null,
 				(token, valueStack) =>

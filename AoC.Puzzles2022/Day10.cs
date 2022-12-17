@@ -62,7 +62,7 @@ namespace AoC.Puzzles2022
 			int x = 1;
 			int signalStrength = 0;
 
-			Helper.RunParser(input, Resources.Day10Grammar, null, null,
+			Helper.ParseInput(input, Resources.Day10Grammar, null, null,
 				(token, valueStack) =>
 				{
 					switch (token)
@@ -135,7 +135,7 @@ namespace AoC.Puzzles2022
 
 			var screen = new StringBuilder();
 
-			Helper.RunParser(input,  Resources.Day10Grammar, 
+			Helper.ParseInput(input,  Resources.Day10Grammar, 
 				null,
 				(token, valueStack) =>
 				{

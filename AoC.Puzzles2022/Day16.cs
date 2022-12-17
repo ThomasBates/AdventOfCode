@@ -47,7 +47,7 @@ public class Day16 : IPuzzle
 	{
 		var output = new StringBuilder();
 
-		LoadDataFromInput(input, output);
+		LoadDataFromInput(input);
 
 		ProcessDataForPart1(output);
 
@@ -58,14 +58,14 @@ public class Day16 : IPuzzle
 	{
 		var output = new StringBuilder();
 
-		LoadDataFromInput(input, output);
+		LoadDataFromInput(input);
 
 		ProcessDataForPart2(output);
 
 		return output.ToString();
 	}
 
-	private class Valve // node
+	private class Valve
 	{
 		public string Name;
 		public int FlowRate;
@@ -80,13 +80,13 @@ public class Day16 : IPuzzle
 
 	private readonly List<Valve> allValves = new();
 
-	private void LoadDataFromInput(string input, StringBuilder output)
+	private void LoadDataFromInput(string input, StringBuilder output = null)
 	{
 		allValves.Clear();
 
 		Valve fromValve = null;
 
-		Helper.RunParser(input, Resources.Day16Grammar,
+		Helper.ParseInput(input, Resources.Day16Grammar,
 			null,
 			null,
 			(token, valueStack) =>
@@ -120,13 +120,13 @@ public class Day16 : IPuzzle
 						}
 						break;
 					default:
-						output.AppendLine($"Unknown token: {token}");
+						output?.AppendLine($"Unknown token: {token}");
 						break;
 				}
 			},
 			(severity, category, message) =>
 			{
-				output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
+				output?.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 			});
 	}
 
@@ -187,8 +187,12 @@ public class Day16 : IPuzzle
 		if (source.Distances.TryGetValue(target, out var distance))
 			return distance;
 
-		var path = FindPath(source, target);
-		distance = path.Count;
+		var path = Helper.FindPath(allValves,
+			(valve) => valve.Tunnels,
+			(source, target) => 1, 
+			source, target);
+
+		distance = path.Count();
 
 		source.Distances[target] = distance;
 		target.Distances[source] = distance;
@@ -296,98 +300,4 @@ public class Day16 : IPuzzle
 		output?.AppendLine($"{indent}SolveRemaining return [{string.Join(",", bestValveOrder1)}], [{string.Join(",", bestValveOrder2)}], {bestValue}");
 		return (bestValveOrder1, bestValveOrder2, bestValue);
 	}
-
-
-	#region Pathfinding
-
-	private List<Valve> FindPath(Valve source, Valve target)
-	{
-		Dictionary<Valve, bool> visited = new();
-		Dictionary<Valve, int> distance = new();
-		Dictionary<Valve, Valve> prev = new();
-
-		foreach (var valve in allValves)
-		{
-			visited[valve] = false;
-			distance[valve] = int.MaxValue;
-			prev[valve] = null;
-		}
-
-		distance[source] = 0;
-		Valve current = source;
-
-		while (true)
-		{
-			foreach (var neighbor in current.Tunnels)
-			{
-				if (visited[neighbor])
-					continue;
-
-				int d = distance[current] + 1;
-				if (d < distance[neighbor])
-				{
-					distance[neighbor] = d;
-					prev[neighbor] = current;
-				}
-			}
-
-			visited[current] = true;
-
-			if (current == target)
-			{
-				return GetPath(prev, source, target);
-			}
-
-			current = GetCurrent(visited, distance);
-
-			if (current == null)
-			{
-				return null;
-			}
-		}
-	}
-
-	private Valve GetCurrent(Dictionary<Valve, bool> visited, Dictionary<Valve, int> distance)
-	{
-		int minDistance = int.MaxValue;
-		Valve result = null;
-
-		foreach (var valve in visited.Keys)
-		{
-			if (visited[valve])
-				continue;
-
-			if (distance[valve] < minDistance)
-			{
-				minDistance = distance[valve];
-				result = valve;
-			}
-		}
-
-		return result;
-	}
-
-	private List<Valve> GetPath(Dictionary<Valve, Valve> prev, Valve source, Valve target)
-	{
-		var path = new List<Valve>();
-		Valve current = target;
-
-		while (true)
-		{
-			if (current == source)
-			{
-				return path;
-			}
-
-			path.Insert(0, current);
-
-			current = prev[current];
-			if (current == null)
-			{
-				return null;
-			}
-		}
-	}
-
-	#endregion Pattfinding
 }
