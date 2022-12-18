@@ -566,9 +566,7 @@ namespace AoC.Puzzles2022.Properties {
         ///#DEFINITIONS
         ///
         ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
-        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
-        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
-        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///Integer         = &quot;an integer&quot; | [0-9]+
         ///
         ///#GRAMMAR
         ///
@@ -577,10 +575,15 @@ namespace AoC.Puzzles2022.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
-        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
-        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
-        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        ///line            = &quot;Valve&quot; Id c_valve &quot;has&quot; &quot;flow&quot; &quot;rate&quot; &quot;=&quot; Integer &quot;;&quot; c_rate tunnels_
+        ///
+        ///tunnels_        = &quot;tunnel&quot; &quot;leads&quot; &quot;to&quot; &quot;valve&quot; tunnel_
+        ///                | &quot;tunnels&quot; &quot;lead&quot; &quot;to&quot; &quot;valves&quot; tunnel_ moreTunnels
+        ///
+        ///tunnel_         = Id c_tunnel
+        ///
+        ///moreTunnels     =
+        ///                [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day16Grammar {
             get {
@@ -589,11 +592,28 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Valve AA has flow rate=0; tunnels lead to valves DD, II, BB
+        ///Valve BB has flow rate=13; tunnels lead to valves CC, AA
+        ///Valve CC has flow rate=2; tunnels lead to valves DD, BB
+        ///Valve DD has flow rate=20; tunnels lead to valves CC, AA, EE
+        ///Valve EE has flow rate=3; tunnels lead to valves FF, DD
+        ///Valve FF has flow rate=0; tunnels lead to valves EE, GG
+        ///Valve GG has flow rate=0; tunnels lead to valves FF, HH
+        ///Valve HH has flow rate=22; tunnel leads to valve GG
+        ///Valve II has flow rate=0; tunnels lead to valves A [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day16Inputs {
             get {
                 return ResourceManager.GetString("Day16Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;&gt;&gt;&lt;&lt;&gt;&lt;&gt;&gt;&lt;&lt;&lt;&gt;&gt;&lt;&gt;&gt;&gt;&lt;&lt;&lt;&gt;&gt;&gt;&lt;&lt;&lt;&gt;&lt;&lt;&lt;&gt;&gt;&lt;&gt;&gt;&lt;&lt;&gt;&gt;.
+        /// </summary>
+        internal static string Day17Inputs {
+            get {
+                return ResourceManager.GetString("Day17Inputs", resourceCulture);
             }
         }
     }
