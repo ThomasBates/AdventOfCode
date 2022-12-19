@@ -40,6 +40,8 @@ public class Day00 : IPuzzle
 
 	#endregion Constructors
 
+	#region Solvers
+
 	private string SolvePart1(string input)
 	{
 		var output = new StringBuilder();
@@ -61,6 +63,8 @@ public class Day00 : IPuzzle
 
 		return output.ToString();
 	}
+
+	#endregion Solvers
 
 	private void LoadDataFromInput(string input, StringBuilder output = null)
 	{

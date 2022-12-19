@@ -186,6 +186,7 @@ public class Day17 : IPuzzle
 		}
 	}
 
+	//	https://github.com/jonathanpaulson/AdventOfCode/blob/master/2022/17.py
 	private void ProcessDataForPart1b(string moves1, long rockCount, StringBuilder output = null)
 	{
 		var moves = moves1.ToCharArray();
@@ -305,20 +306,6 @@ public class Day17 : IPuzzle
 					room[roomY][roomX] = '#';
 				}
 			}
-
-			//for (int rockY = rockShape.GetLength(1); rockY > 0; rockY--)
-			//{
-			//	int roomY = rockPosition.Y + rockY;
-
-			//	var s = new string(room[roomY]);
-			//	if (s == "#######")
-			//	{
-			//		for (int i = 0; i < roomY; i++)
-			//			room.RemoveAt(0);
-			//		extraRows += roomY;
-			//		break;
-			//	}
-			//}
 
 			if (room.Count > signatureSize)
 			{
