@@ -68,6 +68,8 @@ public class Day00 : IPuzzle
 
 	private void LoadDataFromInput(string input, StringBuilder output = null)
 	{
+		//  First Clear Data
+
 		Helper.TraverseInputTokens(input, value =>
 		{
 		});
