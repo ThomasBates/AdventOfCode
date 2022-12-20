@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AoC.IO.SegmentList
+namespace AoC.Common.SegmentList
 {
 	public class SegmentListItem : ISegmentListItem
 	{

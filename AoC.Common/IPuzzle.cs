@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AoC.Puzzle
+namespace AoC.Common
 {
 	public interface IPuzzle
 	{

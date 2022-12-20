@@ -93,17 +93,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AoC.IO\AoC.IO.csproj">
-      <Project>{8f4a30b8-a970-458c-a5d5-cbbcbe50f7c7}</Project>
-      <Name>AoC.IO</Name>
+    <ProjectReference Include="..\AoC.Common\AoC.Common.csproj">
+      <Project>{c68a44a6-d5ec-4f74-afd8-7ec8a750906d}</Project>
+      <Name>AoC.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\AoC.Parser\AoC.Parser.csproj">
       <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
       <Name>AoC.Parser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AoC.Puzzle\AoC.Puzzle.csproj">
-      <Project>{c68a44a6-d5ec-4f74-afd8-7ec8a750906d}</Project>
-      <Name>AoC.Puzzle</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

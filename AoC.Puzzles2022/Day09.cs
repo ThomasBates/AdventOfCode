@@ -5,8 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-using AoC.IO;
-using AoC.Puzzle;
+using AoC.Common;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022

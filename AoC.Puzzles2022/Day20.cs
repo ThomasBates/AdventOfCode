@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Text;
 
-using AoC.IO;
-using AoC.Puzzle;
+using AoC.Common;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -139,7 +137,7 @@ public class Day20 : IPuzzle
 
 	private long FindValueAt(LinkedListNode<long> zero, int count)
 	{
-		count = count % file.Count;
+		count %= file.Count;
 		var node = zero;
 		for (int i = 0; i < count; i++)
 			node = node.Next ?? node.List.First;

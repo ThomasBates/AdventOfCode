@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
-using AoC.IO;
-using AoC.IO.SegmentList;
-using AoC.Parser;
-using AoC.Puzzle;
+using AoC.Common;
 using AoC.Puzzles2018.Properties;
 
 namespace AoC.Puzzles2018

@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Text;
 
-using AoC.IO;
-using AoC.Puzzle;
+using AoC.Common;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;

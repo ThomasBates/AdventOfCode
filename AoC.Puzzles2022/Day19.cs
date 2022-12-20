@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
 using System.Text;
 
-using AoC.IO;
-using AoC.Puzzle;
+using AoC.Common;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -36,6 +34,7 @@ public class Day19 : IPuzzle
 	public Day19()
 	{
 		Solvers.Add("Solve Part 1", SolvePart1);
+		Solvers.Add("Solve Part 1 (b)", SolvePart1b);
 		Solvers.Add("Solve Part 2", SolvePart2);
 	}
 
@@ -44,6 +43,17 @@ public class Day19 : IPuzzle
 	#region Solvers
 
 	private string SolvePart1(string input)
+	{
+		var output = new StringBuilder();
+
+		LoadDataFromInput(input, output);
+
+		ProcessDataForPart1a(output);
+
+		return output.ToString();
+	}
+
+	private string SolvePart1b(string input)
 	{
 		var output = new StringBuilder();
 
@@ -78,7 +88,7 @@ public class Day19 : IPuzzle
 		public int GeodeRobot_ObsidianCost;
 	}
 
-	private List<Blueprint> blueprints = new();
+	private readonly List<Blueprint> blueprints = new();
 
 	private void LoadDataFromInput(string input, StringBuilder output = null)
 	{
@@ -157,7 +167,7 @@ public class Day19 : IPuzzle
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is State other))
+			if (obj is not State other)
 				return false;
 			return this.Ore == other.Ore &&
 				this.Clay == other.Clay &&
@@ -186,7 +196,7 @@ public class Day19 : IPuzzle
 	{
 		int bestResult = 0;
 		Blueprint bestBluePrint = null;
-		IEnumerable<ChoiceType> bestChoices = null;
+		IEnumerable<ChoiceType> bestChoices;
 
 		output.AppendLine(DateTime.Now.ToString());
 

@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace AoC.IO.SegmentList
+namespace AoC.Common.SegmentList
 {
 	public class AccumulatingSegmentList : ISegmentList
 	{

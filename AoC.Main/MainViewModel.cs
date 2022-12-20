@@ -11,8 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-using AoC.IO;
-using AoC.Puzzle;
+using AoC.Common;
 
 namespace AoC.Main
 {

@@ -4,9 +4,8 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
-using AoC.IO;
-using AoC.IO.SegmentList;
-using AoC.Puzzle;
+
+using AoC.Common;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022
