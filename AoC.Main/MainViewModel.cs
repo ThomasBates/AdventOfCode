@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -215,7 +216,13 @@ namespace AoC.Main
 
 				if (value != null)
 				{
-					OutputText = selectedPuzzleDay.Solvers[value.Text](InputText);
+					OutputText = "";
+
+					new Thread(() =>
+					{
+						Thread.CurrentThread.IsBackground = true;
+						OutputText = selectedPuzzleDay.Solvers[value.Text](InputText);
+					}).Start();
 				}
 
 				SelectedSolver = null;

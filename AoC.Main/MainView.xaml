@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AoC.Main"
         mc:Ignorable="d"
-        Title="Advent of Code 2018"
+        Title="Advent of Code"
         MinHeight="400" MinWidth="600"
         Height="500" Width="800">
 
