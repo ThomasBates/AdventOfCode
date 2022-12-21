@@ -680,5 +680,28 @@ namespace AoC.Puzzles2022.Properties {
                 return ResourceManager.GetString("Day20Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to root: pppw + sjmn
+        ///dbpl: 5
+        ///cczh: sllz + lgvd
+        ///zczc: 2
+        ///ptdq: humn - dvpt
+        ///dvpt: 3
+        ///lfqf: 4
+        ///humn: 5
+        ///ljgn: 2
+        ///sjmn: drzm * dbpl
+        ///sllz: 4
+        ///pppw: cczh / lfqf
+        ///lgvd: ljgn * ptdq
+        ///drzm: hmdt - zczc
+        ///hmdt: 32.
+        /// </summary>
+        internal static string Day21Inputs {
+            get {
+                return ResourceManager.GetString("Day21Inputs", resourceCulture);
+            }
+        }
     }
 }
