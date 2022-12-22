@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Text;
 
 using AoC.Common;
 using AoC.Puzzles2022.Properties;
@@ -11,6 +10,12 @@ namespace AoC.Puzzles2022;
 [Export(typeof(IPuzzle))]
 public class Day00 : IPuzzle
 {
+	#region Private Members
+
+	private readonly ILogger logger;
+
+	#endregion Private Members
+
 	#region IPuzzle Properties
 
 	public int Year => 2022;
@@ -31,8 +36,11 @@ public class Day00 : IPuzzle
 
 	#region Constructors
 
-	public Day00()
+	[ImportingConstructor]
+	public Day00(ILogger logger)
 	{
+		this.logger = logger;
+
 		Solvers.Add("Solve Part 1", SolvePart1);
 		Solvers.Add("Solve Part 2", SolvePart2);
 	}
@@ -43,29 +51,25 @@ public class Day00 : IPuzzle
 
 	private string SolvePart1(string input)
 	{
-		var output = new StringBuilder();
+		LoadDataFromInput(input);
 
-		LoadDataFromInput(input, output);
+		var result = ProcessDataForPart1();
 
-		ProcessDataForPart1(output);
-
-		return output.ToString();
+		return result;
 	}
 
 	private string SolvePart2(string input)
 	{
-		var output = new StringBuilder();
+		LoadDataFromInput(input);
 
-		LoadDataFromInput(input, output);
+		var result = ProcessDataForPart2();
 
-		ProcessDataForPart2(output);
-
-		return output.ToString();
+		return result;
 	}
 
 	#endregion Solvers
 
-	private void LoadDataFromInput(string input, StringBuilder output = null)
+	private void LoadDataFromInput(string input)
 	{
 		//  First Clear Data
 
@@ -77,7 +81,7 @@ public class Day00 : IPuzzle
 		{
 		});
 
-		Helper.ParseInput(input, Resources.Day00Grammar,
+		Helper.ParseInput(logger, input, Resources.Day00Grammar,
 			(token, valueStack) =>
 			{
 				switch (token)
@@ -85,7 +89,7 @@ public class Day00 : IPuzzle
 					case "s_scope":
 						break;
 					default:
-						output?.AppendLine($"Unknown token: {token}");
+						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
 						break;
 				}
 			},
@@ -96,7 +100,7 @@ public class Day00 : IPuzzle
 					case "t_type":
 						break;
 					default:
-						output?.AppendLine($"Unknown token: {token}");
+						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
 						break;
 				}
 			},
@@ -107,22 +111,19 @@ public class Day00 : IPuzzle
 					case "c_code":
 						break;
 					default:
-						output?.AppendLine($"Unknown token: {token}");
+						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
 						break;
 				}
-			},
-			(severity, category, message) =>
-			{
-				output?.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 			});
-
 	}
 
-	private void ProcessDataForPart1(StringBuilder output = null)
+	private string ProcessDataForPart1()
 	{
+		return "";
 	}
 
-	private void ProcessDataForPart2(StringBuilder output = null)
+	private string ProcessDataForPart2()
 	{
+		return "";
 	}
 }

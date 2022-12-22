@@ -110,12 +110,12 @@ public class Helper
 	}
 
 	public static void ParseInput(
+		ILogger logger,
 		string input,
 		string grammarFile,
 		Action<string, Stack<string>> scopeControllerAction,
 		Action<string, Stack<string>> typeCheckerAction,
-		Action<string, Stack<string>> codeGeneratorAction,
-		Action<string, string, string> logMessageAction)
+		Action<string, Stack<string>> codeGeneratorAction)
 	{
 		var valueStack = new Stack<string>();
 
@@ -128,7 +128,7 @@ public class Helper
 		}
 		catch (GrammarException ex)
 		{
-			logMessageAction?.Invoke("Error", "Grammar", $"{ex.GetType().Name}: {ex.Message}");
+			logger?.Send(SeverityLevel.Error, "Grammar", $"{ex.GetType().Name}: {ex.Message}");
 		}
 
 		IParser parser = new L2Parser(grammar);
@@ -142,7 +142,7 @@ public class Helper
 		}
 		catch (ParserException ex)
 		{
-			logMessageAction?.Invoke("Error", "Parser", $"{ex.GetType().Name}: {ex.Message}");
+			logger?.Send(SeverityLevel.Error, "Parser", $"{ex.GetType().Name}: {ex.Message}");
 		}
 
 
@@ -160,13 +160,22 @@ public class Helper
 				case 't': typeCheckerAction?.Invoke(e.Token, valueStack); break;
 				case 'c': codeGeneratorAction?.Invoke(e.Token, valueStack); break;
 				default:
-					logMessageAction?.Invoke("Error", "Parser", $"Unknown token: {e.Token}");
+					logger?.Send(SeverityLevel.Error, "Parser", $"Unknown token: {e.Token}");
 					break;
 			}
 		}
 		void HandleLogMessageEmitted(object sender, ParserLogEventArgs e)
 		{
-			logMessageAction?.Invoke(e.Severity, e.Category, e.Message);
+			SeverityLevel severity = e.Severity.ToLower() switch
+			{
+				"error" => SeverityLevel.Error,
+				"earning" => SeverityLevel.Warning,
+				"info" => SeverityLevel.Info,
+				"debug" => SeverityLevel.Debug,
+				"verbose" => SeverityLevel.Verbose,
+				_ => SeverityLevel.Info,
+			};
+			logger?.Send(severity, e.Category, e.Message);
 		}
 	}
 

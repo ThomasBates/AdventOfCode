@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Text;
 
 using AoC.Common;
 using AoC.Puzzles2022.Properties;
@@ -11,6 +10,12 @@ namespace AoC.Puzzles2022;
 [Export(typeof(IPuzzle))]
 public class Day20 : IPuzzle
 {
+	#region Private Members
+
+	private readonly ILogger logger;
+
+	#endregion Private Members
+
 	#region IPuzzle Properties
 
 	public int Year => 2022;
@@ -31,8 +36,11 @@ public class Day20 : IPuzzle
 
 	#region Constructors
 
-	public Day20()
+	[ImportingConstructor]
+	public Day20(ILogger logger)
 	{
+		this.logger = logger;
+
 		Solvers.Add("Solve Part 1", SolvePart1);
 		Solvers.Add("Solve Part 2", SolvePart2);
 	}
@@ -43,24 +51,20 @@ public class Day20 : IPuzzle
 
 	private string SolvePart1(string input)
 	{
-		var output = new StringBuilder();
+		LoadDataFromInput(input, 1);
 
-		LoadDataFromInput(input, 1, output);
+		var result = DecryptFile(1);
 
-		DecryptFile(1, output);
-
-		return output.ToString();
+		return result;
 	}
 
 	private string SolvePart2(string input)
 	{
-		var output = new StringBuilder();
+		LoadDataFromInput(input, 811589153);
 
-		LoadDataFromInput(input, 811589153, output);
+		var result = DecryptFile(10);
 
-		DecryptFile(10, output);
-
-		return output.ToString();
+		return result;
 	}
 
 	#endregion Solvers
@@ -68,7 +72,7 @@ public class Day20 : IPuzzle
 	private readonly LinkedList<long> file = new();
 	private readonly List<LinkedListNode<long>> nodes = new();
 
-	private void LoadDataFromInput(string input, long key, StringBuilder output = null)
+	private void LoadDataFromInput(string input, long key)
 	{
 		file.Clear();
 		nodes.Clear();
@@ -79,15 +83,15 @@ public class Day20 : IPuzzle
 		});
 	}
 
-	private void DecryptFile(int mixCount, StringBuilder output = null)
+	private string DecryptFile(int mixCount)
 	{
-		output?.AppendLine($"File size = {file.Count}");
+		logger.Send(SeverityLevel.Debug, nameof(Day20), $"File size = {file.Count}");
 
 		if (file.Count < 100)
-			output?.AppendLine(string.Join(", ", file));
+			logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
 
 		for (int i = 0; i < mixCount; i++)
-			MixFile(output);
+			MixFile();
 
 		var zero = file.Find(0);
 		var x = FindValueAt(zero, 1000);
@@ -95,12 +99,13 @@ public class Day20 : IPuzzle
 		var z = FindValueAt(zero, 3000);
 
 		if (file.Count < 100)
-			output?.AppendLine(string.Join(", ", file));
+			logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
 
-		output?.AppendLine($"({x}, {y}, {z}) => {x + y + z}");
+		logger.Send(SeverityLevel.Debug, nameof(Day20), $"({x}, {y}, {z}) => {x + y + z}");
+		return (x + y + z).ToString();
 	}
 
-	private void MixFile(StringBuilder output = null)
+	private void MixFile()
 	{
 		foreach (var node in nodes)
 		{
@@ -131,7 +136,7 @@ public class Day20 : IPuzzle
 			}
 
 			if (file.Count < 100)
-				output?.AppendLine(string.Join(", ", file));
+				logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
 		}
 	}
 

@@ -185,7 +185,7 @@ namespace AoC.Puzzles2022
 			var packetStack = new Stack<PacketElement>();
 			PacketElement openList = null;
 
-			Helper.ParseInput(input, Resources.Day13Grammar,
+			Helper.ParseInput(null, input, Resources.Day13Grammar,
 				null,
 				null,
 				(token, valueStack) =>
@@ -224,10 +224,6 @@ namespace AoC.Puzzles2022
 							output.AppendLine($"Unknown token: {token}");
 							break;
 					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 
 		}

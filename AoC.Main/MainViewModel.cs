@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using System.Windows.Threading;
 using AoC.Common;
 
 namespace AoC.Main
@@ -20,7 +21,7 @@ namespace AoC.Main
 		private TextViewModel selectedPuzzleYearViewModel;
 		private TextViewModel selectedPuzzleDayViewModel;
 		private int selectedPuzzleYear;
-		private IPuzzle selectedPuzzleDay;
+		private IPuzzle selectedPuzzle;
 		private TextViewModel selectedInputsViewModel;
 		private TextViewModel selectedSolverViewModel;
 
@@ -34,15 +35,14 @@ namespace AoC.Main
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
 		[ImportMany(typeof(IPuzzle))]
-		private IEnumerable<IPuzzle> puzzleDays;
+		private IEnumerable<IPuzzle> puzzles;
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
+
+		private readonly ILogger logger = new Logger(SeverityLevel.Debug);
 
 		public MainViewModel()
 		{
-			PuzzleYears = new ObservableCollection<TextViewModel>();
-			PuzzleDays = new ObservableCollection<TextViewModel>();
-			Inputs = new ObservableCollection<TextViewModel>();
-			Solvers = new ObservableCollection<TextViewModel>();
+			logger.OnMessageSent += Logger_OnMessageSent;
 
 			ImportPuzzles();
 		}
@@ -60,11 +60,12 @@ namespace AoC.Main
 
 			//Create the CompositionContainer with the parts in the catalog
 			CompositionContainer container = new(catalog);
+			container.ComposeExportedValue<ILogger>(logger);
 
 			//Fill the imports of this object
 			container.ComposeParts(this);
 
-			foreach (var year in puzzleDays.Select(p => p.Year).Distinct().OrderByDescending(p => p).ToList())
+			foreach (var year in puzzles.Select(p => p.Year).Distinct().OrderByDescending(p => p).ToList())
 			{
 				puzzleYearDays[year] = new List<TextViewModel>();
 
@@ -73,7 +74,7 @@ namespace AoC.Main
 				PuzzleYears.Add(yearViewModel);
 			}
 
-			foreach (var puzzleDay in puzzleDays.OrderByDescending(p => p.Name).ToList())
+			foreach (var puzzleDay in puzzles.OrderByDescending(p => p.Name).ToList())
 			{
 				var dayViewModel = new TextViewModel(puzzleDay.Name);
 				puzzleDayMap.Add(dayViewModel, puzzleDay);
@@ -83,9 +84,15 @@ namespace AoC.Main
 			SelectedPuzzleYear = PuzzleYears[0];
 		}
 
-		public ObservableCollection<TextViewModel> PuzzleYears { get; }
+		public ObservableCollection<TextViewModel> PuzzleYears { get; } = new();
 
-		public ObservableCollection<TextViewModel> PuzzleDays { get; }
+		public ObservableCollection<TextViewModel> PuzzleDays { get; } = new();
+
+		public ObservableCollection<TextViewModel> Inputs { get; } = new();
+
+		public ObservableCollection<TextViewModel> Solvers { get; } = new();
+
+		public ObservableCollection<string> MessageLog { get; } = new();
 
 		public TextViewModel SelectedPuzzleYear
 		{
@@ -136,12 +143,12 @@ namespace AoC.Main
 				if (selectedPuzzleDayViewModel == null)
 					return;
 
-				if (puzzleDayMap.TryGetValue(selectedPuzzleDayViewModel, out selectedPuzzleDay))
+				if (puzzleDayMap.TryGetValue(selectedPuzzleDayViewModel, out selectedPuzzle))
 				{
-					foreach (var key in selectedPuzzleDay.Inputs.Keys.OrderBy(k => k))
+					foreach (var key in selectedPuzzle.Inputs.Keys.OrderBy(k => k))
 						Inputs.Add(new TextViewModel(key));
 
-					foreach (var key in selectedPuzzleDay.Solvers.Keys.OrderBy(k => k))
+					foreach (var key in selectedPuzzle.Solvers.Keys.OrderBy(k => k))
 						Solvers.Add(new TextViewModel(key));
 				}
 			}
@@ -151,16 +158,11 @@ namespace AoC.Main
 		{
 			get
 			{
-				if (selectedPuzzleDay == null)
+				if (selectedPuzzle == null)
 					return String.Empty;
 
-				return selectedPuzzleDay.Name;
+				return selectedPuzzle.Name;
 			}
-		}
-
-		public ObservableCollection<TextViewModel> Inputs
-		{
-			get;
 		}
 
 		public TextViewModel SelectedInputs
@@ -169,7 +171,7 @@ namespace AoC.Main
 			set
 			{
 				if (selectedInputsViewModel == value)
-					return;	
+					return;
 
 				selectedInputsViewModel = value;
 
@@ -177,28 +179,23 @@ namespace AoC.Main
 
 				if (value != null)
 				{
-					InputText = GetInputText(selectedPuzzleYear, selectedPuzzleDay, value.Text);
+					InputText = GetInputText(selectedPuzzleYear, selectedPuzzle, value.Text);
 				}
 			}
 		}
 
 		private string GetInputText(int selectedPuzzleYear, IPuzzle selectedPuzzleDay, string key)
 		{
-			var inputText = this.selectedPuzzleDay.Inputs[key];
+			var inputText = this.selectedPuzzle.Inputs[key];
 
 			if (string.IsNullOrEmpty(inputText))
 			{
 				inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzleDay.Day);
 				if (!string.IsNullOrEmpty(inputText))
-					this.selectedPuzzleDay.Inputs[key] = inputText;
+					this.selectedPuzzle.Inputs[key] = inputText;
 			}
 
 			return inputText;
-		}
-
-		public ObservableCollection<TextViewModel> Solvers
-		{
-			get;
 		}
 
 		public TextViewModel SelectedSolver
@@ -220,7 +217,7 @@ namespace AoC.Main
 					new Thread(() =>
 					{
 						Thread.CurrentThread.IsBackground = true;
-						OutputText = selectedPuzzleDay.Solvers[value.Text](InputText);
+						OutputText = selectedPuzzle.Solvers[value.Text](inputText);
 					}).Start();
 				}
 
@@ -248,10 +245,18 @@ namespace AoC.Main
 			{
 				if (String.Equals(value, outputText))
 					return;
-				
+
 				outputText = value;
 				NotifyPropertyChanged();
 			}
+		}
+
+		private void Logger_OnMessageSent(object sender, string message)
+		{
+			App.Current.Dispatcher.Invoke(() => 
+			{
+				MessageLog.Add(message);
+			});
 		}
 	}
 }

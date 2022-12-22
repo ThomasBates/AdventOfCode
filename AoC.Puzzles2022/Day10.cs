@@ -61,7 +61,7 @@ namespace AoC.Puzzles2022
 			int x = 1;
 			int signalStrength = 0;
 
-			Helper.ParseInput(input, Resources.Day10Grammar, null, null,
+			Helper.ParseInput(null, input, Resources.Day10Grammar, null, null,
 				(token, valueStack) =>
 				{
 					switch (token)
@@ -116,10 +116,6 @@ namespace AoC.Puzzles2022
 							}
 							break;
 					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 
 			output.AppendLine($"The signal strength is {signalStrength}.");
@@ -134,7 +130,7 @@ namespace AoC.Puzzles2022
 
 			var screen = new StringBuilder();
 
-			Helper.ParseInput(input,  Resources.Day10Grammar, 
+			Helper.ParseInput(null, input,  Resources.Day10Grammar, 
 				null,
 				(token, valueStack) =>
 				{
@@ -218,10 +214,6 @@ namespace AoC.Puzzles2022
 							}
 							break;
 					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 
 

@@ -86,7 +86,7 @@ namespace AoC.Puzzles2022
 		{
 			var currentDirectory = root;
 
-			Helper.ParseInput(input, Resources.Day07Grammar,
+			Helper.ParseInput(null, input, Resources.Day07Grammar,
 				null,
 				null,
 				(token, valueStack) =>
@@ -167,10 +167,6 @@ namespace AoC.Puzzles2022
 							output.AppendLine($"Unknown parser token: {token}");
 							break;
 					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 				});
 		}
 

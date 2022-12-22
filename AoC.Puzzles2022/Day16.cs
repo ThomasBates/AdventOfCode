@@ -83,7 +83,7 @@ public class Day16 : IPuzzle
 
 		Valve fromValve = null;
 
-		Helper.ParseInput(input, Resources.Day16Grammar,
+		Helper.ParseInput(null, input, Resources.Day16Grammar,
 			null,
 			null,
 			(token, valueStack) =>
@@ -120,10 +120,6 @@ public class Day16 : IPuzzle
 						output?.AppendLine($"Unknown token: {token}");
 						break;
 				}
-			},
-			(severity, category, message) =>
-			{
-				output?.AppendLine($"[{severity,-7}] - [{category,-15}] - {message}");
 			});
 	}
 

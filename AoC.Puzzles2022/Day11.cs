@@ -78,7 +78,7 @@ namespace AoC.Puzzles2022
 		{
 			Monkey monkey = null;
 
-			Helper.ParseInput(input, Resources.Day11Grammar,
+			Helper.ParseInput(null, input, Resources.Day11Grammar,
 				(token, valueStack) =>
 				{
 					switch (token)
@@ -120,10 +120,6 @@ namespace AoC.Puzzles2022
 							monkey.FalseTarget = int.Parse(valueStack.Pop());
 							break;
 					}
-				},
-				(severity, category, message) =>
-				{
-					output.AppendLine($"[ {severity,-7} ] - [ {category,-15} ] - {message}");
 				});
 		}
 
