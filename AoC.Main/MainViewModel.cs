@@ -213,6 +213,7 @@ namespace AoC.Main
 				if (value != null)
 				{
 					OutputText = "";
+					MessageLog.Clear();
 
 					new Thread(() =>
 					{
