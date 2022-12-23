@@ -18,7 +18,7 @@ namespace AoC.Common
 		public void Send(SeverityLevel severity, string category, string message)
 		{
 			if (severity >= Severity) 
-				OnMessageSent?.Invoke(this, $"[{severity,-7}] - [{category,-15}] - {message}");
+				OnMessageSent?.Invoke(this, $"[{severity,-7}] [{category,-15}] {message}");
 		}
 	}
 }

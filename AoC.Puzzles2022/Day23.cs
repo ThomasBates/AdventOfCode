@@ -219,8 +219,7 @@ public class Day23 : IPuzzle
 
 	private void VisualizeElves(int round)
 	{
-		var output = new StringBuilder();
-		output.AppendLine($"== End of Round {round} ==");
+		logger.Send(SeverityLevel.Debug, nameof(Day23), $"== End of Round {round} ==");
 
 		var min = new Point(int.MaxValue, int.MaxValue);
 		var max = new Point(int.MinValue, int.MinValue);
@@ -236,10 +235,11 @@ public class Day23 : IPuzzle
 		var dx = (max.X - min.X + 1);
 		var dy = (max.Y - min.Y + 1);
 
-		output.AppendLine($"{dx} x {dy}");
+		logger.Send(SeverityLevel.Debug, nameof(Day23), $"{dx} x {dy}");
 
 		for (int x = min.X - 1; x <= max.X + 1; x++)
 		{
+			var output = new StringBuilder();
 			for (int y = min.Y - 1; y <= max.Y + 1; y++)
 			{
 				if (elves.Contains(new Point(x, y)))
@@ -247,9 +247,7 @@ public class Day23 : IPuzzle
 				else
 					output.Append(".");
 			}
-			output.AppendLine();
+			logger.Send(SeverityLevel.Debug, nameof(Day23), output.ToString());
 		}
-
-		logger.Send(SeverityLevel.Debug, nameof(Day23), output.ToString());
 	}
 }
