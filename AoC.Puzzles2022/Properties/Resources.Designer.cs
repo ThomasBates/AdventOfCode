@@ -705,11 +705,33 @@ namespace AoC.Puzzles2022.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to         ...#
+        ///        .#..
+        ///        #...
+        ///        ....
+        ///...#.......#
+        ///........#...
+        ///..#....#....
+        ///..........#.
+        ///        ...#....
+        ///        .....#..
+        ///        .#......
+        ///        ......#.
+        ///
+        ///10R5L5R10L4R5L5.
         /// </summary>
         internal static string Day22Inputs {
             get {
                 return ResourceManager.GetString("Day22Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day23Inputs {
+            get {
+                return ResourceManager.GetString("Day23Inputs", resourceCulture);
             }
         }
     }
