@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AoC.Main"
         mc:Ignorable="d"
         Title="Advent of Code"
         MinHeight="400" MinWidth="600"
@@ -48,7 +47,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
             <ListView 
                 Margin="0,0,0,5" 
                 ItemsSource="{Binding Solvers}" 
@@ -60,7 +59,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
             <TextBox 
                 Margin="0,0,0,5" 
                 Text="{Binding OutputText}" 
@@ -76,7 +75,7 @@
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <TextBox 
                 Grid.Row="0" 
                 Margin="5,5,5,0" 
@@ -86,13 +85,13 @@
                 HorizontalScrollBarVisibility="Auto" 
                 AcceptsReturn="True" 
                 FontFamily="Consolas" />
-            
+
             <GridSplitter 
                 Grid.Row="1" 
                 Height="5" 
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch" />
-            
+
             <ListView 
                 Grid.Row="2"
                 Name="LogListView"
