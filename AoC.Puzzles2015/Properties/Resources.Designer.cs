@@ -97,26 +97,30 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1000
-        ///2000
-        ///3000
-        ///
-        ///4000
-        ///
-        ///5000
-        ///6000
-        ///
-        ///7000
-        ///8000
-        ///9000
-        ///
-        ///10000
-        ///
-        ///.
+        ///   Looks up a localized string similar to (())
+        ///()()
+        ///(((
+        ///(()(()(
+        ///))(((((
+        ///())
+        ///))(
+        ///)))
+        ///)())())
+        ///)
+        ///()()).
         /// </summary>
         internal static string Day01Inputs {
             get {
                 return ResourceManager.GetString("Day01Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day02Inputs {
+            get {
+                return ResourceManager.GetString("Day02Inputs", resourceCulture);
             }
         }
     }
