@@ -148,11 +148,59 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ugknbfddgicrmopn
+        ///aaa
+        ///jchzalrnumimnmhp
+        ///haegwjzuvuyypxyu
+        ///dvszwmarrgswjxmb
+        ///
+        ///qjhvhtzxzqqjkmpb
+        ///xxyxx
+        ///uurcxstgmygtbstg
+        ///ieodomkazucvgmuy.
         /// </summary>
         internal static string Day05Inputs {
             get {
                 return ResourceManager.GetString("Day05Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;turn&quot; onoff
+        ///                | toggle range c_toggle
+        ///
+        ///onoff           = &quot;on&quot; range c_turnon
+        ///                | &quot;off&quot; range c_turnoff
+        ///
+        ///range           = Integer  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day06Grammar {
+            get {
+                return ResourceManager.GetString("Day06Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day06Inputs {
+            get {
+                return ResourceManager.GetString("Day06Inputs", resourceCulture);
             }
         }
     }
