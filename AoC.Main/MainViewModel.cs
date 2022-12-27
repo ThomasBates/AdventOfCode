@@ -18,24 +18,24 @@ namespace AoC.Main
 {
 	class MainViewModel : ViewModel
 	{
-		private TextViewModel selectedPuzzleYearViewModel;
-		private TextViewModel selectedPuzzleDayViewModel;
 		private int selectedPuzzleYear;
 		private IPuzzle selectedPuzzle;
-		private TextViewModel selectedInputsViewModel;
-		private TextViewModel selectedSolverViewModel;
+		private string selectedInputs;
+		private string selectedSolver;
 
-		private string inputText;
 		private string outputText;
+		private string inputText;
 
-		private readonly Dictionary<TextViewModel, int> puzzleYearMap = new();
-		private readonly Dictionary<TextViewModel, IPuzzle> puzzleDayMap = new();
+		//private readonly Dictionary<string, int> puzzleYearMap = new();
+		///private readonly Dictionary<string, IPuzzle> puzzleDayMap = new();
 
-		private readonly Dictionary<int, List<TextViewModel>> puzzleYearDays = new();
+		private readonly Dictionary<int, List<IPuzzle>> yearPuzzles = new();
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
+#pragma warning disable IDE0044 // Add readonly modifier
 		[ImportMany(typeof(IPuzzle))]
-		private IEnumerable<IPuzzle> puzzles;
+		private IEnumerable<IPuzzle> importedPuzzles;
+#pragma warning restore IDE0044 // Add readonly modifier
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
 
 		private readonly ILogger logger = new Logger(SeverityLevel.Debug);
@@ -53,80 +53,71 @@ namespace AoC.Main
 			var catalog = new AggregateCatalog();
 			//Adds all the parts found in all assemblies in 
 			//the same directory as the executing program
-			catalog.Catalogs.Add(
-			 new DirectoryCatalog(
-			  Path.GetDirectoryName(
-			   Assembly.GetExecutingAssembly().Location)));
+			catalog.Catalogs.Add(new DirectoryCatalog(
+				Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
 
 			//Create the CompositionContainer with the parts in the catalog
 			CompositionContainer container = new(catalog);
-			container.ComposeExportedValue<ILogger>(logger);
+			container.ComposeExportedValue(logger);
 
 			//Fill the imports of this object
 			container.ComposeParts(this);
 
-			foreach (var year in puzzles.Select(p => p.Year).Distinct().OrderByDescending(p => p).ToList())
+			foreach (var puzzle in importedPuzzles.OrderByDescending(p => p.Year).ThenByDescending(p=>p.Name).ToList())
 			{
-				puzzleYearDays[year] = new List<TextViewModel>();
+				if (!PuzzleYears.Contains(puzzle.Year))
+				{
+					PuzzleYears.Add(puzzle.Year);
+					yearPuzzles[puzzle.Year] = new List<IPuzzle>();
+				}
 
-				var yearViewModel = new TextViewModel(year.ToString());
-				puzzleYearMap.Add(yearViewModel, year);
-				PuzzleYears.Add(yearViewModel);
+				yearPuzzles[puzzle.Year].Add(puzzle);
 			}
 
-			foreach (var puzzleDay in puzzles.OrderByDescending(p => p.Name).ToList())
-			{
-				var dayViewModel = new TextViewModel(puzzleDay.Name);
-				puzzleDayMap.Add(dayViewModel, puzzleDay);
-				puzzleYearDays[puzzleDay.Year].Add(dayViewModel);
-			}
-
-			SelectedPuzzleYear = PuzzleYears[0];
+			SelectedPuzzleYear = 2015; // PuzzleYears[0];
 		}
 
-		public ObservableCollection<TextViewModel> PuzzleYears { get; } = new();
+		public ObservableCollection<int> PuzzleYears { get; } = new();
 
-		public ObservableCollection<TextViewModel> PuzzleDays { get; } = new();
+		public ObservableCollection<IPuzzle> Puzzles { get; } = new();
 
-		public ObservableCollection<TextViewModel> Inputs { get; } = new();
+		public ObservableCollection<string> Inputs { get; } = new();
 
-		public ObservableCollection<TextViewModel> Solvers { get; } = new();
+		public ObservableCollection<string> Solvers { get; } = new();
 
 		public ObservableCollection<string> MessageLog { get; } = new();
 
-		public TextViewModel SelectedPuzzleYear
+		public int SelectedPuzzleYear
 		{
-			get => selectedPuzzleYearViewModel;
+			get => selectedPuzzleYear;
 			set
 			{
-				if (selectedPuzzleYearViewModel == value)
+				if (selectedPuzzleYear == value)
 					return;
 
-				selectedPuzzleYearViewModel = value;
-				puzzleYearMap.TryGetValue(selectedPuzzleYearViewModel, out selectedPuzzleYear);
-
+				selectedPuzzleYear = value;
 				NotifyPropertyChanged();
 
-				PuzzleDays.Clear();
+				Puzzles.Clear();
 
-				foreach (var dayViewModel in puzzleYearDays[selectedPuzzleYear].OrderByDescending(p => p.Text).ToList())
+				foreach (var puzzle in yearPuzzles[selectedPuzzleYear].ToList())
 				{
-					PuzzleDays.Add(dayViewModel);
+					Puzzles.Add(puzzle);
 
-					SelectedPuzzleDay ??= dayViewModel;
+					SelectedPuzzle ??= puzzle;
 				}
 			}
 		}
 
-		public TextViewModel SelectedPuzzleDay
+		public IPuzzle SelectedPuzzle
 		{
-			get => selectedPuzzleDayViewModel;
+			get => selectedPuzzle;
 			set
 			{
-				if (selectedPuzzleDayViewModel == value)
+				if (selectedPuzzle == value)
 					return;
 
-				selectedPuzzleDayViewModel = value;
+				selectedPuzzle = value;
 
 				NotifyPropertyChanged();
 				NotifyPropertyChanged(nameof(PuzzleName));
@@ -140,17 +131,14 @@ namespace AoC.Main
 				SelectedSolver = null;
 				Solvers.Clear();
 
-				if (selectedPuzzleDayViewModel == null)
+				if (selectedPuzzle == null)
 					return;
 
-				if (puzzleDayMap.TryGetValue(selectedPuzzleDayViewModel, out selectedPuzzle))
-				{
-					foreach (var key in selectedPuzzle.Inputs.Keys.OrderBy(k => k))
-						Inputs.Add(new TextViewModel(key));
+				foreach (var key in selectedPuzzle.Inputs.Keys.OrderBy(k => k))
+					Inputs.Add(key);
 
-					foreach (var key in selectedPuzzle.Solvers.Keys.OrderBy(k => k))
-						Solvers.Add(new TextViewModel(key));
-				}
+				foreach (var key in selectedPuzzle.Solvers.Keys.OrderBy(k => k))
+					Solvers.Add(key);
 			}
 		}
 
@@ -165,32 +153,32 @@ namespace AoC.Main
 			}
 		}
 
-		public TextViewModel SelectedInputs
+		public string SelectedInputs
 		{
-			get => selectedInputsViewModel;
+			get => selectedInputs;
 			set
 			{
-				if (selectedInputsViewModel == value)
+				if (selectedInputs == value)
 					return;
 
-				selectedInputsViewModel = value;
+				selectedInputs = value;
 
 				NotifyPropertyChanged();
 
 				if (value != null)
 				{
-					InputText = GetInputText(selectedPuzzleYear, selectedPuzzle, value.Text);
+					InputText = GetInputText(selectedPuzzleYear, selectedPuzzle, value);
 				}
 			}
 		}
 
-		private string GetInputText(int selectedPuzzleYear, IPuzzle selectedPuzzleDay, string key)
+		private string GetInputText(int selectedPuzzleYear, IPuzzle selectedPuzzle, string key)
 		{
 			var inputText = this.selectedPuzzle.Inputs[key];
 
 			if (string.IsNullOrEmpty(inputText))
 			{
-				inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzleDay.Day);
+				inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzle.Day);
 				if (!string.IsNullOrEmpty(inputText))
 					this.selectedPuzzle.Inputs[key] = inputText;
 			}
@@ -198,15 +186,15 @@ namespace AoC.Main
 			return inputText;
 		}
 
-		public TextViewModel SelectedSolver
+		public string SelectedSolver
 		{
-			get => selectedSolverViewModel;
+			get => selectedSolver;
 			set
 			{
-				if (selectedSolverViewModel == value)
+				if (selectedSolver == value)
 					return;
 
-				selectedSolverViewModel = value;
+				selectedSolver = value;
 
 				NotifyPropertyChanged();
 
@@ -218,7 +206,11 @@ namespace AoC.Main
 					new Thread(() =>
 					{
 						Thread.CurrentThread.IsBackground = true;
-						OutputText = selectedPuzzle.Solvers[value.Text](inputText);
+						var begin = DateTime.Now;
+						logger.Send(SeverityLevel.Info, "Core", $"Begin");
+						OutputText = selectedPuzzle.Solvers[value](inputText);
+						var end = DateTime.Now;
+						logger.Send(SeverityLevel.Info, "Core", $"End: {end - begin}");
 					}).Start();
 				}
 

@@ -169,7 +169,7 @@ public class Helper
 			SeverityLevel severity = e.Severity.ToLower() switch
 			{
 				"error" => SeverityLevel.Error,
-				"earning" => SeverityLevel.Warning,
+				"warning" => SeverityLevel.Warning,
 				"info" => SeverityLevel.Info,
 				"debug" => SeverityLevel.Debug,
 				"verbose" => SeverityLevel.Verbose,

@@ -18,22 +18,13 @@
                 Margin="0,0,0,5"
                 ItemsSource="{Binding PuzzleYears}" 
                 SelectedItem="{Binding SelectedPuzzleYear, Mode=TwoWay}" >
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Text}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
             </ComboBox>
 
             <ComboBox 
                 Margin="0,0,0,5"
-                ItemsSource="{Binding PuzzleDays}" 
-                SelectedItem="{Binding SelectedPuzzleDay, Mode=TwoWay}" >
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Text}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+                ItemsSource="{Binding Puzzles}" 
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding SelectedPuzzle, Mode=TwoWay}" >
             </ComboBox>
 
             <ListView 
@@ -41,11 +32,6 @@
                 ItemsSource="{Binding Inputs}" 
                 SelectedItem="{Binding SelectedInputs, Mode=TwoWay}" 
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Text}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
 
             <ListView 
@@ -53,11 +39,6 @@
                 ItemsSource="{Binding Solvers}" 
                 SelectedItem="{Binding SelectedSolver, Mode=TwoWay}" 
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Text}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
 
             <TextBox 
@@ -102,7 +83,7 @@
                 FontSize="10">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" Margin="0" Padding="0" Height="10" />
+                        <TextBlock Margin="0,-3,0,-3" Text="{Binding}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>

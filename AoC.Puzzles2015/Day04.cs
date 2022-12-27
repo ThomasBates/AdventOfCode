@@ -109,7 +109,7 @@ public class Day04 : IPuzzle
 			}
 			result = number;
 
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{key}{result}");
+			logger.Send(SeverityLevel.Debug, nameof(Day04), $"{key}{result}");
 		}
 
 		return result.ToString();
@@ -142,7 +142,7 @@ public class Day04 : IPuzzle
 			}
 			result = number;
 
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{key}{result}");
+			logger.Send(SeverityLevel.Debug, nameof(Day04), $"{key}{result}");
 		}
 
 		return result.ToString();
