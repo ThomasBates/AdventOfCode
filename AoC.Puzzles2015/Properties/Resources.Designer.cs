@@ -126,11 +126,23 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to &gt;
+        ///^v
+        ///^&gt;v&lt;
+        ///^v^v^v^v^v.
         /// </summary>
         internal static string Day03Inputs {
             get {
                 return ResourceManager.GetString("Day03Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day04Inputs {
+            get {
+                return ResourceManager.GetString("Day04Inputs", resourceCulture);
             }
         }
     }
