@@ -98,7 +98,7 @@ public class Day02 : IPuzzle
 				l * w * h / Math.Max(Math.Max(l, w), h);
 
 			result += a;
-			logger.Send(SeverityLevel.Info, nameof(Day01), $"{line} => {a}");
+			logger.SendInfo(nameof(Day01), $"{line} => {a}");
 		}
 
 		return result.ToString();
@@ -119,7 +119,7 @@ public class Day02 : IPuzzle
 				+ l * w * h;
 
 			result += r;
-			logger.Send(SeverityLevel.Info, nameof(Day01), $"{line} => {r}");
+			logger.SendInfo(nameof(Day01), $"{line} => {r}");
 		}
 
 		return result.ToString();

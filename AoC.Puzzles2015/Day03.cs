@@ -115,8 +115,8 @@ public class Day03 : IPuzzle
 
 			result = houses.Count;
 
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{line}");
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{result} houses");
+			logger.SendDebug(nameof(Day03), $"{line}");
+			logger.SendDebug(nameof(Day03), $"{result} houses");
 		}
 
 		return result.ToString();
@@ -155,8 +155,8 @@ public class Day03 : IPuzzle
 
 			result = houses.Count;
 
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{line}");
-			logger.Send(SeverityLevel.Debug, nameof(Day03), $"{result} houses");
+			logger.SendDebug(nameof(Day03), $"{line}");
+			logger.SendDebug(nameof(Day03), $"{result} houses");
 		}
 
 		return result.ToString();

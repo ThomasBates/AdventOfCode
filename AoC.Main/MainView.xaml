@@ -49,6 +49,16 @@
                 HorizontalScrollBarVisibility="Auto" 
                 IsReadOnly="True" 
                 FontFamily="Consolas" />
+
+            <Button
+                Margin="0,0,0,5"
+                Content="Copy Result"
+                Command="{Binding CopyOutputCommand}" />
+
+            <Button
+                Margin="0,0,0,5"
+                Content="Copy Log"
+                Command="{Binding CopyLogCommand}" />
         </StackPanel>
         <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>

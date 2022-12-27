@@ -89,11 +89,11 @@ public class Day25 : IPuzzle
 		{
 			var dec = SnafuToDecimal(snafu);
 			var back = DecimalToSnafu(dec);
-			logger.Send(SeverityLevel.Debug, nameof(Day25), $"{snafu} => {dec} => {back}");
+			logger.SendDebug(nameof(Day25), $"{snafu} => {dec} => {back}");
 			sum += dec;
 		}
 		var snafuSum = DecimalToSnafu(sum);
-		logger.Send(SeverityLevel.Debug, nameof(Day25), $"{sum} => {snafuSum}");
+		logger.SendDebug(nameof(Day25), $"{sum} => {snafuSum}");
 
 		return snafuSum;
 	}
@@ -105,7 +105,7 @@ public class Day25 : IPuzzle
 		{
 			var sum = AddSnafu(snafuSum, snafu);
 
-			logger.Send(SeverityLevel.Debug, nameof(Day25), $"{snafuSum} + {snafu} = {sum}");
+			logger.SendDebug(nameof(Day25), $"{snafuSum} + {snafu} = {sum}");
 
 			snafuSum = sum;
 		}

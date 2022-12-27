@@ -18,11 +18,11 @@ public class Helper
 
 		Directory.CreateDirectory(path);
 
-		var filename = Path.Combine(path, $"AoC-Input-{year}-12-{day:00}.txt");
+		var filename = Path.Combine(path, $"Puzzle Inputs\\AoC-Input-{year}-12-{day:00}.txt");
 
 		if (!File.Exists(filename))
 		{
-			using var sessionStream = new StreamReader(Path.Combine(path, $"adventofcode.com.session.txt"));
+			using var sessionStream = new StreamReader(Path.Combine(path, $"Session\\adventofcode.com.session.txt"));
 			var session = sessionStream.ReadToEnd();
 
 			GetInputFileAsync(day, year, session, filename).ConfigureAwait(false).GetAwaiter().GetResult();
@@ -128,7 +128,7 @@ public class Helper
 		}
 		catch (GrammarException ex)
 		{
-			logger?.Send(SeverityLevel.Error, "Grammar", $"{ex.GetType().Name}: {ex.Message}");
+			logger?.SendError("Grammar", $"{ex.GetType().Name}: {ex.Message}");
 		}
 
 		IParser parser = new L2Parser(grammar);
@@ -142,7 +142,7 @@ public class Helper
 		}
 		catch (ParserException ex)
 		{
-			logger?.Send(SeverityLevel.Error, "Parser", $"{ex.GetType().Name}: {ex.Message}");
+			logger?.SendError("Parser", $"{ex.GetType().Name}: {ex.Message}");
 		}
 
 
@@ -160,22 +160,33 @@ public class Helper
 				case 't': typeCheckerAction?.Invoke(e.Token, valueStack); break;
 				case 'c': codeGeneratorAction?.Invoke(e.Token, valueStack); break;
 				default:
-					logger?.Send(SeverityLevel.Error, "Parser", $"Unknown token: {e.Token}");
+					logger?.SendError("Parser", $"Unknown token: {e.Token}");
 					break;
 			}
 		}
 		void HandleLogMessageEmitted(object sender, ParserLogEventArgs e)
 		{
-			SeverityLevel severity = e.Severity.ToLower() switch
+			if (logger == null)
+				return;
+
+			switch (e.Severity.ToLower())
 			{
-				"error" => SeverityLevel.Error,
-				"warning" => SeverityLevel.Warning,
-				"info" => SeverityLevel.Info,
-				"debug" => SeverityLevel.Debug,
-				"verbose" => SeverityLevel.Verbose,
-				_ => SeverityLevel.Info,
-			};
-			logger?.Send(severity, e.Category, e.Message);
+				case "error":
+					logger.SendError(e.Category, e.Message);
+					break;
+				case "warning":
+					logger.SendWarning(e.Category, e.Message);
+					break;
+				case "info":
+					logger.SendInfo(e.Category, e.Message);
+					break;
+				case "debug":
+					logger.SendDebug(e.Category, e.Message);
+					break;
+				case "verbose":
+					logger.SendVerbose(e.Category, e.Message);
+					break;
+			}
 		}
 	}
 

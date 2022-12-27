@@ -89,7 +89,7 @@ public class Day00 : IPuzzle
 					case "s_scope":
 						break;
 					default:
-						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
+						logger.SendError("Parser", $"Unknown token: {token}");
 						break;
 				}
 			},
@@ -100,7 +100,7 @@ public class Day00 : IPuzzle
 					case "t_type":
 						break;
 					default:
-						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
+						logger.SendError("Parser", $"Unknown token: {token}");
 						break;
 				}
 			},
@@ -111,7 +111,7 @@ public class Day00 : IPuzzle
 					case "c_code":
 						break;
 					default:
-						logger.Send(SeverityLevel.Error, "Parser", $"Unknown token: {token}");
+						logger.SendError("Parser", $"Unknown token: {token}");
 						break;
 				}
 			});

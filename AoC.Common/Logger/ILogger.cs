@@ -13,10 +13,16 @@ namespace AoC.Common
 
 	public interface ILogger
 	{
-		event EventHandler<string> OnMessageSent;
-
 		SeverityLevel Severity { get; set; }
 
-		void Send(SeverityLevel severity, string category, string message);
+		void SendVerbose(string category, string message);
+
+		void SendDebug(string category, string message);
+
+		void SendInfo(string category, string message);
+
+		void SendWarning(string category, string message);
+
+		void SendError(string category, string message);
 	}
 }

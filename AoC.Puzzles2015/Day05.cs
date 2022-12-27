@@ -103,7 +103,7 @@ public class Day05 : IPuzzle
 				line.Contains("cd") ||
 				line.Contains("pq") ||
 				line.Contains("xy"));
-			logger.Send(SeverityLevel.Debug, nameof(Day05), $"{line,-16} - {(test1 ? " " : "x")}{(test2 ? " " : "x")}{(test3 ? " " : "x")} - {(test1 && test2 && test3 ? "nice" : "naughty")}");
+			logger.SendDebug(nameof(Day05), $"{line,-16} - {(test1 ? " " : "x")}{(test2 ? " " : "x")}{(test3 ? " " : "x")} - {(test1 && test2 && test3 ? "nice" : "naughty")}");
 
 			if (test1 && test2 && test3)
 				count++;
@@ -141,7 +141,7 @@ public class Day05 : IPuzzle
 				}
 			}
 
-			logger.Send(SeverityLevel.Debug, nameof(Day05), $"{line,-16} - {(test1 ? " " : "x")}{(test2 ? " " : "x")} - {(test1 && test2 ? "nice" : "naughty")}");
+			logger.SendDebug(nameof(Day05), $"{line,-16} - {(test1 ? " " : "x")}{(test2 ? " " : "x")} - {(test1 && test2 ? "nice" : "naughty")}");
 
 			if (test1 && test2)
 				count++;

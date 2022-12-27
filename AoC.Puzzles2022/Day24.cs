@@ -219,9 +219,9 @@ public class Day24 : IPuzzle
 			clones = choices.ToList();
 
 			if (valley.Max.Y < 10)
-				logger.Send(SeverityLevel.Debug, nameof(Day24), $"{time}: {string.Join(", ", clones)}");
+				logger.SendDebug(nameof(Day24), $"{time}: {string.Join(", ", clones)}");
 			else
-				logger.Send(SeverityLevel.Debug, nameof(Day24), $"{time}: {clones.Count}");
+				logger.SendDebug(nameof(Day24), $"{time}: {clones.Count}");
 		}
 
 		return time;

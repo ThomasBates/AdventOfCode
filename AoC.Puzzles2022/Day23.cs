@@ -219,7 +219,7 @@ public class Day23 : IPuzzle
 
 	private void VisualizeElves(int round)
 	{
-		logger.Send(SeverityLevel.Debug, nameof(Day23), $"== End of Round {round} ==");
+		logger.SendDebug(nameof(Day23), $"== End of Round {round} ==");
 
 		var min = new Point(int.MaxValue, int.MaxValue);
 		var max = new Point(int.MinValue, int.MinValue);
@@ -235,7 +235,7 @@ public class Day23 : IPuzzle
 		var dx = (max.X - min.X + 1);
 		var dy = (max.Y - min.Y + 1);
 
-		logger.Send(SeverityLevel.Debug, nameof(Day23), $"{dx} x {dy}");
+		logger.SendDebug(nameof(Day23), $"{dx} x {dy}");
 
 		for (int x = min.X - 1; x <= max.X + 1; x++)
 		{
@@ -247,7 +247,7 @@ public class Day23 : IPuzzle
 				else
 					output.Append(".");
 			}
-			logger.Send(SeverityLevel.Debug, nameof(Day23), output.ToString());
+			logger.SendDebug(nameof(Day23), output.ToString());
 		}
 	}
 }

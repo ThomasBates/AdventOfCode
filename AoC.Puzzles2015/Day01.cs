@@ -90,8 +90,8 @@ public class Day01 : IPuzzle
 			var up = line.Count(c => c == '(');
 			var dn = line.Count(c => c == ')');
 			result = (up - dn).ToString();
-			logger.Send(SeverityLevel.Info, nameof(Day01), line);
-			logger.Send(SeverityLevel.Info, nameof(Day01), result);
+			logger.SendInfo(nameof(Day01), line);
+			logger.SendInfo(nameof(Day01), result);
 		}
 
 		return result;
@@ -119,8 +119,8 @@ public class Day01 : IPuzzle
 				}
 			}
 
-			logger.Send(SeverityLevel.Info, nameof(Day01), line);
-			logger.Send(SeverityLevel.Info, nameof(Day01), result);
+			logger.SendInfo(nameof(Day01), line);
+			logger.SendInfo(nameof(Day01), result);
 		}
 
 		return result;

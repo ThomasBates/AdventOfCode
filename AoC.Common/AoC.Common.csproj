@@ -61,7 +61,11 @@
   <ItemGroup>
     <Compile Include="Helper.cs" />
     <Compile Include="IPuzzle.cs" />
-    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logger\IMessenger.cs" />
+    <Compile Include="Logger\Messenger.cs" />
+    <Compile Include="Logger\AggregateLogger.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\MessengerLogger.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="PerformanceTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

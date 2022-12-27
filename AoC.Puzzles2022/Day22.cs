@@ -139,10 +139,10 @@ public class Day22 : IPuzzle
 
 		for (int r = 0; r < rowStats.Count; r++)
 			if (rowStats[r].WallCount == 0)
-				logger.Send(SeverityLevel.Warning, nameof(Day22), $"row {r} has no walls.");
+				logger.SendWarning(nameof(Day22), $"row {r} has no walls.");
 		for (int c = 0; c < maxWidth; c++)
 			if (colStats[c].WallCount == 0)
-				logger.Send(SeverityLevel.Warning, nameof(Day22), $"column {c} has no walls.");
+				logger.SendWarning(nameof(Day22), $"column {c} has no walls.");
 	}
 
 	private char[,,] cube;
@@ -325,18 +325,18 @@ public class Day22 : IPuzzle
 			{
 				case "R":
 					dir = (dir + 1) % 4;
-					logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({row},{col},{dir})");
+					logger.SendDebug(nameof(Day22), $"{instruction} => ({row},{col},{dir})");
 					continue;
 				case "L":
 					dir = (dir + 3) % 4;
-					logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({row},{col},{dir})");
+					logger.SendDebug(nameof(Day22), $"{instruction} => ({row},{col},{dir})");
 					continue;
 			}
 
 			var count = int.Parse(instruction);
 			if (count == 0)
 			{
-				logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({row},{col},{dir})");
+				logger.SendDebug(nameof(Day22), $"{instruction} => ({row},{col},{dir})");
 				continue;
 			}
 
@@ -459,7 +459,7 @@ public class Day22 : IPuzzle
 					}
 					break;
 			}
-			logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({row},{col},{dir})");
+			logger.SendDebug(nameof(Day22), $"{instruction} => ({row},{col},{dir})");
 		}
 
 		return ((row + 1) * 1000 + (col + 1) * 4 + dir).ToString();
@@ -478,18 +478,18 @@ public class Day22 : IPuzzle
 			{
 				case "R":
 					dir = (dir + 1) % 4;
-					logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
+					logger.SendDebug(nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
 					continue;
 				case "L":
 					dir = (dir + 3) % 4;
-					logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
+					logger.SendDebug(nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
 					continue;
 			}
 
 			var count = int.Parse(instruction);
 			if (count == 0)
 			{
-				logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
+				logger.SendDebug(nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
 				continue;
 			}
 
@@ -589,7 +589,7 @@ public class Day22 : IPuzzle
 						break;
 				}
 			}
-			logger.Send(SeverityLevel.Debug, nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
+			logger.SendDebug(nameof(Day22), $"{instruction} => ({face},{row},{col},{dir})");
 		}
 
 		int mapRow = topLeft[face, 0] + row + 1;

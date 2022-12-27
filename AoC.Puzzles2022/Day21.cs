@@ -95,14 +95,14 @@ public class Day21 : IPuzzle
 	private long Evaluate(string name)
 	{
 		var job = monkeys[name];
-		logger.Send(SeverityLevel.Debug, nameof(Day21), $"{indent}{name}: {job}");
+		logger.SendDebug(nameof(Day21), $"{indent}{name}: {job}");
 		indent = $"  {indent}";
 
 		var parts = job.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 		if (parts.Length== 1)
 		{
 			indent = indent.Substring(2);
-			logger.Send(SeverityLevel.Debug, nameof(Day21), $"{indent}{name} = {parts[0]}");
+			logger.SendDebug(nameof(Day21), $"{indent}{name} = {parts[0]}");
 			return long.Parse(parts[0]);
 		}
 
@@ -120,7 +120,7 @@ public class Day21 : IPuzzle
 			_ => throw new Exception()
 		};
 		indent = indent.Substring(2);
-		logger.Send(SeverityLevel.Debug, nameof(Day21), $"{indent}{name} = {result}");
+		logger.SendDebug(nameof(Day21), $"{indent}{name} = {result}");
 		return result;
 	}
 
@@ -135,7 +135,7 @@ public class Day21 : IPuzzle
 
 		var value = Evaluate(found ? name2 : name1);
 		long humn = Solve(found ? name1 : name2, value);
-		logger.Send(SeverityLevel.Debug, nameof(Day21), $"humn = {humn}");
+		logger.SendDebug(nameof(Day21), $"humn = {humn}");
 
 		return humn.ToString();
 	}

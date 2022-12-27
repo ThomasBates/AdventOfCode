@@ -10,246 +10,279 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using AoC.Common;
 
-namespace AoC.Main
+namespace AoC.Main;
+
+class MainViewModel : ViewModel
 {
-	class MainViewModel : ViewModel
-	{
-		private int selectedPuzzleYear;
-		private IPuzzle selectedPuzzle;
-		private string selectedInputs;
-		private string selectedSolver;
+	#region Private Members
 
-		private string outputText;
-		private string inputText;
-
-		//private readonly Dictionary<string, int> puzzleYearMap = new();
-		///private readonly Dictionary<string, IPuzzle> puzzleDayMap = new();
-
-		private readonly Dictionary<int, List<IPuzzle>> yearPuzzles = new();
+	private readonly ILogger logger;
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
 #pragma warning disable IDE0044 // Add readonly modifier
-		[ImportMany(typeof(IPuzzle))]
-		private IEnumerable<IPuzzle> importedPuzzles;
+	[ImportMany(typeof(IPuzzle))]
+	private IEnumerable<IPuzzle> importedPuzzles;
 #pragma warning restore IDE0044 // Add readonly modifier
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
 
-		private readonly ILogger logger = new Logger(SeverityLevel.Debug);
+	private readonly Dictionary<int, List<IPuzzle>> yearPuzzles = new();
 
-		public MainViewModel()
+	private int selectedPuzzleYear;
+	private IPuzzle selectedPuzzle;
+	private string selectedInputs;
+	private string selectedSolver;
+
+	private string outputText;
+	private string inputText;
+
+	#endregion Private Members
+
+	#region Constructors
+
+	public MainViewModel()
+	{
+		var logMessenger = new Messenger();
+		logger = new AggregateLogger(new ILogger[] 
+		{ 
+			new MessengerLogger(logMessenger, SeverityLevel.Debug), 
+			new FileLogger(SeverityLevel.Verbose) 
+		});
+
+		logMessenger.OnMessageSent += LogMessenger_OnMessageSent;
+
+		CopyOutputCommand = new RelayCommand(CopyOutput, CanCopyOutput);
+		CopyLogCommand = new RelayCommand(CopyLog, CanCopyLog);
+
+		//  Use MEF to compose the list of puzzles.
+		var catalog = new AggregateCatalog();
+		catalog.Catalogs.Add(new DirectoryCatalog(
+			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
+
+		CompositionContainer container = new(catalog);
+		container.ComposeExportedValue(logger);
+
+		container.ComposeParts(this);
+
+		foreach (var puzzle in importedPuzzles.OrderByDescending(p => p.Year).ThenByDescending(p=>p.Name).ToList())
 		{
-			logger.OnMessageSent += Logger_OnMessageSent;
-
-			ImportPuzzles();
-		}
-
-		public void ImportPuzzles()
-		{
-			//An aggregate catalog that combines multiple catalogs
-			var catalog = new AggregateCatalog();
-			//Adds all the parts found in all assemblies in 
-			//the same directory as the executing program
-			catalog.Catalogs.Add(new DirectoryCatalog(
-				Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
-
-			//Create the CompositionContainer with the parts in the catalog
-			CompositionContainer container = new(catalog);
-			container.ComposeExportedValue(logger);
-
-			//Fill the imports of this object
-			container.ComposeParts(this);
-
-			foreach (var puzzle in importedPuzzles.OrderByDescending(p => p.Year).ThenByDescending(p=>p.Name).ToList())
+			if (!PuzzleYears.Contains(puzzle.Year))
 			{
-				if (!PuzzleYears.Contains(puzzle.Year))
-				{
-					PuzzleYears.Add(puzzle.Year);
-					yearPuzzles[puzzle.Year] = new List<IPuzzle>();
-				}
-
-				yearPuzzles[puzzle.Year].Add(puzzle);
+				PuzzleYears.Add(puzzle.Year);
+				yearPuzzles[puzzle.Year] = new List<IPuzzle>();
 			}
 
-			SelectedPuzzleYear = 2015; // PuzzleYears[0];
+			yearPuzzles[puzzle.Year].Add(puzzle);
 		}
 
-		public ObservableCollection<int> PuzzleYears { get; } = new();
+		SelectedPuzzleYear = 2015; // PuzzleYears[0];
+	}
 
-		public ObservableCollection<IPuzzle> Puzzles { get; } = new();
+	#endregion Constructors
 
-		public ObservableCollection<string> Inputs { get; } = new();
+	#region Properties
 
-		public ObservableCollection<string> Solvers { get; } = new();
+	public ObservableCollection<int> PuzzleYears { get; } = new();
 
-		public ObservableCollection<string> MessageLog { get; } = new();
+	public ObservableCollection<IPuzzle> Puzzles { get; } = new();
 
-		public int SelectedPuzzleYear
+	public ObservableCollection<string> Inputs { get; } = new();
+
+	public ObservableCollection<string> Solvers { get; } = new();
+
+	public ObservableCollection<string> MessageLog { get; } = new();
+
+	public int SelectedPuzzleYear
+	{
+		get => selectedPuzzleYear;
+		set
 		{
-			get => selectedPuzzleYear;
-			set
+			if (selectedPuzzleYear == value)
+				return;
+
+			selectedPuzzleYear = value;
+			NotifyPropertyChanged();
+
+			Puzzles.Clear();
+
+			foreach (var puzzle in yearPuzzles[selectedPuzzleYear].ToList())
 			{
-				if (selectedPuzzleYear == value)
-					return;
+				Puzzles.Add(puzzle);
 
-				selectedPuzzleYear = value;
-				NotifyPropertyChanged();
-
-				Puzzles.Clear();
-
-				foreach (var puzzle in yearPuzzles[selectedPuzzleYear].ToList())
-				{
-					Puzzles.Add(puzzle);
-
-					SelectedPuzzle ??= puzzle;
-				}
+				SelectedPuzzle ??= puzzle;
 			}
-		}
-
-		public IPuzzle SelectedPuzzle
-		{
-			get => selectedPuzzle;
-			set
-			{
-				if (selectedPuzzle == value)
-					return;
-
-				selectedPuzzle = value;
-
-				NotifyPropertyChanged();
-				NotifyPropertyChanged(nameof(PuzzleName));
-
-				InputText = string.Empty;
-				OutputText = string.Empty;
-
-				SelectedInputs = null;
-				Inputs.Clear();
-
-				SelectedSolver = null;
-				Solvers.Clear();
-
-				if (selectedPuzzle == null)
-					return;
-
-				foreach (var key in selectedPuzzle.Inputs.Keys.OrderBy(k => k))
-					Inputs.Add(key);
-
-				foreach (var key in selectedPuzzle.Solvers.Keys.OrderBy(k => k))
-					Solvers.Add(key);
-			}
-		}
-
-		public string PuzzleName
-		{
-			get
-			{
-				if (selectedPuzzle == null)
-					return String.Empty;
-
-				return selectedPuzzle.Name;
-			}
-		}
-
-		public string SelectedInputs
-		{
-			get => selectedInputs;
-			set
-			{
-				if (selectedInputs == value)
-					return;
-
-				selectedInputs = value;
-
-				NotifyPropertyChanged();
-
-				if (value != null)
-				{
-					InputText = GetInputText(selectedPuzzleYear, selectedPuzzle, value);
-				}
-			}
-		}
-
-		private string GetInputText(int selectedPuzzleYear, IPuzzle selectedPuzzle, string key)
-		{
-			var inputText = this.selectedPuzzle.Inputs[key];
-
-			if (string.IsNullOrEmpty(inputText))
-			{
-				inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzle.Day);
-				if (!string.IsNullOrEmpty(inputText))
-					this.selectedPuzzle.Inputs[key] = inputText;
-			}
-
-			return inputText;
-		}
-
-		public string SelectedSolver
-		{
-			get => selectedSolver;
-			set
-			{
-				if (selectedSolver == value)
-					return;
-
-				selectedSolver = value;
-
-				NotifyPropertyChanged();
-
-				if (value != null)
-				{
-					OutputText = "";
-					MessageLog.Clear();
-
-					new Thread(() =>
-					{
-						Thread.CurrentThread.IsBackground = true;
-						var begin = DateTime.Now;
-						logger.Send(SeverityLevel.Info, "Core", $"Begin");
-						OutputText = selectedPuzzle.Solvers[value](inputText);
-						var end = DateTime.Now;
-						logger.Send(SeverityLevel.Info, "Core", $"End: {end - begin}");
-					}).Start();
-				}
-
-				SelectedSolver = null;
-			}
-		}
-
-		public string InputText
-		{
-			get => inputText;
-			set
-			{
-				if (String.Equals(value, inputText))
-					return;
-
-				inputText = value;
-				NotifyPropertyChanged();
-			}
-		}
-
-		public string OutputText
-		{
-			get => outputText;
-			set
-			{
-				if (String.Equals(value, outputText))
-					return;
-
-				outputText = value;
-				NotifyPropertyChanged();
-			}
-		}
-
-		private void Logger_OnMessageSent(object sender, string message)
-		{
-			App.Current.Dispatcher.Invoke(() => 
-			{
-				MessageLog.Add(message);
-			});
 		}
 	}
+
+	public IPuzzle SelectedPuzzle
+	{
+		get => selectedPuzzle;
+		set
+		{
+			if (selectedPuzzle == value)
+				return;
+
+			selectedPuzzle = value;
+
+			NotifyPropertyChanged();
+
+			InputText = string.Empty;
+			OutputText = string.Empty;
+
+			SelectedInputs = null;
+			Inputs.Clear();
+
+			SelectedSolver = null;
+			Solvers.Clear();
+
+			if (selectedPuzzle == null)
+				return;
+
+			foreach (var key in selectedPuzzle.Inputs.Keys.OrderBy(k => k))
+				Inputs.Add(key);
+
+			foreach (var key in selectedPuzzle.Solvers.Keys.OrderBy(k => k))
+				Solvers.Add(key);
+		}
+	}
+
+	public string SelectedInputs
+	{
+		get => selectedInputs;
+		set
+		{
+			if (selectedInputs == value)
+				return;
+
+			selectedInputs = value;
+
+			NotifyPropertyChanged();
+
+			if (value != null)
+			{
+				InputText = GetInputText(selectedPuzzleYear, selectedPuzzle, value);
+			}
+		}
+	}
+
+	public string SelectedSolver
+	{
+		get => selectedSolver;
+		set
+		{
+			if (selectedSolver == value)
+				return;
+
+			selectedSolver = value;
+
+			NotifyPropertyChanged();
+
+			if (value != null)
+			{
+				OutputText = "";
+				MessageLog.Clear();
+
+				new Thread(() =>
+				{
+					Thread.CurrentThread.IsBackground = true;
+					var begin = DateTime.Now;
+					logger.SendInfo("Core", $"Begin");
+					OutputText = selectedPuzzle.Solvers[value](inputText);
+					var end = DateTime.Now;
+					logger.SendInfo("Core", $"End: {end - begin}");
+				}).Start();
+			}
+
+			SelectedSolver = null;
+		}
+	}
+
+	public string InputText
+	{
+		get => inputText;
+		set
+		{
+			if (String.Equals(value, inputText))
+				return;
+
+			inputText = value;
+			NotifyPropertyChanged();
+		}
+	}
+
+	public string OutputText
+	{
+		get => outputText;
+		set
+		{
+			if (String.Equals(value, outputText))
+				return;
+
+			outputText = value;
+			NotifyPropertyChanged();
+		}
+	}
+
+	#endregion Properties
+
+	#region Commands
+
+	public ICommand CopyOutputCommand { get; }
+
+	private bool CanCopyOutput(object obj)
+	{
+		return !string.IsNullOrEmpty(OutputText);
+	}
+
+	private void CopyOutput(object obj)
+	{
+		Clipboard.SetDataObject(OutputText);
+	}
+
+	public ICommand CopyLogCommand { get; }
+
+	private bool CanCopyLog(object obj)
+	{
+		return MessageLog.Count > 0;
+	}
+
+	private void CopyLog(object obj)
+	{
+		var log = new StringBuilder();
+		foreach (var message in MessageLog)
+			log.AppendLine(message);
+		Clipboard.SetDataObject(log.ToString());
+	}
+
+	#endregion Commands
+
+	#region Private Methods
+
+	private void LogMessenger_OnMessageSent(object sender, string message)
+	{
+		App.Current.Dispatcher.Invoke(() => 
+		{
+			MessageLog.Add(message);
+		});
+	}
+
+	private string GetInputText(int selectedPuzzleYear, IPuzzle selectedPuzzle, string key)
+	{
+		var inputText = this.selectedPuzzle.Inputs[key];
+
+		if (string.IsNullOrEmpty(inputText))
+		{
+			inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzle.Day);
+			if (!string.IsNullOrEmpty(inputText))
+				this.selectedPuzzle.Inputs[key] = inputText;
+		}
+
+		return inputText;
+	}
+
+	#endregion Private Methods
 }

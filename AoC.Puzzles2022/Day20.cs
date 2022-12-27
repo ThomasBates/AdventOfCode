@@ -85,10 +85,10 @@ public class Day20 : IPuzzle
 
 	private string DecryptFile(int mixCount)
 	{
-		logger.Send(SeverityLevel.Debug, nameof(Day20), $"File size = {file.Count}");
+		logger.SendDebug(nameof(Day20), $"File size = {file.Count}");
 
 		if (file.Count < 100)
-			logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
+			logger.SendDebug(nameof(Day20), string.Join(", ", file));
 
 		for (int i = 0; i < mixCount; i++)
 			MixFile();
@@ -99,9 +99,9 @@ public class Day20 : IPuzzle
 		var z = FindValueAt(zero, 3000);
 
 		if (file.Count < 100)
-			logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
+			logger.SendDebug(nameof(Day20), string.Join(", ", file));
 
-		logger.Send(SeverityLevel.Debug, nameof(Day20), $"({x}, {y}, {z}) => {x + y + z}");
+		logger.SendDebug(nameof(Day20), $"({x}, {y}, {z}) => {x + y + z}");
 		return (x + y + z).ToString();
 	}
 
@@ -136,7 +136,7 @@ public class Day20 : IPuzzle
 			}
 
 			if (file.Count < 100)
-				logger.Send(SeverityLevel.Debug, nameof(Day20), string.Join(", ", file));
+				logger.SendDebug(nameof(Day20), string.Join(", ", file));
 		}
 	}
 
