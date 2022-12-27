@@ -116,11 +116,21 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 2x3x4
+        ///1x1x10.
         /// </summary>
         internal static string Day02Inputs {
             get {
                 return ResourceManager.GetString("Day02Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day03Inputs {
+            get {
+                return ResourceManager.GetString("Day03Inputs", resourceCulture);
             }
         }
     }

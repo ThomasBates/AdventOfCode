@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Day03.cs" />
     <Compile Include="Day02.cs" />
     <Compile Include="Day01.cs" />
     <Compile Include="Day00.cs" />
@@ -101,6 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day02Inputs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day03Inputs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
