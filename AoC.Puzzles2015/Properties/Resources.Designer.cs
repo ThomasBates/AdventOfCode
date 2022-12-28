@@ -264,11 +264,22 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to London to Dublin = 464
+        ///London to Belfast = 518
+        ///Dublin to Belfast = 141.
         /// </summary>
         internal static string Day09Inputs {
             get {
                 return ResourceManager.GetString("Day09Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day10Inputs {
+            get {
+                return ResourceManager.GetString("Day10Inputs", resourceCulture);
             }
         }
     }
