@@ -182,12 +182,12 @@ namespace AoC.Puzzles2015.Properties {
         ///                | line moreLines
         ///
         ///line            = &quot;turn&quot; onoff
-        ///                | toggle range c_toggle
+        ///                | &quot;toggle&quot; range c_toggle
         ///
         ///onoff           = &quot;on&quot; range c_turnon
         ///                | &quot;off&quot; range c_turnoff
         ///
-        ///range           = Integer  [rest of string was truncated]&quot;;.
+        ///range           = Intege [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day06Grammar {
             get {
@@ -196,11 +196,49 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to turn on 0,0 through 999,999
+        ///toggle 0,0 through 999,0
+        ///turn off 499,499 through 500,500.
         /// </summary>
         internal static string Day06Inputs {
             get {
                 return ResourceManager.GetString("Day06Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day07Grammar {
+            get {
+                return ResourceManager.GetString("Day07Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day07Inputs {
+            get {
+                return ResourceManager.GetString("Day07Inputs", resourceCulture);
             }
         }
     }

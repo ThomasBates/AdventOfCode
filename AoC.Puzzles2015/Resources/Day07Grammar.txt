@@ -1,0 +1,28 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+String          = "a string" | '[.]*'
+Integer         = "an integer" | (\+|-)?[0-9]+
+Real            = "a real number" | (\+|-)?[0-9]+\.[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = input operation
+                | "NOT" input "-" ">" Id c_not
+
+operation       = "-" ">" Id c_set
+                | "AND" input "-" ">" Id c_and
+                | "OR" input "-" ">" Id c_or
+                | "LSHIFT" input "-" ">" Id c_lshift
+                | "RSHIFT" input "-" ">" Id c_rshift
+
+input           = Id
+                | Integer
+
+#END

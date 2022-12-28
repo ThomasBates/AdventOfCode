@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AoC.Common;
@@ -109,7 +107,7 @@ public class Helper
 		}
 	}
 
-	public static void ParseInput(
+	public static bool ParseInput(
 		ILogger logger,
 		string input,
 		string grammarFile,
@@ -129,6 +127,7 @@ public class Helper
 		catch (GrammarException ex)
 		{
 			logger?.SendError("Grammar", $"{ex.GetType().Name}: {ex.Message}");
+			return false;
 		}
 
 		IParser parser = new L2Parser(grammar);
@@ -143,8 +142,10 @@ public class Helper
 		catch (ParserException ex)
 		{
 			logger?.SendError("Parser", $"{ex.GetType().Name}: {ex.Message}");
+			return false;
 		}
 
+		return true;
 
 		void HandleValueEmitted(object sender, ParserEventArgs e)
 		{
