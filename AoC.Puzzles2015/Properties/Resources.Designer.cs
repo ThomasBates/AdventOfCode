@@ -222,10 +222,12 @@ namespace AoC.Puzzles2015.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
-        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
-        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
-        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        ///line            = input operation
+        ///                | &quot;NOT&quot; input &quot;-&quot; &quot;&gt;&quot; Id c_not
+        ///
+        ///operation       = &quot;-&quot; &quot;&gt;&quot; Id c_set
+        ///                | &quot;AND&quot; input &quot;-&quot; &quot;&gt;&quot; Id c_and
+        ///               [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day07Grammar {
             get {
@@ -234,11 +236,27 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 123 -&gt; x
+        ///456 -&gt; y
+        ///x AND y -&gt; d
+        ///x OR y -&gt; e
+        ///x LSHIFT 2 -&gt; f
+        ///y RSHIFT 2 -&gt; g
+        ///NOT x -&gt; h
+        ///NOT y -&gt; i.
         /// </summary>
         internal static string Day07Inputs {
             get {
                 return ResourceManager.GetString("Day07Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day08Inputs {
+            get {
+                return ResourceManager.GetString("Day08Inputs", resourceCulture);
             }
         }
     }
