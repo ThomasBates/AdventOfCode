@@ -289,11 +289,48 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to abcdefgh
+        ///ghijklmn.
         /// </summary>
         internal static string Day11Inputs {
             get {
                 return ResourceManager.GetString("Day11Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day12Grammar {
+            get {
+                return ResourceManager.GetString("Day12Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day12Inputs {
+            get {
+                return ResourceManager.GetString("Day12Inputs", resourceCulture);
             }
         }
     }

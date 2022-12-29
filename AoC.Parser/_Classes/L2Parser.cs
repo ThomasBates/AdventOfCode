@@ -207,8 +207,9 @@ namespace AoC.Parser
                     string testValue = string.Empty;
                     string lastToken = string.Empty;
                     string lastValue = string.Empty;
+					bool foundStart = false;
 
-                    while (_nextChar != 26)
+					while (_nextChar != 26)
                     {
                         testValue += _nextChar;
 
@@ -226,7 +227,11 @@ namespace AoC.Parser
                                 }
                             }
                         }
-                        if (count == 0)  //  Current test failed
+                        if (!foundStart && count > 0)
+                        {
+                            foundStart = true;
+                        }
+                        if (foundStart && count == 0)  //  Current test failed
                         {
                             if (!string.IsNullOrEmpty(lastValue))  //  Previous test succeeded:  use last value.
                             {

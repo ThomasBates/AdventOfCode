@@ -1,0 +1,38 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+String          = "a string" | \".*\"
+Integer         = "an integer" | [0-9]+
+
+#GRAMMAR
+
+program         = value moreValue
+
+value           = String t_checkForRed
+                | number c_number
+                | array
+                | class
+
+moreValue       = 
+                | "," value moreValue
+
+number          = Integer
+                | "-" Integer c_negate
+
+array           = "[" s_beginArray moreArray s_endArray
+
+moreArray       = "]"
+                | value moreValue "]"
+
+class           = "{" s_beginClass moreClass s_endClass
+
+moreClass       = "}"
+                | property moreProperties "}"
+
+property        = s_beginProperty String ":" value s_endProperty
+
+moreProperties  = 
+                | "," property moreProperties
+
+#END
