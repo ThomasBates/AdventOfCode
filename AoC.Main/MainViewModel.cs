@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
@@ -9,11 +8,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
+
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 
 namespace AoC.Main;
 
@@ -47,10 +47,10 @@ class MainViewModel : ViewModel
 	public MainViewModel()
 	{
 		var logMessenger = new Messenger();
-		logger = new AggregateLogger(new ILogger[] 
-		{ 
-			new MessengerLogger(logMessenger, SeverityLevel.Debug), 
-			new FileLogger(SeverityLevel.Verbose) 
+		logger = new AggregateLogger(new ILogger[]
+		{
+			new MessengerLogger(logMessenger, SeverityLevel.Debug),
+			new FileLogger(SeverityLevel.Verbose)
 		});
 
 		logMessenger.OnMessageSent += LogMessenger_OnMessageSent;
@@ -276,7 +276,7 @@ class MainViewModel : ViewModel
 
 		if (string.IsNullOrEmpty(inputText))
 		{
-			inputText = Helper.GetInputText(selectedPuzzleYear, selectedPuzzle.Day);
+			inputText = InputHelper.GetInputText(selectedPuzzleYear, selectedPuzzle.Day);
 			if (!string.IsNullOrEmpty(inputText))
 				this.selectedPuzzle.Inputs[key] = inputText;
 		}

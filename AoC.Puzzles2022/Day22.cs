@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -92,7 +94,7 @@ public class Day22 : IPuzzle
 
 		var mapComplete = false;
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			if (string.IsNullOrWhiteSpace(line))
 			{
@@ -147,7 +149,7 @@ public class Day22 : IPuzzle
 
 	private char[,,] cube;
 	private int[,] topLeft;
-	private Func<int, int, (int, int, int, int)>[,] edgeFunction = new Func<int, int, (int, int, int, int)>[6, 4];
+	private readonly Func<int, int, (int, int, int, int)>[,] edgeFunction = new Func<int, int, (int, int, int, int)>[6, 4];
 
 	private void LoadCubeMap(string input)
 	{
@@ -163,7 +165,7 @@ public class Day22 : IPuzzle
 
 		var mapComplete = false;
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			if (string.IsNullOrWhiteSpace(line))
 			{
@@ -191,7 +193,7 @@ public class Day22 : IPuzzle
 			};
 
 			for (int face = 0; face < 6; face++)
-				ReadCubeFace(face, topLeft[face, 0], topLeft[face, 1]);
+				ReadCubeFace(face);
 
 			int max = size - 1;
 			edgeFunction[0, 0] = (r, c) => (5, 2, max - r, max);
@@ -237,7 +239,7 @@ public class Day22 : IPuzzle
 			};
 
 			for (int face = 0; face < 6; face++)
-				ReadCubeFace(face, topLeft[face, 0], topLeft[face, 1]);
+				ReadCubeFace(face);
 
 			int max = size - 1;
 			edgeFunction[0, 0] = (r, c) => (1, 0, r, 0);
@@ -272,7 +274,7 @@ public class Day22 : IPuzzle
 		}
 	}
 
-	private void ReadCubeFace(int face, int top, int left)
+	private void ReadCubeFace(int face)
 	{
 		int r0 = topLeft[face, 0];
 		int c0 = topLeft[face, 1];

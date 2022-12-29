@@ -4,260 +4,282 @@ using System.ComponentModel.Composition;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2018.Properties;
 
-namespace AoC.Puzzles2018
+namespace AoC.Puzzles2018;
+
+[Export(typeof(IPuzzle))]
+internal class Day20 : IPuzzle
 {
-	[Export(typeof(IPuzzle))]
-	internal class Day20 : IPuzzle
+	#region IPuzzle Properties
+
+	public int Year => 2018;
+
+	public int Day => 20;
+
+	public string Name => $"Day {Day:00}";
+
+	public Dictionary<string, string> Inputs { get; } = new()
 	{
-		#region IPuzzle Properties
+		{"Example Inputs 01", Resources.Day20Inputs01 },
+		{"Example Inputs 02", Resources.Day20Inputs02 },
+		{"Example Inputs 03", Resources.Day20Inputs03 },
+		{"Example Inputs 04", Resources.Day20Inputs04 },
+		{"Example Inputs 05", Resources.Day20Inputs05 },
+		{"Puzzle Inputs", ""}
+	};
 
-		public int Year => 2018;
+	public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
-		public int Day => 20;
+	#endregion IPuzzle Properties
 
-		public string Name => $"Day {Day:00}";
+	#region Constructors
 
-		public Dictionary<string, string> Inputs
+	public Day20()
+	{
+		Solvers.Add("Solve Part 1", SolvePart1);
+		//Solvers.Add("Solve Part 2", SolvePart2);
+	}
+
+	#endregion Constructors
+
+	//List<string> _allPaths;
+
+	string _paths;
+	char[,] _map;
+	int[,] _steps;
+	int _minX, _maxX, _minY, _maxY;
+
+	public string SolvePart1(string input)
+	{
+		var result = new StringBuilder();
+
+		LoadDataFromInput(input);
+
+		//_allPaths = new List<string>();
+		//FindAllPaths(_paths);
+
+		//foreach (string path in _allPaths)
+		//{
+		//	result.AppendLine(path);
+		//}
+		//result.AppendLine("---------");
+
+		BuildMap(result, _paths);
+		DisplayMap(result);
+
+		return result.ToString();
+	}
+
+	private void FindAllPaths(string _paths)
+	{
+		int openIndex = -1;
+		int closeIndex = -1;
+		for (int i = 0; i < _paths.Length; i++)
 		{
-			get;
-		} = new Dictionary<string, string>();
+			char c = _paths[i];
 
-		public Dictionary<string, Func<string, string>> Solvers
-		{
-			get;
-		} = new Dictionary<string, Func<string, string>>();
-
-		#endregion IPuzzle Properties
-
-		#region Constructors
-
-		public Day20()
-		{
-			Inputs.Add("Example Inputs 01", Resources.Day20Inputs01);
-			Inputs.Add("Example Inputs 02", Resources.Day20Inputs02);
-			Inputs.Add("Example Inputs 03", Resources.Day20Inputs03);
-			Inputs.Add("Example Inputs 04", Resources.Day20Inputs04);
-			Inputs.Add("Example Inputs 05", Resources.Day20Inputs05);
-			Inputs.Add("Puzzle Inputs", "");
-
-			Solvers.Add("Solve Part 1", SolvePart1);
-			//Solvers.Add("Solve Part 2", SolvePart2);
+			if (c == '(')
+			{
+				openIndex = i;
+			}
+			if (c == ')')
+			{
+				closeIndex = i;
+				break;
+			}
 		}
 
-		#endregion Constructors
-
-		//List<string> _allPaths;
-
-		string _paths;
-		char[,] _map;
-		int[,] _steps;
-		int _minX, _maxX, _minY, _maxY;
-
-		public string SolvePart1(string input)
+		if (openIndex < 0 && closeIndex < 0)
 		{
-			var result = new StringBuilder();
-
-			LoadDataFromInput(input);
-
-			//_allPaths = new List<string>();
-			//FindAllPaths(_paths);
-
-			//foreach (string path in _allPaths)
+			//if (!_allPaths.Contains(_paths))
 			//{
-			//	result.AppendLine(path);
+			//	_allPaths.Add(_paths);
 			//}
-			//result.AppendLine("---------");
-
-			BuildMap(result, _paths);
-			DisplayMap(result);
-
-			return result.ToString();
+			return;
 		}
 
-		private void FindAllPaths(string _paths)
+		int startIndex = openIndex + 1;
+		for (int i = openIndex + 1; i <= closeIndex; i++)
 		{
-			int openIndex = -1;
-			int closeIndex = -1;
-			for (int i = 0; i < _paths.Length; i++)
+			char c = _paths[i];
+			if (c == '|' || c==')')
 			{
-				char c = _paths[i];
-
-				if (c == '(')
+				if (i == startIndex)
 				{
-					openIndex = i;
+					string path = _paths.Substring(0, openIndex)
+								+ _paths.Substring(closeIndex + 1);
+					FindAllPaths(path);
 				}
-				if (c == ')')
+				else
 				{
-					closeIndex = i;
-					break;
+					string path = _paths.Substring(0, openIndex)
+								+ _paths.Substring(startIndex, i - startIndex)
+								+ _paths.Substring(closeIndex + 1);
+					FindAllPaths(path);
 				}
+				startIndex = i + 1;
 			}
+		}
+	}
 
-			if (openIndex < 0 && closeIndex < 0)
-			{
-				//if (!_allPaths.Contains(_paths))
-				//{
-				//	_allPaths.Add(_paths);
-				//}
-				return;
-			}
+	public string SolvePart2(string input)
+	{
+		var result = new StringBuilder();
 
-			int startIndex = openIndex + 1;
-			for (int i = openIndex + 1; i <= closeIndex; i++)
+		LoadDataFromInput(input);
+
+		//
+
+		return result.ToString();
+	}
+
+	private void BuildMap(StringBuilder result, string paths)
+	{
+		_map = new char[400, 400];
+		_steps = new int[400, 400];
+		_minX = int.MaxValue;
+		_maxX = int.MinValue;
+		_minY = int.MaxValue;
+		_maxY = int.MinValue;
+
+		int x = 200;
+		int y = 200;
+		Map(x, y, 'X');
+		BuildRoom(x,y);
+
+		var path = new StringBuilder();
+		path.Append(paths[0]);
+
+		//int pathIndex = 1;
+		//FollowPath(paths, pathIndex, x, y, path, result);
+		//FollowPath2(paths, x, y, path, result);
+		FollowPath3(x, y, paths);
+
+		int longWalks = 0;
+		int maxSteps = 0;
+		for (y = _minY; y <= _maxY; y++)
+		{
+			for (x = _minX; x <= _maxX; x++)
 			{
-				char c = _paths[i];
-				if (c == '|' || c==')')
+				if (_map[x, y] == '?')
 				{
-					if (i == startIndex)
-					{
-						string path = _paths.Substring(0, openIndex)
-									+ _paths.Substring(closeIndex + 1);
-						FindAllPaths(path);
-					}
-					else
-					{
-						string path = _paths.Substring(0, openIndex)
-									+ _paths.Substring(startIndex, i - startIndex)
-									+ _paths.Substring(closeIndex + 1);
-						FindAllPaths(path);
-					}
-					startIndex = i + 1;
+					_map[x, y] = '#';
+				}
+				if (_steps[x, y] > maxSteps)
+				{
+					maxSteps = _steps[x, y];
+				}
+				if (_steps[x, y] >= 1000)
+				{
+					longWalks++;
 				}
 			}
 		}
 
-		public string SolvePart2(string input)
+		result.AppendLine($"Longest route is {maxSteps}");
+		result.AppendLine($"{longWalks} rooms are at least 1000 doors away.");
+	}
+
+	private void DisplayMap(StringBuilder result)
+	{
+		for (int y = _minY; y <= _maxY; y++)
 		{
-			var result = new StringBuilder();
-
-			LoadDataFromInput(input);
-
-			//
-
-			return result.ToString();
-		}
-
-		private void BuildMap(StringBuilder result, string paths)
-		{
-			_map = new char[400, 400];
-			_steps = new int[400, 400];
-			_minX = int.MaxValue;
-			_maxX = int.MinValue;
-			_minY = int.MaxValue;
-			_maxY = int.MinValue;
-
-			int x = 200;
-			int y = 200;
-			Map(x, y, 'X');
-			BuildRoom(x,y);
-
-			var path = new StringBuilder();
-			path.Append(paths[0]);
-
-			//int pathIndex = 1;
-			//FollowPath(paths, pathIndex, x, y, path, result);
-			//FollowPath2(paths, x, y, path, result);
-			FollowPath3(x, y, paths);
-
-			int longWalks = 0;
-			int maxSteps = 0;
-			for (y = _minY; y <= _maxY; y++)
+			for (int x = _minX; x <= _maxX; x++)
 			{
-				for (x = _minX; x <= _maxX; x++)
+				if (_map[x, y] == (char)0)
 				{
-					if (_map[x, y] == '?')
-					{
-						_map[x, y] = '#';
-					}
-					if (_steps[x, y] > maxSteps)
-					{
-						maxSteps = _steps[x, y];
-					}
-					if (_steps[x, y] >= 1000)
-					{
-						longWalks++;
-					}
+					result.Append(' ');
 				}
-			}
-
-			result.AppendLine($"Longest route is {maxSteps}");
-			result.AppendLine($"{longWalks} rooms are at least 1000 doors away.");
-		}
-
-		private void DisplayMap(StringBuilder result)
-		{
-			for (int y = _minY; y <= _maxY; y++)
-			{
-				for (int x = _minX; x <= _maxX; x++)
+				else
 				{
-					if (_map[x, y] == (char)0)
-					{
-						result.Append(' ');
-					}
-					else
-					{
-						result.Append(_map[x, y]);
-					}
+					result.Append(_map[x, y]);
 				}
-				result.AppendLine();
 			}
 			result.AppendLine();
 		}
+		result.AppendLine();
+	}
 
-		private void FollowPath3(int x, int y, string path)
+	private void FollowPath3(int x, int y, string path)
+	{
+		int steps = _steps[x, y];
+		for (int i = 0; i < path.Length; i++)
 		{
-			int steps = _steps[x, y];
-			for (int i = 0; i < path.Length; i++)
+			char c = path[i];
+			if (c == '(')
 			{
-				char c = path[i];
-				if (c == '(')
-				{
-					string remaining = path.Substring(i);
-					BranchPath3(x, y, remaining);
+				string remaining = path.Substring(i);
+				BranchPath3(x, y, remaining);
+				return;
+			}
+			switch (c)
+			{
+				case 'W':
+					Map(--x, y, '|', '?');
+					BuildRoom(--x, y);
+					Steps(x, y, ++steps);
+					break;
+				case 'N':
+					Map(x, --y, '-', '?');
+					BuildRoom(x, --y);
+					Steps(x, y, ++steps);
+					break;
+				case 'E':
+					Map(++x, y, '|', '?');
+					BuildRoom(++x, y);
+					Steps(x, y, ++steps);
+					break;
+				case 'S':
+					Map(x, ++y, '-', '?');
+					BuildRoom(x, ++y);
+					Steps(x, y, ++steps);
+					break;
+				case '(':
+					BranchPath3(x, y, path.Substring(i));
 					return;
-				}
-				switch (c)
-				{
-					case 'W':
-						Map(--x, y, '|', '?');
-						BuildRoom(--x, y);
-						Steps(x, y, ++steps);
-						break;
-					case 'N':
-						Map(x, --y, '-', '?');
-						BuildRoom(x, --y);
-						Steps(x, y, ++steps);
-						break;
-					case 'E':
-						Map(++x, y, '|', '?');
-						BuildRoom(++x, y);
-						Steps(x, y, ++steps);
-						break;
-					case 'S':
-						Map(x, ++y, '-', '?');
-						BuildRoom(x, ++y);
-						Steps(x, y, ++steps);
-						break;
-					case '(':
-						BranchPath3(x, y, path.Substring(i));
-						return;
-					case '$':
-						return;
-				}
+				case '$':
+					return;
+			}
+		}
+	}
+
+	private void BranchPath3(int x, int y, string path)
+	{
+		string options = string.Empty;
+		string remainder = string.Empty;
+
+		int level = 0;
+		for (int i = 1; i < path.Length; i++)
+		{
+			char c = path[i];
+			if (c == '(')
+			{
+				level++;
+			}
+			else if (c == ')')
+			{
+				level--;
+			}
+			if (level < 0)
+			{
+				options = path.Substring(1, i - 1);
+				remainder = path.Substring(i + 1);
+				break;
 			}
 		}
 
-		private void BranchPath3(int x, int y, string path)
-		{
-			string options = string.Empty;
-			string remainder = string.Empty;
+		int px = x;
+		int py = y;
 
-			int level = 0;
-			for (int i = 1; i < path.Length; i++)
+		while (true)
+		{
+			level = 0;
+			bool optionFound = false;
+			for (int i = 0; i < options.Length; i++)
 			{
-				char c = path[i];
+				char c = options[i];
 				if (c == '(')
 				{
 					level++;
@@ -266,103 +288,97 @@ namespace AoC.Puzzles2018
 				{
 					level--;
 				}
-				if (level < 0)
+				else if (c == '|')
 				{
-					options = path.Substring(1, i - 1);
-					remainder = path.Substring(i + 1);
-					break;
+					if (level == 0)
+					{
+						optionFound = true;
+						string option = options.Substring(0, i);
+						options = options.Substring(i + 1);
+						//FollowPath3(x, y, option + remainder);
+						FollowPath3(x, y, option);
+						break;
+					}
 				}
 			}
 
-			int px = x;
-			int py = y;
-
-			while (true)
+			if (!optionFound)
 			{
-				level = 0;
-				bool optionFound = false;
-				for (int i = 0; i < options.Length; i++)
-				{
-					char c = options[i];
-					if (c == '(')
-					{
-						level++;
-					}
-					else if (c == ')')
-					{
-						level--;
-					}
-					else if (c == '|')
-					{
-						if (level == 0)
-						{
-							optionFound = true;
-							string option = options.Substring(0, i);
-							options = options.Substring(i + 1);
-							//FollowPath3(x, y, option + remainder);
-							FollowPath3(x, y, option);
-							break;
-						}
-					}
-				}
-
-				if (!optionFound)
-				{
-					//FollowPath3(x, y, options + remainder);
-					FollowPath3(px, py, options);
-					break;
-				}
+				//FollowPath3(x, y, options + remainder);
+				FollowPath3(px, py, options);
+				break;
 			}
-
-			FollowPath3(x, y, remainder);
 		}
 
-		private void FollowPath2(string paths, int x, int y, StringBuilder path, StringBuilder result)
+		FollowPath3(x, y, remainder);
+	}
+
+	private void FollowPath2(string paths, int x, int y, StringBuilder path, StringBuilder result)
+	{
+		int i;
+		for (i=0; i<paths.Length; i++)
 		{
-			int i;
-			for (i=0; i<paths.Length; i++)
+			char c = paths[i];
+			if (c == '(')
+				break;
+			switch (c)
 			{
-				char c = paths[i];
-				if (c == '(')
+				case 'W':
+					Map(--x, y, '|', '?');
+					BuildRoom(--x, y);
+					//path.Append(c);
 					break;
-				switch (c)
-				{
-					case 'W':
-						Map(--x, y, '|', '?');
-						BuildRoom(--x, y);
-						//path.Append(c);
-						break;
-					case 'N':
-						Map(x, --y, '-', '?');
-						BuildRoom(x, --y);
-						//path.Append(c);
-						break;
-					case 'E':
-						Map(++x, y, '|', '?');
-						BuildRoom(++x, y);
-						//path.Append(c);
-						break;
-					case 'S':
-						Map(x, ++y, '-', '?');
-						BuildRoom(x, ++y);
-						//path.Append(c);
-						break;
-				}
+				case 'N':
+					Map(x, --y, '-', '?');
+					BuildRoom(x, --y);
+					//path.Append(c);
+					break;
+				case 'E':
+					Map(++x, y, '|', '?');
+					BuildRoom(++x, y);
+					//path.Append(c);
+					break;
+				case 'S':
+					Map(x, ++y, '-', '?');
+					BuildRoom(x, ++y);
+					//path.Append(c);
+					break;
 			}
+		}
 
-			int px = x;
-			int py = y;
+		int px = x;
+		int py = y;
 
-			if (i == paths.Length)
+		if (i == paths.Length)
+		{
+			return;
+		}
+
+		int j = i + 1;
+		int level = 0;
+		while (level >= 0)
+		{
+			char c = paths[j];
+			if (c == '(')
 			{
-				return;
+				level++;
 			}
-
-			int j = i + 1;
-			int level = 0;
-			while (level >= 0)
+			if (c == ')')
 			{
-				char c = paths[j];
+				level--;
+			}
+			j++;
+		}
+
+		string branchPath = paths.Substring(i + 1, j - i - 2);
+
+		while (true)
+		{
+			int k;
+			level = 0;
+			for (k = 0; k < branchPath.Length; k++)
+			{
+				char c = branchPath[k];
 				if (c == '(')
 				{
 					level++;
@@ -371,188 +387,167 @@ namespace AoC.Puzzles2018
 				{
 					level--;
 				}
-				j++;
-			}
-
-			string branchPath = paths.Substring(i + 1, j - i - 2);
-
-			while (true)
-			{
-				int k;
-				level = 0;
-				for (k = 0; k < branchPath.Length; k++)
-				{
-					char c = branchPath[k];
-					if (c == '(')
-					{
-						level++;
-					}
-					if (c == ')')
-					{
-						level--;
-					}
-					if (c == '|' && level == 0)
-					{
-						break;
-					}
-				}
-
-				FollowPath2(branchPath.Substring(0, k), x, y, path, result);
-
-				if (k == branchPath.Length)
+				if (c == '|' && level == 0)
 				{
 					break;
 				}
-
-				branchPath = branchPath.Substring(k + 1);
 			}
 
-			if (j < paths.Length - 1)
+			FollowPath2(branchPath.Substring(0, k), x, y, path, result);
+
+			if (k == branchPath.Length)
 			{
-				FollowPath2(paths.Substring(j + 1), px, py, path, result);
+				break;
 			}
+
+			branchPath = branchPath.Substring(k + 1);
 		}
 
-		private void FollowPath(string paths, int pathIndex, int x, int y, StringBuilder path, StringBuilder result)
+		if (j < paths.Length - 1)
 		{
-			while (true)
+			FollowPath2(paths.Substring(j + 1), px, py, path, result);
+		}
+	}
+
+	private void FollowPath(string paths, int pathIndex, int x, int y, StringBuilder path, StringBuilder result)
+	{
+		while (true)
+		{
+			char c = paths[pathIndex];
+			switch (c)
 			{
-				char c = paths[pathIndex];
-				switch (c)
-				{
-					case 'W':
-						Map(--x, y, '|', '?');
-						BuildRoom(--x, y);
-						//path.Append(c);
-						break;
-					case 'N':
-						Map(x, --y, '-', '?');
-						BuildRoom(x, --y);
-						//path.Append(c);
-						break;
-					case 'E':
-						Map(++x, y, '|', '?');
-						BuildRoom(++x, y);
-						//path.Append(c);
-						break;
-					case 'S':
-						Map(x, ++y, '-', '?');
-						BuildRoom(x, ++y);
-						//path.Append(c);
-						break;
-					case '(':
-						BranchPath(paths, ++pathIndex, x, y, path, result);
+				case 'W':
+					Map(--x, y, '|', '?');
+					BuildRoom(--x, y);
+					//path.Append(c);
+					break;
+				case 'N':
+					Map(x, --y, '-', '?');
+					BuildRoom(x, --y);
+					//path.Append(c);
+					break;
+				case 'E':
+					Map(++x, y, '|', '?');
+					BuildRoom(++x, y);
+					//path.Append(c);
+					break;
+				case 'S':
+					Map(x, ++y, '-', '?');
+					BuildRoom(x, ++y);
+					//path.Append(c);
+					break;
+				case '(':
+					BranchPath(paths, ++pathIndex, x, y, path, result);
+					return;
+				case '|':
+					//	find closing ')'.
+					int level = 0;
+					while (level >= 0)
+					{
+						c = paths[++pathIndex];
+						if (c == '(')
+						{
+							level++;
+						}
+						if (c == ')')
+						{
+							level--;
+						}
+					}
+					break;
+				case ')':
+					//	no need to do anything.
+					break;
+				case '$':
+					//path.Append(c);
+					//result.AppendLine(path.ToString());
+					return;
+			}
+			pathIndex++;
+		}
+	}
+
+	//	Already processed the leading '('.
+	private void BranchPath(string paths, int pathIndex, int x, int y, StringBuilder path, StringBuilder result)
+	{
+		var branchPath = new StringBuilder(path.ToString());
+		FollowPath(paths, pathIndex, x, y, branchPath, result);
+
+		int level = 0;
+		while (true)
+		{
+			switch (paths[pathIndex])
+			{
+				case '|':
+					if (level == 0)
+					{
+						branchPath = new StringBuilder(path.ToString());
+						FollowPath(paths, pathIndex + 1, x, y, branchPath, result);
+					}
+					break;
+				case '(':
+					level++;
+					break;
+				case ')':
+					level--;
+					if (level < 0)
+					{
 						return;
-					case '|':
-						//	find closing ')'.
-						int level = 0;
-						while (level >= 0)
-						{
-							c = paths[++pathIndex];
-							if (c == '(')
-							{
-								level++;
-							}
-							if (c == ')')
-							{
-								level--;
-							}
-						}
-						break;
-					case ')':
-						//	no need to do anything.
-						break;
-					case '$':
-						//path.Append(c);
-						//result.AppendLine(path.ToString());
-						return;
-				}
-				pathIndex++;
+					}
+					break;
 			}
+			pathIndex++;
 		}
+	}
 
-		//	Already processed the leading '('.
-		private void BranchPath(string paths, int pathIndex, int x, int y, StringBuilder path, StringBuilder result)
+	private void BuildRoom(int x, int y)
+	{
+		Map(x - 1, y - 1, '#');
+		Map(x - 1, y + 1, '#');
+		Map(x + 1, y - 1, '#');
+		Map(x + 1, y + 1, '#');
+		Map(x, y - 1, '?');
+		Map(x, y + 1, '?');
+		Map(x - 1, y, '?');
+		Map(x + 1, y, '?');
+		Map(x, y, '.');
+	}
+
+	void Map(int x, int y, char c, char t = (char)0)
+	{
+		if (x < 0 || x >= 400 || y < 0 || y >= 400)
 		{
-			var branchPath = new StringBuilder(path.ToString());
-			FollowPath(paths, pathIndex, x, y, branchPath, result);
-
-			int level = 0;
-			while (true)
-			{
-				switch (paths[pathIndex])
-				{
-					case '|':
-						if (level == 0)
-						{
-							branchPath = new StringBuilder(path.ToString());
-							FollowPath(paths, pathIndex + 1, x, y, branchPath, result);
-						}
-						break;
-					case '(':
-						level++;
-						break;
-					case ')':
-						level--;
-						if (level < 0)
-						{
-							return;
-						}
-						break;
-				}
-				pathIndex++;
-			}
+			return;
 		}
 
-		private void BuildRoom(int x, int y)
+		if (_map[x, y] == t)
 		{
-			Map(x - 1, y - 1, '#');
-			Map(x - 1, y + 1, '#');
-			Map(x + 1, y - 1, '#');
-			Map(x + 1, y + 1, '#');
-			Map(x, y - 1, '?');
-			Map(x, y + 1, '?');
-			Map(x - 1, y, '?');
-			Map(x + 1, y, '?');
-			Map(x, y, '.');
+			_map[x, y] = c;
 		}
+		_minX = Math.Min(_minX, x);
+		_maxX = Math.Max(_maxX, x);
+		_minY = Math.Min(_minY, y);
+		_maxY = Math.Max(_maxY, y);
+	}
 
-		void Map(int x, int y, char c, char t = (char)0)
+	void Steps(int x, int y, int steps)
+	{
+		if (x < 0 || x >= 400 || y < 0 || y >= 400)
 		{
-			if (x < 0 || x >= 400 || y < 0 || y >= 400)
-			{
-				return;
-			}
-
-			if (_map[x, y] == t)
-			{
-				_map[x, y] = c;
-			}
-			_minX = Math.Min(_minX, x);
-			_maxX = Math.Max(_maxX, x);
-			_minY = Math.Min(_minY, y);
-			_maxY = Math.Max(_maxY, y);
+			return;
 		}
 
-		void Steps(int x, int y, int steps)
+		if (_steps[x, y] == 0)
 		{
-			if (x < 0 || x >= 400 || y < 0 || y >= 400)
-			{
-				return;
-			}
-
-			if (_steps[x, y] == 0)
-			{
-				_steps[x, y] = steps;
-			}
+			_steps[x, y] = steps;
 		}
+	}
 
-		private void LoadDataFromInput(string input)
+	private void LoadDataFromInput(string input)
+	{
+		InputHelper.TraverseInputLines(input, line =>
 		{
-			Helper.TraverseInputLines(input, line =>
-			{
-				_paths = line;
-			});
-		}
+			_paths = line;
+		});
 	}
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -88,7 +89,7 @@ public class Day18 : IPuzzle
 	private void LoadDataFromInput(string input, List<string> voxels, StringBuilder output = null)
 	{
 		voxels.Clear();
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			voxels.Add(line);
 		});

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
+
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2015.Properties;
 
 namespace AoC.Puzzles2015;
@@ -80,7 +82,7 @@ public class Day06 : IPuzzle
 				grid[x, y] = 0;
 
 		int line = 0;
-		Helper.ParseInput(null, input, Resources.Day06Grammar,
+		GrammarHelper.ParseInput(null, input, Resources.Day06Grammar,
 			null,
 			null,
 			(token, valueStack) =>

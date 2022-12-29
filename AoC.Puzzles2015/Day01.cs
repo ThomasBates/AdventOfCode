@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2015.Properties;
 
 namespace AoC.Puzzles2015;
@@ -76,7 +79,7 @@ public class Day01 : IPuzzle
 		//  First Clear Data
 		lines.Clear();
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			lines.Add(line);
 		});

@@ -7,8 +7,8 @@
     <ProjectGuid>{C68A44A6-D5EC-4F74-AFD8-7EC8A750906D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AoC.Puzzle</RootNamespace>
-    <AssemblyName>AoC.Puzzle</AssemblyName>
+    <RootNamespace>AoC.Common</RootNamespace>
+    <AssemblyName>AoC.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,6 +51,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper.cs" />
+    <Compile Include="Helpers\PathfindingHelper.cs" />
+    <Compile Include="Helpers\GrammarHelper.cs" />
+    <Compile Include="Helpers\InputHelper.cs" />
     <Compile Include="IPuzzle.cs" />
     <Compile Include="Logger\IMessenger.cs" />
     <Compile Include="Logger\Messenger.cs" />
@@ -76,10 +81,13 @@
     <Compile Include="SegmentList\SegmentListItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AoC.Parser\AoC.Parser.csproj">
+    <ProjectReference Include="..\AoC.Grammar\AoC.Grammar.csproj">
       <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
-      <Name>AoC.Parser</Name>
+      <Name>AoC.Grammar</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

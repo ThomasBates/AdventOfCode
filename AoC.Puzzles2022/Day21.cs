@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -76,7 +78,7 @@ public class Day21 : IPuzzle
 		//  First Clear Data
 		monkeys.Clear();
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			var parts = line.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 			monkeys[parts[0].Trim()] = parts[1].Trim();

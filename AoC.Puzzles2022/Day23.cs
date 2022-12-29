@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Text;
+
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -78,7 +81,7 @@ public class Day23 : IPuzzle
 		elves = new HashSet<Point>();
 
 		int x = 0;
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			for (int y = 0; y < line.Length; y++)
 			{

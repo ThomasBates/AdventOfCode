@@ -30,7 +30,7 @@ class           = "{" s_beginClass moreClass s_endClass
 moreClass       = "}"
                 | property moreProperties "}"
 
-property        = s_beginProperty String ":" value s_endProperty
+property        = String ":" value
 
 moreProperties  = 
                 | "," property moreProperties

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -76,7 +78,7 @@ public class Day25 : IPuzzle
 		//  First Clear Data
 		snafus.Clear();
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			snafus.Add(line);
 		});
@@ -168,7 +170,7 @@ public class Day25 : IPuzzle
 		return new string(result.ToArray());
 	}
 
-	private char[,] addTable = new char[,]
+	private readonly char[,] addTable = new char[,]
 	{
 
 		{ '-', '=', '=', '-', '0' },

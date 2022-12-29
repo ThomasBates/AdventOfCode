@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2015.Properties;
 
 namespace AoC.Puzzles2015;
@@ -69,14 +71,14 @@ public class Day11 : IPuzzle
 
 	#endregion Solvers
 
-	private List<string> lines = new();
+	private readonly List<string> lines = new();
 
 	private void LoadDataFromInput(string input)
 	{
 		//  First Clear Data
 		lines.Clear();
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			lines.Add(line);
 		});

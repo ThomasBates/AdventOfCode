@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -94,7 +95,7 @@ public class Day19 : IPuzzle
 	{
 		blueprints.Clear();
 		int nextID = 1;
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			var parts = line.Split(' ');
 			blueprints.Add(new Blueprint

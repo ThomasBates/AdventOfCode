@@ -402,8 +402,4 @@ public class Day17 : IPuzzle
 
 		output.AppendLine("+-------+");
 	}
-
-	private void ProcessDataForPart2(string moves, StringBuilder output = null)
-	{
-	}
 }

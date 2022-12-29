@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2015.Properties;
 
 namespace AoC.Puzzles2015;
@@ -110,7 +113,7 @@ public class Day07 : IPuzzle
 		//  First Clear Data
 		allGates.Clear();
 
-		var ok = Helper.ParseInput(logger, input, Resources.Day07Grammar,
+		var ok = GrammarHelper.ParseInput(logger, input, Resources.Day07Grammar,
 			null,
 			null,
 			(token, valueStack) =>

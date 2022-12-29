@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2015.Properties;
 
 namespace AoC.Puzzles2015;
@@ -73,15 +75,15 @@ public class Day00 : IPuzzle
 	{
 		//  First Clear Data
 
-		Helper.TraverseInputTokens(input, value =>
+		InputHelper.TraverseInputTokens(input, value =>
 		{
 		});
 
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 		});
 
-		Helper.ParseInput(logger, input, Resources.Day00Grammar,
+		GrammarHelper.ParseInput(logger, input, Resources.Day00Grammar,
 			(token, valueStack) =>
 			{
 				switch (token)

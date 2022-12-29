@@ -1,15 +1,13 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 
-namespace AoC.Common
+namespace AoC.Common.Logger;
+
+public class Messenger : IMessenger
 {
-	public class Messenger : IMessenger
-	{
-		public event EventHandler<string> OnMessageSent;
+	public event EventHandler<string> OnMessageSent;
 
-		public void Send(object sender, string message)
-		{
-			OnMessageSent?.Invoke(sender, message);
-		}
+	public void Send(object sender, string message)
+	{
+		OnMessageSent?.Invoke(sender, message);
 	}
 }

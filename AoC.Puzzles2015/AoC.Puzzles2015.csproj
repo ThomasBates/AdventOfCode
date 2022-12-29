@@ -85,16 +85,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AoC.Common\AoC.Common.csproj">
-      <Project>{c68a44a6-d5ec-4f74-afd8-7ec8a750906d}</Project>
-      <Name>AoC.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AoC.Parser\AoC.Parser.csproj">
-      <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
-      <Name>AoC.Parser</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -150,6 +140,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day12Grammar.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AoC.Common\AoC.Common.csproj">
+      <Project>{c68a44a6-d5ec-4f74-afd8-7ec8a750906d}</Project>
+      <Name>AoC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AoC.Grammar\AoC.Grammar.csproj">
+      <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
+      <Name>AoC.Grammar</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

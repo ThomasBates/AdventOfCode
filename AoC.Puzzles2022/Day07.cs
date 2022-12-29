@@ -5,221 +5,221 @@ using System.Linq;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
-namespace AoC.Puzzles2022
+namespace AoC.Puzzles2022;
+
+[Export(typeof(IPuzzle))]
+public class Day07 : IPuzzle
 {
-	[Export(typeof(IPuzzle))]
-	public class Day07 : IPuzzle
+	#region IPuzzle Properties
+
+	public int Year => 2022;
+
+	public int Day => 7;
+
+	public string Name => $"Day {Day:00}";
+
+	public Dictionary<string, string> Inputs { get; } = new()
 	{
-		#region IPuzzle Properties
+		{"Example Inputs", Resources.Day07Inputs},
+		{"Puzzle Inputs",  ""}
+	};
 
-		public int Year => 2022;
+	public Dictionary<string, Func<string, string>> Solvers { get; } = new()
+	{
+		{ "Part 1", SolvePart1 },
+		{ "Part 2", SolvePart2 }
+	};
 
-		public int Day => 7;
+	#endregion IPuzzle Properties
 
-		public string Name => $"Day {Day:00}";
+	private class File
+	{
+		public string Name;
+		public int Size;
+	}
 
-		public Dictionary<string, string> Inputs { get; } = new()
-		{
-			{"Example Inputs", Resources.Day07Inputs},
-			{"Puzzle Inputs",  ""}
-		};
+	private class Directory
+	{
+		public string Name;
+		public List<File> Files = new();
+		public Directory Parent;
+		public List<Directory> Directories = new();
+		public int Size => Files.Sum(file => file.Size) + Directories.Sum(dir => dir.Size);
+		public string Path => (Parent == null ? "" : Parent.Path) + Name + "/";
+	}
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
-		{
-			{ "Part 1", SolvePart1 },
-			{ "Part 2", SolvePart2 }
-		};
+	#region Solvers
 
-		#endregion IPuzzle Properties
+	private static string SolvePart1(string input)
+	{
+		var output = new StringBuilder();
 
-		private class File
-		{
-			public string Name;
-			public int Size;
-		}
+		var root = new Directory { Name = "" };
 
-		private class Directory
-		{
-			public string Name;
-			public List<File> Files = new();
-			public Directory Parent;
-			public List<Directory> Directories = new();
-			public int Size => Files.Sum(file => file.Size) + Directories.Sum(dir => dir.Size);
-			public string Path => (Parent == null ? "" : Parent.Path) + Name + "/";
-		}
+		LoadDataFromInput(input, root, output);
 
-		#region Solvers
+		AnalyzeDiskPart1(root, output);
 
-		private static string SolvePart1(string input)
-		{
-			var output = new StringBuilder();
+		return output.ToString();
+	}
 
-			var root = new Directory { Name = "" };
+	private static string SolvePart2(string input)
+	{
+		var output = new StringBuilder();
 
-			LoadDataFromInput(input, root, output);
+		var root = new Directory { Name = "" };
 
-			AnalyzeDiskPart1(root, output);
+		LoadDataFromInput(input, root, output);
 
-			return output.ToString();
-		}
+		AnalyzeDiskPart2(root, output);
 
-		private static string SolvePart2(string input)
-		{
-			var output = new StringBuilder();
+		return output.ToString();
+	}
 
-			var root = new Directory { Name = "" };
+	#endregion Solvers
 
-			LoadDataFromInput(input, root, output);
+	#region Private Methods
 
-			AnalyzeDiskPart2(root, output);
+	private static void LoadDataFromInput(string input, Directory root, StringBuilder output)
+	{
+		var currentDirectory = root;
 
-			return output.ToString();
-		}
-
-		#endregion Solvers
-
-		#region Private Methods
-
-		private static void LoadDataFromInput(string input, Directory root, StringBuilder output)
-		{
-			var currentDirectory = root;
-
-			Helper.ParseInput(null, input, Resources.Day07Grammar,
-				null,
-				null,
-				(token, valueStack) =>
+		GrammarHelper.ParseInput(null, input, Resources.Day07Grammar,
+			null,
+			null,
+			(token, valueStack) =>
+			{
+				switch (token)
 				{
-					switch (token)
-					{
-						case "c_dir":   // add child directory to current directory
+					case "c_dir":   // add child directory to current directory
+						{
+							var directoryName = valueStack.Pop();
+							var find = currentDirectory.Directories.FirstOrDefault(dir => dir.Name == directoryName);
+							if (find == null)
 							{
-								var directoryName = valueStack.Pop();
-								var find = currentDirectory.Directories.FirstOrDefault(dir => dir.Name == directoryName);
-								if (find == null)
-								{
-									output.AppendLine($"Adding directory {directoryName} to {currentDirectory.Path}.");
-									currentDirectory.Directories.Add(new Directory { Name = directoryName, Parent = currentDirectory });
-								}
-								else
-								{
-									output.AppendLine($"Directory {directoryName} already exists in {currentDirectory.Path}.");
-								}
+								output.AppendLine($"Adding directory {directoryName} to {currentDirectory.Path}.");
+								currentDirectory.Directories.Add(new Directory { Name = directoryName, Parent = currentDirectory });
 							}
-							break;
-						case "c_file":  //	add file to current directory
+							else
 							{
-								var fileName = valueStack.Pop();
-								var fileSizeString = valueStack.Pop();
+								output.AppendLine($"Directory {directoryName} already exists in {currentDirectory.Path}.");
+							}
+						}
+						break;
+					case "c_file":  //	add file to current directory
+						{
+							var fileName = valueStack.Pop();
+							var fileSizeString = valueStack.Pop();
 
-								if (!int.TryParse(fileSizeString, out int fileSize))
-								{
-									output.AppendLine("File size is invalid.");
-									return;
-								}
-
-								var find = currentDirectory.Files.FirstOrDefault(file => file.Name == fileName);
-								if (find == null)
-								{
-									output.AppendLine($"Adding file {fileName} to {currentDirectory.Path}.");
-									currentDirectory.Files.Add(new File { Name = fileName, Size = fileSize });
-								}
-								else
-								{
-									output.AppendLine($"File {fileName} already exists in {currentDirectory.Path}.");
-								}
-							}
-							break;
-						case "c_ls":    //	command to list files in directory
-							break;
-						case "c_extension": //	add extension to file name
+							if (!int.TryParse(fileSizeString, out int fileSize))
 							{
-								var extension = valueStack.Pop();
-								var fileName = valueStack.Pop();
-								valueStack.Push($"{fileName}.{extension}");
-							}
-							break;
-						case "c_cdRoot":
-							currentDirectory = root;
-							break;
-						case "c_cdParent":
-							if (currentDirectory.Parent == null)
-							{
-								output.AppendLine($"Directory {currentDirectory.Path} does not have a parent directory.");
+								output.AppendLine("File size is invalid.");
 								return;
 							}
-							currentDirectory = currentDirectory.Parent;
-							break;
-						case "c_cdChild":
+
+							var find = currentDirectory.Files.FirstOrDefault(file => file.Name == fileName);
+							if (find == null)
 							{
-								var directoryName = valueStack.Pop();
-								var find = currentDirectory.Directories.FirstOrDefault(dir => dir.Name == directoryName);
-								if (find is null)
-								{
-									output.AppendLine($"Directory {directoryName} not found in {currentDirectory.Path}.");
-									return;
-								}
-								currentDirectory = find;
+								output.AppendLine($"Adding file {fileName} to {currentDirectory.Path}.");
+								currentDirectory.Files.Add(new File { Name = fileName, Size = fileSize });
 							}
-							break;
-						default:
-							output.AppendLine($"Unknown parser token: {token}");
-							break;
-					}
-				});
-		}
-
-		private static void AnalyzeDiskPart1(Directory root, StringBuilder output)
-		{
-			var directories = AllDescendantDirectories(root);
-
-			var total = 0;
-			foreach (var directory in directories)
-			{
-				var directorySize = directory.Size;
-				output.AppendLine($"{directory.Path} = {directorySize}");
-				if (directorySize <= 100000)
-					total += directorySize;
-			}
-			output.AppendLine($"total = {total}");
-		}
-
-		private static void AnalyzeDiskPart2(Directory root, StringBuilder output)
-		{
-			var rootSize = root.Size;
-			var minSize = rootSize - 40000000;
-			output.AppendLine($"total size = {rootSize}. Need {minSize}");
-
-			var directories = AllDescendantDirectories(root);
-
-			var bestSize = 70000000;
-			foreach (var directory in directories)
-			{
-				var directorySize = directory.Size;
-				output.AppendLine($"{directory.Path} = {directorySize}");
-
-				if (directorySize >= minSize && directorySize < bestSize)
-				{
-					output.AppendLine($":::::::::::::::::::    {directory.Path} = {directorySize}");
-					bestSize = directorySize;
+							else
+							{
+								output.AppendLine($"File {fileName} already exists in {currentDirectory.Path}.");
+							}
+						}
+						break;
+					case "c_ls":    //	command to list files in directory
+						break;
+					case "c_extension": //	add extension to file name
+						{
+							var extension = valueStack.Pop();
+							var fileName = valueStack.Pop();
+							valueStack.Push($"{fileName}.{extension}");
+						}
+						break;
+					case "c_cdRoot":
+						currentDirectory = root;
+						break;
+					case "c_cdParent":
+						if (currentDirectory.Parent == null)
+						{
+							output.AppendLine($"Directory {currentDirectory.Path} does not have a parent directory.");
+							return;
+						}
+						currentDirectory = currentDirectory.Parent;
+						break;
+					case "c_cdChild":
+						{
+							var directoryName = valueStack.Pop();
+							var find = currentDirectory.Directories.FirstOrDefault(dir => dir.Name == directoryName);
+							if (find is null)
+							{
+								output.AppendLine($"Directory {directoryName} not found in {currentDirectory.Path}.");
+								return;
+							}
+							currentDirectory = find;
+						}
+						break;
+					default:
+						output.AppendLine($"Unknown parser token: {token}");
+						break;
 				}
-			}
-			output.AppendLine($"best size = {bestSize}");
-		}
-
-		private static List<Directory> AllDescendantDirectories(Directory root)
-		{
-			var result = new List<Directory>(root.Directories);
-			foreach (var directory in root.Directories)
-			{
-				var directories = AllDescendantDirectories(directory);
-				result.AddRange(directories);
-			}
-			return result;
-		}
-
-		#endregion Private Methods
-
+			});
 	}
+
+	private static void AnalyzeDiskPart1(Directory root, StringBuilder output)
+	{
+		var directories = AllDescendantDirectories(root);
+
+		var total = 0;
+		foreach (var directory in directories)
+		{
+			var directorySize = directory.Size;
+			output.AppendLine($"{directory.Path} = {directorySize}");
+			if (directorySize <= 100000)
+				total += directorySize;
+		}
+		output.AppendLine($"total = {total}");
+	}
+
+	private static void AnalyzeDiskPart2(Directory root, StringBuilder output)
+	{
+		var rootSize = root.Size;
+		var minSize = rootSize - 40000000;
+		output.AppendLine($"total size = {rootSize}. Need {minSize}");
+
+		var directories = AllDescendantDirectories(root);
+
+		var bestSize = 70000000;
+		foreach (var directory in directories)
+		{
+			var directorySize = directory.Size;
+			output.AppendLine($"{directory.Path} = {directorySize}");
+
+			if (directorySize >= minSize && directorySize < bestSize)
+			{
+				output.AppendLine($":::::::::::::::::::    {directory.Path} = {directorySize}");
+				bestSize = directorySize;
+			}
+		}
+		output.AppendLine($"best size = {bestSize}");
+	}
+
+	private static List<Directory> AllDescendantDirectories(Directory root)
+	{
+		var result = new List<Directory>(root.Directories);
+		foreach (var directory in root.Directories)
+		{
+			var directories = AllDescendantDirectories(directory);
+			result.AddRange(directories);
+		}
+		return result;
+	}
+
+	#endregion Private Methods
+
 }

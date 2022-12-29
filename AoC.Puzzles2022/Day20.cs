@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -77,7 +79,7 @@ public class Day20 : IPuzzle
 		file.Clear();
 		nodes.Clear();
 
-		Helper.TraverseInputTokens(input, value =>
+		InputHelper.TraverseInputTokens(input, value =>
 		{
 			nodes.Add(file.AddLast(long.Parse(value) * key));
 		});

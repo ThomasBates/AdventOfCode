@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace AoC.Common
-{
-	public interface IMessenger
-	{
-		event EventHandler<string> OnMessageSent;
+namespace AoC.Common.Logger;
 
-		void Send(object sender, string message);
-	}
+public interface IMessenger
+{
+	event EventHandler<string> OnMessageSent;
+
+	void Send(object sender, string message);
 }

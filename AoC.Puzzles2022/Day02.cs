@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022
@@ -78,7 +79,7 @@ namespace AoC.Puzzles2022
 			int total = 0;
 			int you = -1;
 			int me = -1;
-			Helper.TraverseInputTokens(input, value =>
+			InputHelper.TraverseInputTokens(input, value =>
 			{
 				switch (value)
 				{

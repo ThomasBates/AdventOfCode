@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -83,7 +84,7 @@ public class Day16 : IPuzzle
 
 		Valve fromValve = null;
 
-		Helper.ParseInput(null, input, Resources.Day16Grammar,
+		GrammarHelper.ParseInput(null, input, Resources.Day16Grammar,
 			null,
 			null,
 			(token, valueStack) =>
@@ -180,7 +181,7 @@ public class Day16 : IPuzzle
 		if (source.Distances.TryGetValue(target, out var distance))
 			return distance;
 
-		var path = Helper.FindPath(allValves,
+		var path = PathfindingHelper.FindPath(allValves,
 			(valve) => valve.Tunnels,
 			(source, target) => 1, 
 			source, target);

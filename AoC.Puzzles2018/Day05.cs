@@ -4,91 +4,137 @@ using System.ComponentModel.Composition;
 using System.Text;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2018.Properties;
 
-namespace AoC.Puzzles2018
+namespace AoC.Puzzles2018;
+
+[Export(typeof(IPuzzle))]
+public class Day05 : IPuzzle
 {
-	[Export(typeof(IPuzzle))]
-	public class Day05 : IPuzzle
+	#region IPuzzle Properties
+
+	public int Year => 2018;
+
+	public int Day => 5;
+
+	public string Name => $"Day {Day:00}";
+
+	public Dictionary<string, string> Inputs { get; } = new()
 	{
-		#region IPuzzle Properties
+		{"Example Inputs", Resources.Day05Inputs},
+		{"Puzzle Inputs",  ""}
+	};
 
-		public int Year => 2018;
+	public Dictionary<string, Func<string, string>> Solvers { get; } = new();
 
-		public int Day => 5;
+	#endregion IPuzzle Properties
 
-		public string Name => $"Day {Day:00}";
+	#region Constructors
 
-		public Dictionary<string, string> Inputs
+	public Day05()
+	{
+		Solvers.Add("Solve Part 1", SolvePart1);
+		Solvers.Add("Solve Part 2", SolvePart2);
+	}
+
+	#endregion Constructors
+
+	public string SolvePart1(string input)
+	{
+		var result = new StringBuilder();
+
+		InputHelper.TraverseInputTokens(input, value =>
 		{
-			get;
-		} = new Dictionary<string, string>();
+			string sequence = value;
 
-		public Dictionary<string, Func<string, string>> Solvers
-		{
-			get;
-		} = new Dictionary<string, Func<string, string>>();
-
-		#endregion IPuzzle Properties
-
-		#region Constructors
-
-		public Day05()
-		{
-			Inputs.Add("Example Inputs", Resources.Day05Inputs);
-			Inputs.Add("Puzzle Inputs", "");
-
-			Solvers.Add("Part 1", SolvePart1);
-			Solvers.Add("Part 2", SolvePart2);
-		}
-
-		#endregion Constructors
-
-		public string SolvePart1(string input)
-		{
-			var result = new StringBuilder();
-
-			Helper.TraverseInputTokens(input, value =>
+			int cDiff = Math.Abs('A' - 'a');
+			int index = 0;
+			while (index < sequence.Length - 1)
 			{
-				string sequence = value;
+				char c1 = sequence[index];
+				char c2 = sequence[index + 1];
 
-				int cDiff = Math.Abs('A' - 'a');
-				int index = 0;
-				while (index < sequence.Length - 1)
+				if (Math.Abs(c1 - c2) == cDiff)
 				{
-					char c1 = sequence[index];
-					char c2 = sequence[index + 1];
-
-					if (Math.Abs(c1 - c2) == cDiff)
+					sequence = sequence.Remove(index, 2);
+					if (index > 0)
 					{
-						sequence = sequence.Remove(index, 2);
-						if (index > 0)
-						{
-							index--;
-						}
+						index--;
 					}
-					else
+				}
+				else
+				{
+					index++;
+				}
+			}
+
+			result.AppendLine($"There are {sequence.Length} units remaining.");
+		});
+
+		return result.ToString();
+	}
+
+	public string SolvePart1_Take1(string input)
+	{
+		var result = new StringBuilder();
+
+		InputHelper.TraverseInputTokens(input, value =>
+		{
+			bool finished = false;
+
+			string sequence = value;
+
+			while (!finished)
+			{
+				bool reaction = false;
+
+				for (char c = 'a'; c <= 'z'; c++)
+				{
+					char C = (char)(c + 'A' - 'a');
+
+					string pair = $"{c}{C}";
+					if (sequence.Contains(pair))
 					{
-						index++;
+						sequence = sequence.Replace(pair, "");
+						reaction = true;
+					}
+
+					pair = $"{C}{c}";
+					if (sequence.Contains(pair))
+					{
+						sequence = sequence.Replace(pair, "");
+						reaction = true;
 					}
 				}
 
-				result.AppendLine($"There are {sequence.Length} units remaining.");
-			});
+				finished = !reaction;
+			}
 
-			return result.ToString();
-		}
+			result.AppendLine(sequence);
+		});
 
-		public string SolvePart1_Take1(string input)
+		return result.ToString();
+	}
+
+	public string SolvePart2(string input)
+	{
+		var result = new StringBuilder();
+
+		InputHelper.TraverseInputTokens(input, value =>
 		{
-			var result = new StringBuilder();
+			int minLength = int.MaxValue;
+			char minType = ' ';
 
-			Helper.TraverseInputTokens(input, value =>
+			for (char cType = 'a'; cType <= 'z'; cType++)
 			{
-				bool finished = false;
-
 				string sequence = value;
+				string sType = $"{cType}";
+				sequence = sequence.Replace(sType, "");
+				sType = $"{(char)(cType + 'A' - 'a')}";
+				sequence = sequence.Replace(sType, "");
 
+				bool finished = false;
 				while (!finished)
 				{
 					bool reaction = false;
@@ -115,68 +161,17 @@ namespace AoC.Puzzles2018
 					finished = !reaction;
 				}
 
-				result.AppendLine(sequence);
-			});
-
-			return result.ToString();
-		}
-
-		public string SolvePart2(string input)
-		{
-			var result = new StringBuilder();
-
-			Helper.TraverseInputTokens(input, value =>
-			{
-				int minLength = int.MaxValue;
-				char minType = ' ';
-
-				for (char cType = 'a'; cType <= 'z'; cType++)
+				int length = sequence.Length;
+				if (length < minLength)
 				{
-					string sequence = value;
-					string sType = $"{cType}";
-					sequence = sequence.Replace(sType, "");
-					sType = $"{(char)(cType + 'A' - 'a')}";
-					sequence = sequence.Replace(sType, "");
-
-					bool finished = false;
-					while (!finished)
-					{
-						bool reaction = false;
-
-						for (char c = 'a'; c <= 'z'; c++)
-						{
-							char C = (char)(c + 'A' - 'a');
-
-							string pair = $"{c}{C}";
-							if (sequence.Contains(pair))
-							{
-								sequence = sequence.Replace(pair, "");
-								reaction = true;
-							}
-
-							pair = $"{C}{c}";
-							if (sequence.Contains(pair))
-							{
-								sequence = sequence.Replace(pair, "");
-								reaction = true;
-							}
-						}
-
-						finished = !reaction;
-					}
-
-					int length = sequence.Length;
-					if (length < minLength)
-					{
-						minLength = length;
-						minType = cType;
-					}
+					minLength = length;
+					minType = cType;
 				}
+			}
 
-				result.AppendLine($"After removing type '{minType}', there are {minLength} units remaining.");
-			});
+			result.AppendLine($"After removing type '{minType}', there are {minLength} units remaining.");
+		});
 
-			return result.ToString();
-		}
+		return result.ToString();
 	}
 }

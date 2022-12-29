@@ -5,161 +5,161 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using AoC.Common;
+using AoC.Common.Helpers;
 using AoC.Puzzles2022.Properties;
 
-namespace AoC.Puzzles2022
+namespace AoC.Puzzles2022;
+
+[Export(typeof(IPuzzle))]
+public class Day04 : IPuzzle
 {
-	[Export(typeof(IPuzzle))]
-	public class Day04 : IPuzzle
+	#region IPuzzle Properties
+
+	public int Year => 2022;
+
+	public int Day => 4;
+
+	public string Name => $"Day {Day:00}";
+
+	public Dictionary<string, string> Inputs { get; } = new()
 	{
-		#region IPuzzle Properties
+		{"Example Inputs", Resources.Day04Inputs},
+		{"Puzzle Inputs",  ""}
+	};
 
-		public int Year => 2022;
+	public Dictionary<string, Func<string, string>> Solvers { get; } = new()
+	{
+		{ "Part 1 (split)", SolvePart1_Split },
+		{ "Part 1 (regex)", SolvePart1_Regex },
+		{ "Part 2 (split)", SolvePart2_Split },
+		{ "Part 2 (regex)", SolvePart2_Regex },
+	};
 
-		public int Day => 4;
+	#endregion IPuzzle Properties
 
-		public string Name => $"Day {Day:00}";
+	public static string SolvePart1_Split(string input)
+	{
+		var output = new StringBuilder();
 
-		public Dictionary<string, string> Inputs { get; } = new()
+		int total = 0;
+
+		InputHelper.TraverseInputLines(input, line =>
 		{
-			{"Example Inputs", Resources.Day04Inputs},
-			{"Puzzle Inputs",  ""}
-		};
+			var values = line.Split(',', '-');
 
-		public Dictionary<string, Func<string, string>> Solvers { get; } = new()
-		{
-			{ "Part 1 (split)", SolvePart1_Split },
-			{ "Part 1 (regex)", SolvePart1_Regex },
-			{ "Part 2 (split)", SolvePart2_Split },
-			{ "Part 2 (regex)", SolvePart2_Regex },
-		};
+			output.Append(string.Join(", ", values));
 
-		#endregion IPuzzle Properties
+			int min1 = int.Parse(values[0]);
+			int max1 = int.Parse(values[1]);
+			int min2 = int.Parse(values[2]);
+			int max2 = int.Parse(values[3]);
 
-		public static string SolvePart1_Split(string input)
-		{
-			var output = new StringBuilder();
-
-			int total = 0;
-
-			Helper.TraverseInputLines(input, line =>
+			if ((min1 <= min2 && max2 <= max1) ||
+				(min2 <= min1 && max1 <= max2))
 			{
-				var values = line.Split(',', '-');
+				total++;
+				output.AppendLine("  <<====");
+			}
+			else
+				output.AppendLine();
+		});
 
-				output.Append(string.Join(", ", values));
+		output.AppendLine($"The answer is {total}");
 
-				int min1 = int.Parse(values[0]);
-				int max1 = int.Parse(values[1]);
-				int min2 = int.Parse(values[2]);
-				int max2 = int.Parse(values[3]);
+		return output.ToString();
+	}
 
-				if ((min1 <= min2 && max2 <= max1) ||
-					(min2 <= min1 && max1 <= max2))
-				{
-					total++;
-					output.AppendLine("  <<====");
-				}
-				else
-					output.AppendLine();
-			});
+	public static string SolvePart1_Regex(string input)
+	{
+		var output = new StringBuilder();
 
-			output.AppendLine($"The answer is {total}");
+		int total = 0;
 
-			return output.ToString();
-		}
-
-		public static string SolvePart1_Regex(string input)
+		InputHelper.TraverseInputLines(input, line =>
 		{
-			var output = new StringBuilder();
+			Match match = Regex.Match(line, @"(\d+)-(\d+),(\d+)-(\d+)");
 
-			int total = 0;
+			int min1 = int.Parse(match.Groups[1].Value);
+			int max1 = int.Parse(match.Groups[2].Value);
+			int min2 = int.Parse(match.Groups[3].Value);
+			int max2 = int.Parse(match.Groups[4].Value);
 
-			Helper.TraverseInputLines(input, line =>
+			output.Append($"{min1}-{max1},{min2}-{max2}");
+
+			if ((min1 <= min2 && max2 <= max1) ||
+				(min2 <= min1 && max1 <= max2))
 			{
-				Match match = Regex.Match(line, @"(\d+)-(\d+),(\d+)-(\d+)");
+				total++;
+				output.AppendLine("  <<====");
+			}
+			else
+				output.AppendLine();
+		});
 
-				int min1 = int.Parse(match.Groups[1].Value);
-				int max1 = int.Parse(match.Groups[2].Value);
-				int min2 = int.Parse(match.Groups[3].Value);
-				int max2 = int.Parse(match.Groups[4].Value);
+		output.AppendLine($"The answer is {total}");
 
-				output.Append($"{min1}-{max1},{min2}-{max2}");
+		return output.ToString();
+	}
 
-				if ((min1 <= min2 && max2 <= max1) ||
-					(min2 <= min1 && max1 <= max2))
-				{
-					total++;
-					output.AppendLine("  <<====");
-				}
-				else
-					output.AppendLine();
-			});
+	public static string SolvePart2_Split(string input)
+	{
+		var output = new StringBuilder();
 
-			output.AppendLine($"The answer is {total}");
+		int total = 0;
 
-			return output.ToString();
-		}
-
-		public static string SolvePart2_Split(string input)
+		InputHelper.TraverseInputLines(input, line =>
 		{
-			var output = new StringBuilder();
+			var values = line.Split(',', '-');
 
-			int total = 0;
+			output.Append(string.Join(", ", values));
 
-			Helper.TraverseInputLines(input, line =>
+			int min1 = int.Parse(values[0]);
+			int max1 = int.Parse(values[1]);
+			int min2 = int.Parse(values[2]);
+			int max2 = int.Parse(values[3]);
+
+			if (min1 <= max2 && min2 <= max1)
 			{
-				var values = line.Split(',', '-');
+				total++;
+				output.AppendLine("  <<====");
+			}
+			else
+				output.AppendLine();
+		});
 
-				output.Append(string.Join(", ", values));
+		output.AppendLine($"The answer is {total}");
 
-				int min1 = int.Parse(values[0]);
-				int max1 = int.Parse(values[1]);
-				int min2 = int.Parse(values[2]);
-				int max2 = int.Parse(values[3]);
+		return output.ToString();
+	}
 
-				if (min1 <= max2 && min2 <= max1)
-				{
-					total++;
-					output.AppendLine("  <<====");
-				}
-				else
-					output.AppendLine();
-			});
+	public static string SolvePart2_Regex(string input)
+	{
+		var output = new StringBuilder();
 
-			output.AppendLine($"The answer is {total}");
+		int total = 0;
 
-			return output.ToString();
-		}
-
-		public static string SolvePart2_Regex(string input)
+		InputHelper.TraverseInputLines(input, line =>
 		{
-			var output = new StringBuilder();
+			Match match = Regex.Match(line, @"(\d+)-(\d+),(\d+)-(\d+)");
 
-			int total = 0;
+			int min1 = int.Parse(match.Groups[1].Value);
+			int max1 = int.Parse(match.Groups[2].Value);
+			int min2 = int.Parse(match.Groups[3].Value);
+			int max2 = int.Parse(match.Groups[4].Value);
 
-			Helper.TraverseInputLines(input, line =>
+			output.Append($"{min1}-{max1},{min2}-{max2}");
+
+			if (min1 <= max2 && min2 <= max1)
 			{
-				Match match = Regex.Match(line, @"(\d+)-(\d+),(\d+)-(\d+)");
+				total++;
+				output.AppendLine("  <<====");
+			}
+			else
+				output.AppendLine();
+		});
 
-				int min1 = int.Parse(match.Groups[1].Value);
-				int max1 = int.Parse(match.Groups[2].Value);
-				int min2 = int.Parse(match.Groups[3].Value);
-				int max2 = int.Parse(match.Groups[4].Value);
+		output.AppendLine($"The answer is {total}");
 
-				output.Append($"{min1}-{max1},{min2}-{max2}");
-
-				if (min1 <= max2 && min2 <= max1)
-				{
-					total++;
-					output.AppendLine("  <<====");
-				}
-				else
-					output.AppendLine();
-			});
-
-			output.AppendLine($"The answer is {total}");
-
-			return output.ToString();
-		}
+		return output.ToString();
 	}
 }

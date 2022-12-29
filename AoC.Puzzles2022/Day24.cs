@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 
 using AoC.Common;
+using AoC.Common.Helpers;
+using AoC.Common.Logger;
 using AoC.Puzzles2022.Properties;
 
 namespace AoC.Puzzles2022;
@@ -79,7 +81,7 @@ public class Day24 : IPuzzle
 
 	private class Valley
 	{
-		public Point Min = new Point(1, 1);
+		public Point Min = new(1, 1);
 		public Point Max;
 		public Point Entrance;
 		public Point Exit;
@@ -94,7 +96,7 @@ public class Day24 : IPuzzle
 		valley = new Valley();
 
 		int x = 0;
-		Helper.TraverseInputLines(input, line =>
+		InputHelper.TraverseInputLines(input, line =>
 		{
 			var i = line.IndexOf("#.#");
 			if (i >= 0)
