@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Day13.cs" />
     <Compile Include="Day12.cs" />
     <Compile Include="Day11.cs" />
     <Compile Include="Day10.cs" />
@@ -150,6 +151,9 @@
       <Project>{b637888f-4096-4b95-a017-3e1333e9403c}</Project>
       <Name>AoC.Grammar</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day13Inputs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

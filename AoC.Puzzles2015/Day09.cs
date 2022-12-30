@@ -56,7 +56,7 @@ public class Day09 : IPuzzle
 	{
 		LoadDataFromInput(input);
 
-		var result = ProcessDataForPart1a();
+		var result = ProcessDataForPart1();
 
 		return result;
 	}
@@ -113,7 +113,7 @@ public class Day09 : IPuzzle
 	private int bestDistance;
 	private List<string> bestPath;
 
-	private string ProcessDataForPart1a()
+	private string ProcessDataForPart1()
 	{
 		var path = new List<string>();
 
