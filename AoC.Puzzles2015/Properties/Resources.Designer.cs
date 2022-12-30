@@ -350,11 +350,28 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Alice would gain 54 happiness units by sitting next to Bob.
+        ///Alice would lose 79 happiness units by sitting next to Carol.
+        ///Alice would lose 2 happiness units by sitting next to David.
+        ///Bob would gain 83 happiness units by sitting next to Alice.
+        ///Bob would lose 7 happiness units by sitting next to Carol.
+        ///Bob would lose 63 happiness units by sitting next to David.
+        ///Carol would lose 62 happiness units by sitting next to Alice.
+        ///Carol would gain 60 happiness units by sitting next to Bob.
+        ///Carol would gain 55  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day13Inputs {
             get {
                 return ResourceManager.GetString("Day13Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day14Inputs {
+            get {
+                return ResourceManager.GetString("Day14Inputs", resourceCulture);
             }
         }
     }
