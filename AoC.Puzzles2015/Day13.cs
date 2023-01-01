@@ -123,7 +123,7 @@ public class Day13 : IPuzzle
 
 		FindBestHappiness(path);
 
-		logger.SendDebug(nameof(Day09), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
+		logger.SendDebug(nameof(Day13), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
 
 		return bestHappiness.ToString();
 	}
@@ -145,7 +145,7 @@ public class Day13 : IPuzzle
 
 		FindBestHappiness(path);
 
-		logger.SendDebug(nameof(Day09), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
+		logger.SendDebug(nameof(Day13), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
 
 		return bestHappiness.ToString();
 	}
@@ -170,7 +170,7 @@ public class Day13 : IPuzzle
 				bestHappiness = happiness;
 				bestPath = new List<string>(path);
 
-				logger.SendDebug(nameof(Day09), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
+				logger.SendDebug(nameof(Day13), $"{bestHappiness}: {string.Join(" -> ", bestPath)}");
 			}
 			return;
 		}

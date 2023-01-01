@@ -367,11 +367,21 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Comet can fly 14 km/s for 10 seconds, but then must rest for 127 seconds.
+        ///Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds..
         /// </summary>
         internal static string Day14Inputs {
             get {
                 return ResourceManager.GetString("Day14Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day15Inputs {
+            get {
+                return ResourceManager.GetString("Day15Inputs", resourceCulture);
             }
         }
     }
