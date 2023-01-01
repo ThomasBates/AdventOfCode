@@ -14,32 +14,38 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Margin="5,5,0,0">
+            <TextBlock Text="Year:" />
+
             <ComboBox 
                 Margin="0,0,0,5"
                 ItemsSource="{Binding PuzzleYears}" 
-                SelectedItem="{Binding SelectedPuzzleYear, Mode=TwoWay}" >
-            </ComboBox>
+                SelectedItem="{Binding SelectedPuzzleYear, Mode=TwoWay}" />
+
+            <TextBlock Text="Puzzle:" />
 
             <ComboBox 
                 Margin="0,0,0,5"
                 ItemsSource="{Binding Puzzles}" 
                 DisplayMemberPath="Name"
-                SelectedItem="{Binding SelectedPuzzle, Mode=TwoWay}" >
-            </ComboBox>
+                SelectedItem="{Binding SelectedPuzzle, Mode=TwoWay}" />
+
+            <TextBlock Text="Inputs:" />
 
             <ListView 
                 Margin="0,0,0,5" 
                 ItemsSource="{Binding Inputs}" 
                 SelectedItem="{Binding SelectedInputs, Mode=TwoWay}" 
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-            </ListView>
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
+
+            <TextBlock Text="Solvers:" />
 
             <ListView 
                 Margin="0,0,0,5" 
                 ItemsSource="{Binding Solvers}" 
                 SelectedItem="{Binding SelectedSolver, Mode=TwoWay}" 
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-            </ListView>
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
+
+            <TextBlock Text="Result:" />
 
             <TextBox 
                 Margin="0,0,0,5" 
@@ -54,6 +60,13 @@
                 Margin="0,0,0,5"
                 Content="Copy Result"
                 Command="{Binding CopyOutputCommand}" />
+
+            <TextBlock Text="Logging Severity:" />
+
+            <ComboBox 
+                Margin="0,0,0,5"
+                ItemsSource="{Binding SeverityLevels}" 
+                SelectedItem="{Binding SelectedSeverityLevel, Mode=TwoWay}" />
 
             <Button
                 Margin="0,0,0,5"

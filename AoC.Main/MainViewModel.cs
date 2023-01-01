@@ -21,6 +21,8 @@ class MainViewModel : ViewModel
 {
 	#region Private Members
 
+	private readonly ILogger messengerLogger;
+	private readonly ILogger fileLogger;
 	private readonly ILogger logger;
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
@@ -39,6 +41,7 @@ class MainViewModel : ViewModel
 
 	private string outputText;
 	private string inputText;
+	private SeverityLevel selectedSeverityLevel;
 
 	#endregion Private Members
 
@@ -47,11 +50,9 @@ class MainViewModel : ViewModel
 	public MainViewModel()
 	{
 		var logMessenger = new Messenger();
-		logger = new AggregateLogger(new ILogger[]
-		{
-			new MessengerLogger(logMessenger, SeverityLevel.Debug),
-			new FileLogger(SeverityLevel.Verbose)
-		});
+		messengerLogger = new MessengerLogger(logMessenger, SeverityLevel.Debug);
+		fileLogger = new FileLogger(SeverityLevel.Verbose);
+		logger = new AggregateLogger(new ILogger[] { messengerLogger, fileLogger });
 
 		logMessenger.OnMessageSent += LogMessenger_OnMessageSent;
 
@@ -68,7 +69,7 @@ class MainViewModel : ViewModel
 
 		container.ComposeParts(this);
 
-		foreach (var puzzle in importedPuzzles.OrderByDescending(p => p.Year).ThenByDescending(p=>p.Name).ToList())
+		foreach (var puzzle in importedPuzzles.OrderByDescending(p => p.Year).ThenByDescending(p => p.Name).ToList())
 		{
 			if (!PuzzleYears.Contains(puzzle.Year))
 			{
@@ -80,6 +81,10 @@ class MainViewModel : ViewModel
 		}
 
 		SelectedPuzzleYear = 2015; // PuzzleYears[0];
+
+		foreach (SeverityLevel level in Enum.GetValues(typeof(SeverityLevel)))
+			SeverityLevels.Add(level);
+		SelectedSeverityLevel = messengerLogger.Severity;
 	}
 
 	#endregion Constructors
@@ -93,6 +98,8 @@ class MainViewModel : ViewModel
 	public ObservableCollection<string> Inputs { get; } = new();
 
 	public ObservableCollection<string> Solvers { get; } = new();
+
+	public ObservableCollection<SeverityLevel> SeverityLevels { get; } = new();
 
 	public ObservableCollection<string> MessageLog { get; } = new();
 
@@ -186,18 +193,39 @@ class MainViewModel : ViewModel
 				OutputText = "";
 				MessageLog.Clear();
 
+				if (string.IsNullOrEmpty(InputText)) 
+				{
+					logger.SendError("Core", "No inputs selected.");
+					return;
+				}
+
 				new Thread(() =>
 				{
 					Thread.CurrentThread.IsBackground = true;
 					var begin = DateTime.Now;
 					logger.SendInfo("Core", $"Begin");
-					OutputText = selectedPuzzle.Solvers[value](inputText);
+					OutputText = selectedPuzzle.Solvers[value](InputText);
 					var end = DateTime.Now;
 					logger.SendInfo("Core", $"End: {end - begin}");
 				}).Start();
 			}
 
 			SelectedSolver = null;
+		}
+	}
+
+	public SeverityLevel SelectedSeverityLevel
+	{
+		get => selectedSeverityLevel;
+		set
+		{
+			if (selectedSeverityLevel == value) 
+				return;
+
+			selectedSeverityLevel = value;
+			NotifyPropertyChanged();
+
+			messengerLogger.Severity = value;
 		}
 	}
 
@@ -264,7 +292,7 @@ class MainViewModel : ViewModel
 
 	private void LogMessenger_OnMessageSent(object sender, string message)
 	{
-		App.Current.Dispatcher.Invoke(() => 
+		App.Current.Dispatcher.Invoke(() =>
 		{
 			MessageLog.Add(message);
 		});
