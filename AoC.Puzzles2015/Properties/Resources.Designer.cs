@@ -377,11 +377,21 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
+        ///Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3.
         /// </summary>
         internal static string Day15Inputs {
             get {
                 return ResourceManager.GetString("Day15Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day17Inputs {
+            get {
+                return ResourceManager.GetString("Day17Inputs", resourceCulture);
             }
         }
     }
