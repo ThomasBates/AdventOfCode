@@ -53,25 +53,25 @@ public class Day00 : IPuzzle
 
 	private string SolvePart1(string input)
 	{
-		LoadDataFromInput(input);
+		var data = LoadDataFromInput(input);
 
-		var result = ProcessDataForPart1();
+		var result = ProcessDataForPart1(data);
 
-		return result;
+		return result.ToString();
 	}
 
 	private string SolvePart2(string input)
 	{
-		LoadDataFromInput(input);
+		var data = LoadDataFromInput(input);
 
-		var result = ProcessDataForPart2();
+		var result = ProcessDataForPart2(data);
 
-		return result;
+		return result.ToString();
 	}
 
 	#endregion Solvers
 
-	private void LoadDataFromInput(string input)
+	private object LoadDataFromInput(string input)
 	{
 		//  First Clear Data
 
@@ -117,15 +117,17 @@ public class Day00 : IPuzzle
 						break;
 				}
 			});
+		
+		return null;
 	}
 
-	private string ProcessDataForPart1()
+	private object ProcessDataForPart1(object data)
 	{
-		return "";
+		return null;
 	}
 
-	private string ProcessDataForPart2()
+	private object ProcessDataForPart2(object data)
 	{
-		return "";
+		return null;
 	}
 }
