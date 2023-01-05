@@ -429,7 +429,7 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 200.
         /// </summary>
         internal static string Day20Inputs {
             get {
