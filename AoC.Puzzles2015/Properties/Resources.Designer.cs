@@ -451,7 +451,7 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hit Points: 13
+        ///   Looks up a localized string similar to Hit Points: 14
         ///Damage: 8
         ///
         ///Hero HP: 10
@@ -460,6 +460,15 @@ namespace AoC.Puzzles2015.Properties {
         internal static string Day22Inputs14 {
             get {
                 return ResourceManager.GetString("Day22Inputs14", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day23Inputs {
+            get {
+                return ResourceManager.GetString("Day23Inputs", resourceCulture);
             }
         }
     }
