@@ -1,0 +1,5 @@
+Hit Points: 13
+Damage: 8
+
+Hero HP: 10
+Mana: 250
