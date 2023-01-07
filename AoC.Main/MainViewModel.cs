@@ -80,7 +80,7 @@ class MainViewModel : ViewModel
 			yearPuzzles[puzzle.Year].Add(puzzle);
 		}
 
-		SelectedPuzzleYear = 2015; // PuzzleYears[0];
+		SelectedPuzzleYear = 2016; // PuzzleYears[0];
 
 		foreach (SeverityLevel level in Enum.GetValues(typeof(SeverityLevel)))
 			SeverityLevels.Add(level);
