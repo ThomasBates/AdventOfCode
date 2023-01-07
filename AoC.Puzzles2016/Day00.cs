@@ -73,7 +73,7 @@ public class Day00 : IPuzzle
 
 	private object LoadDataFromInput(string input)
 	{
-		//  First Clear Data
+		var data = new object();
 
 		InputHelper.TraverseInputTokens(input, value =>
 		{
@@ -118,7 +118,7 @@ public class Day00 : IPuzzle
 				}
 			});
 		
-		return null;
+		return data;
 	}
 
 	private object ProcessDataForPart1(object data)
