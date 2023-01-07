@@ -476,11 +476,29 @@ namespace AoC.Puzzles2015.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 1
+        ///2
+        ///3
+        ///4
+        ///5
+        ///7
+        ///8
+        ///9
+        ///10
+        ///11.
         /// </summary>
         internal static string Day24Inputs {
             get {
                 return ResourceManager.GetString("Day24Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day25Inputs {
+            get {
+                return ResourceManager.GetString("Day25Inputs", resourceCulture);
             }
         }
     }
