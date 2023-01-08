@@ -106,7 +106,10 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ULL
+        ///RRDDD
+        ///LURDL
+        ///UUUUD.
         /// </summary>
         internal static string Day02Inputs {
             get {
