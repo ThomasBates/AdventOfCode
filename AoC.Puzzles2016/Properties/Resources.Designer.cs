@@ -118,11 +118,23 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to aaaaa-bbb-z-y-x-123[abxyz]
+        ///a-b-c-d-e-f-g-h-987[abcde]
+        ///not-a-real-room-404[oarel]
+        ///totally-real-room-200[decoy].
         /// </summary>
         internal static string Day04Inputs {
             get {
                 return ResourceManager.GetString("Day04Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day05Inputs {
+            get {
+                return ResourceManager.GetString("Day05Inputs", resourceCulture);
             }
         }
     }
