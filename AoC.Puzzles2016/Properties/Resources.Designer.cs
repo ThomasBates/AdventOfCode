@@ -139,11 +139,50 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to eedadn
+        ///drvtee
+        ///eandsr
+        ///raavrd
+        ///atevrs
+        ///tsrnev
+        ///sdttsa
+        ///rasrtv
+        ///nssdts
+        ///ntnada
+        ///svetve
+        ///tesnvt
+        ///vntsnd
+        ///vrdear
+        ///dvrsen
+        ///enarar.
         /// </summary>
         internal static string Day06Inputs {
             get {
                 return ResourceManager.GetString("Day06Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to abba[mnop]qrst
+        ///abcd[bddb]xyyx
+        ///aaaa[qwer]tyui
+        ///ioxxoj[asdfgh]zxcvbn.
+        /// </summary>
+        internal static string Day07Inputs01 {
+            get {
+                return ResourceManager.GetString("Day07Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to aba[bab]xyz
+        ///xyx[xyx]xyx
+        ///aaa[kek]eke
+        ///zazbz[bzb]cdb.
+        /// </summary>
+        internal static string Day07Inputs02 {
+            get {
+                return ResourceManager.GetString("Day07Inputs02", resourceCulture);
             }
         }
     }
