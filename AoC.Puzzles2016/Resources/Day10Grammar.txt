@@ -1,0 +1,22 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+String          = "a string" | '[.]*'
+Integer         = "an integer" | (\+|-)?[0-9]+
+Real            = "a real number" | (\+|-)?[0-9]+\.[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "value" Integer "goes" "to" "bot" Integer c_value
+                | "bot" Integer "gives" "low" "to" target "and" "high" "to" target c_bot
+
+target          = "bot" Integer
+                | "output" Integer c_output
+
+#END
