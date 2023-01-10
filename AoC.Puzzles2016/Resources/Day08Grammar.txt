@@ -1,0 +1,19 @@
+
+#DEFINITIONS
+
+Integer         = [0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "rect" Integer "x" Integer c_rect
+                | "rotate" doRotate
+
+doRotate        = "row" "y" "=" Integer "by" Integer c_rotateRow
+                | "column" "x" "=" Integer "by" Integer c_rotateCol
+
+#END

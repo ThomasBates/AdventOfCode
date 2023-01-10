@@ -185,5 +185,45 @@ namespace AoC.Puzzles2016.Properties {
                 return ResourceManager.GetString("Day07Inputs02", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Integer         = [0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;rect&quot; Integer &quot;x&quot; Integer c_rect
+        ///                | &quot;rotate&quot; rotate
+        ///
+        ///rotate          = &quot;row&quot; &quot;y&quot; &quot;=&quot; Integer &quot;by&quot; Integer c_rotateRow
+        ///                | &quot;column&quot; &quot;x&quot; &quot;=&quot; Integer &quot;by&quot; Integer c_rotateCol
+        ///
+        ///#END
+        ///.
+        /// </summary>
+        internal static string Day08Grammar {
+            get {
+                return ResourceManager.GetString("Day08Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rect 3x2
+        ///rotate column x=1 by 1
+        ///rotate row y=0 by 4
+        ///rotate column x=1 by 1.
+        /// </summary>
+        internal static string Day08Inputs {
+            get {
+                return ResourceManager.GetString("Day08Inputs", resourceCulture);
+            }
+        }
     }
 }
