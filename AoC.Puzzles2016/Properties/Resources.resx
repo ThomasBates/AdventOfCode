@@ -151,4 +151,10 @@
   <data name="Day08Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day08inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Day09Inputs01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day09inputs01.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day09Inputs02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day09inputs02.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

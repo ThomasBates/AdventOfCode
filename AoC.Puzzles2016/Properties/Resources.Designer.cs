@@ -200,9 +200,9 @@ namespace AoC.Puzzles2016.Properties {
         ///                | line moreLines
         ///
         ///line            = &quot;rect&quot; Integer &quot;x&quot; Integer c_rect
-        ///                | &quot;rotate&quot; rotate
+        ///                | &quot;rotate&quot; doRotate
         ///
-        ///rotate          = &quot;row&quot; &quot;y&quot; &quot;=&quot; Integer &quot;by&quot; Integer c_rotateRow
+        ///doRotate        = &quot;row&quot; &quot;y&quot; &quot;=&quot; Integer &quot;by&quot; Integer c_rotateRow
         ///                | &quot;column&quot; &quot;x&quot; &quot;=&quot; Integer &quot;by&quot; Integer c_rotateCol
         ///
         ///#END
@@ -223,6 +223,32 @@ namespace AoC.Puzzles2016.Properties {
         internal static string Day08Inputs {
             get {
                 return ResourceManager.GetString("Day08Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADVENT
+        ///A(1x5)BC
+        ///(3x3)XYZ
+        ///A(2x2)BCD(2x2)EFG
+        ///(6x1)(1x3)A
+        ///X(8x2)(3x3)ABCY.
+        /// </summary>
+        internal static string Day09Inputs01 {
+            get {
+                return ResourceManager.GetString("Day09Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (3x3)XYZ
+        ///X(8x2)(3x3)ABCY
+        ///(27x12)(20x12)(13x14)(7x10)(1x12)A
+        ///(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN.
+        /// </summary>
+        internal static string Day09Inputs02 {
+            get {
+                return ResourceManager.GetString("Day09Inputs02", resourceCulture);
             }
         }
     }
