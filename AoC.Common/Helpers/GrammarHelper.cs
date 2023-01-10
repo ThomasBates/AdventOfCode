@@ -8,27 +8,26 @@ namespace AoC.Common.Helpers;
 
 public class GrammarHelper
 {
-	public static IL2Grammar CreateGrammar(ILogger logger, string grammarFile)
+	public static GrammarData CreateGrammar(ILogger logger, string grammarFile)
 	{
-		IL2Grammar grammar = new L2Grammar();
+		IGrammarReader grammarReader = new L2GrammarReader();
 
 		if (logger != null)
-			grammar.OnLogMessageEmitted += (sender, e) => HandleLogMessageEmitted(logger, e);
+			grammarReader.OnLogMessageEmitted += (sender, e) => HandleLogMessageEmitted(logger, e);
 
 		try
 		{
-			grammar.ReadGrammarDefinition(grammarFile);
+			var grammar = grammarReader.ReadGrammarDefinition(grammarFile);
+			return grammar;
 		}
 		catch (GrammarException ex)
 		{
 			logger?.SendError("Grammar", $"{ex.GetType().Name}: {ex.Message}");
 			return null;
 		}
-
-		return grammar;
 	}
 
-	public static IParser CreateParser(
+	public static IGrammarParser CreateParser(
 		ILogger logger,
 		string grammarFile,
 		Action<string, Stack<string>> scopeControllerAction,
@@ -37,19 +36,22 @@ public class GrammarHelper
 	{
 		var grammar = CreateGrammar(logger, grammarFile);
 
+		if (grammar == null)
+			return null;
+
 		return CreateParser(logger, grammar, scopeControllerAction, typeCheckerAction, codeGeneratorAction);
 	}
 
-	public static IParser CreateParser(
+	public static IGrammarParser CreateParser(
 		ILogger logger,
-		IL2Grammar grammar,
+		GrammarData grammar,
 		Action<string, Stack<string>> scopeControllerAction,
 		Action<string, Stack<string>> typeCheckerAction,
 		Action<string, Stack<string>> codeGeneratorAction)
 	{
 		var valueStack = new Stack<string>();
 
-		IParser parser = new L2Parser(grammar);
+		IGrammarParser parser = new GrammarParser(grammar);
 
 		if (logger != null)
 			parser.OnLogMessageEmitted += (sender, e) => HandleLogMessageEmitted(logger, e);
@@ -83,18 +85,21 @@ public class GrammarHelper
 		Action<string, Stack<string>> typeCheckerAction,
 		Action<string, Stack<string>> codeGeneratorAction)
 	{
-		IParser parser = CreateParser(logger, grammarFile, scopeControllerAction, typeCheckerAction, codeGeneratorAction);
+		IGrammarParser parser = CreateParser(logger, grammarFile, scopeControllerAction, typeCheckerAction, codeGeneratorAction);
 		return ParseInput(logger, parser, input);
 	}
 
 	public static bool ParseInput(
 		ILogger logger,
-		IParser parser,
+		IGrammarParser parser,
 		string input)
 	{
+		if (parser == null)
+			return false;
+
 		try
 		{
-			parser.Parse(input);
+			parser.ParseInput(input);
 		}
 		catch (ParserException ex)
 		{
@@ -108,16 +113,16 @@ public class GrammarHelper
 	public static bool ParseInput(
 		ILogger logger,
 		string input,
-		IL2Grammar grammar,
+		GrammarData grammar,
 		Action<string, Stack<string>> scopeControllerAction,
 		Action<string, Stack<string>> typeCheckerAction,
 		Action<string, Stack<string>> codeGeneratorAction)
 	{
-		IParser parser = CreateParser(logger, grammar, scopeControllerAction, typeCheckerAction, codeGeneratorAction);
+		IGrammarParser parser = CreateParser(logger, grammar, scopeControllerAction, typeCheckerAction, codeGeneratorAction);
 		return ParseInput(logger, parser, input);
 	}
 
-	private static void HandleLogMessageEmitted(ILogger logger, ParserLogEventArgs e)
+	private static void HandleLogMessageEmitted(ILogger logger, GrammarLogEventArgs e)
 	{
 		if (logger == null)
 			return;

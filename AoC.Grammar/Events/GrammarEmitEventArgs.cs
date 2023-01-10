@@ -2,9 +2,9 @@ using System;
 
 namespace AoC.Grammar;
 
-public class ParserEventArgs : EventArgs
+public class GrammarEmitEventArgs : EventArgs
 {
-	public ParserEventArgs(string token, string value)
+	public GrammarEmitEventArgs(string token, string value)
 	{
 		Token = token;
 		Value = value;

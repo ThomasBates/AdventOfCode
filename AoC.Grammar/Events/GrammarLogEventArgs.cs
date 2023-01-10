@@ -2,9 +2,9 @@ using System;
 
 namespace AoC.Grammar;
 
-public class ParserLogEventArgs : EventArgs
+public class GrammarLogEventArgs : EventArgs
 {
-    public ParserLogEventArgs(string severity, string category, string message)
+    public GrammarLogEventArgs(string severity, string category, string message)
     {
         Severity = severity;
         Category = category;

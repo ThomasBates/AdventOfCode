@@ -271,7 +271,7 @@ public class Day04 : IPuzzle
 	/// </summary>
 	/// <param name="sender">The source of the event.</param>
 	/// <param name="e">The <see cref="Dynamic.Parser.ParserEventArgs"/> instance containing the event data.</param>
-	void Parser_ValueEmitted(object sender, ParserEventArgs e)
+	void Parser_ValueEmitted(object sender, GrammarEmitEventArgs e)
 	{
 		_valueStack.Push(e.Value);
 	}
@@ -281,7 +281,7 @@ public class Day04 : IPuzzle
 	/// </summary>
 	/// <param name="sender">The source of the event.</param>
 	/// <param name="e">The <see cref="Dynamic.Parser.ParserEventArgs"/> instance containing the event data.</param>
-	void Parser_TokenEmitted(object sender, ParserEventArgs e)
+	void Parser_TokenEmitted(object sender, GrammarEmitEventArgs e)
 	{
 		//DebugPrint("Filter", e.Token);
 
