@@ -59,17 +59,17 @@ public class Day10 : IPuzzle
 		_points.Clear();
 		_valueStack.Clear();
 
-		var _grammar = new L2Grammar();
-		var _parser = new L2Parser(_grammar);
+		var grammarReader = new L2GrammarReader();
+		var _grammar = grammarReader.ReadGrammarDefinition(Resources.Day03Grammar);
+		var _parser = new GrammarParser(_grammar);
 
-		_grammar.ReadGrammarDefinition(Resources.Day10Grammar);
 		_parser.OnValueEmitted += Parser_ValueEmitted;
 		_parser.OnTokenEmitted += Parser_TokenEmitted;
 
 		InputHelper.TraverseInputLines(input, (Action<string>)(line =>
 		{
 			_point = new Point();
-			_parser.Parse(line);
+			_parser.ParseInput(line);
 			_points.Add(_point);
 		}));
 	}

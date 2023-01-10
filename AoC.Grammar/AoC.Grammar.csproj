@@ -123,7 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\L2GrammarReader.cs" />
-    <Compile Include="Classes\L2GrammarParser.cs" />
+    <Compile Include="Classes\GrammarParser.cs" />
     <Compile Include="Events\GrammarEmitEventArgs.cs" />
     <Compile Include="Events\GrammarLogEventArgs.cs" />
     <Compile Include="Exceptions\GrammarException.cs" />

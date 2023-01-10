@@ -37,14 +37,14 @@ public class GrammarParser : IGrammarParser
     #endregion IParser Events
     #region IParser Methods
 
-    public virtual void ParseInput(string input, string startToken)
+    public void ParseInput(string input, string startToken = "")
     {
         byte[] buffer = Encoding.UTF8.GetBytes(input);
         var stream = new MemoryStream(buffer);
         ParseInput(stream, startToken);
     }
 
-    public void ParseInput(Stream input, string startToken)
+    public void ParseInput(Stream input, string startToken = "")
     {
         if (string.IsNullOrEmpty(startToken))
             startToken = grammar.StartToken;

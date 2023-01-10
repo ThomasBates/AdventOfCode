@@ -75,10 +75,10 @@ public class Day04 : IPuzzle
 		_guardEvents.Clear();
 		_valueStack.Clear();
 
-		var _grammar = new L2Grammar();
-		var _parser = new L2Parser(_grammar);
+		var grammarReader = new L2GrammarReader();
+		var _grammar = grammarReader.ReadGrammarDefinition(Resources.Day03Grammar);
+		var _parser = new GrammarParser(_grammar);
 
-		_grammar.ReadGrammarDefinition(Resources.Day04Grammar);
 		_parser.OnValueEmitted += Parser_ValueEmitted;
 		_parser.OnTokenEmitted += Parser_TokenEmitted;
 
@@ -87,7 +87,7 @@ public class Day04 : IPuzzle
 			if (!String.IsNullOrWhiteSpace(line))
 			{
 				_guardEvent = new GuardEvent();
-				_parser.Parse(line);
+				_parser.ParseInput(line);
 				_guardEvents.Add(_guardEvent);
 			}
 		});
@@ -181,10 +181,10 @@ public class Day04 : IPuzzle
 		_guardEvents.Clear();
 		_valueStack.Clear();
 
-		var _grammar = new L2Grammar();
-		var _parser = new L2Parser(_grammar);
+		var grammarReader = new L2GrammarReader();
+		var _grammar = grammarReader.ReadGrammarDefinition(Resources.Day03Grammar);
+		var _parser = new GrammarParser(_grammar);
 
-		_grammar.ReadGrammarDefinition(Resources.Day04Grammar);
 		_parser.OnValueEmitted += Parser_ValueEmitted;
 		_parser.OnTokenEmitted += Parser_TokenEmitted;
 
@@ -193,7 +193,7 @@ public class Day04 : IPuzzle
 			if (!String.IsNullOrWhiteSpace(line))
 			{
 				_guardEvent = new GuardEvent();
-				_parser.Parse(line);
+				_parser.ParseInput(line);
 				_guardEvents.Add(_guardEvent);
 			}
 		});
