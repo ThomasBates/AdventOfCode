@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.Serialization;
 using System.Text;
 using AoC.Common;
 using AoC.Common.Helpers;
@@ -289,23 +291,70 @@ public class Day11 : IPuzzle
 			stepStateCount++;
 			timeStateCount++;
 
-			logger.SendVerbose(nameof(Day11), $"Processing state: {state}");
+			State finalState = ProcessState(states, seen, state);
+			if (finalState != null)
+				return finalState;
+		}
 
-			var candidates = state.Components.Where(c => c.floor == state.ElevatorFloor);
-			var pairs = new List<(Component first, Component second)>();
+		return null;
+	}
 
-			var singleUp = new List<State>();
-			var doubleUp = new List<State>();
-			var singleDown = new List<State>();
-			var doubleDown = new List<State>();
+	private State ProcessState(Queue<State> states, List<State> seen, State state)
+	{
+		logger.SendVerbose(nameof(Day11), $"Processing state: {state}");
 
-			foreach (var first in candidates)
+		var candidates = state.Components.Where(c => c.floor == state.ElevatorFloor);
+		var pairs = new List<(Component first, Component second)>();
+
+		var singleUp = new List<State>();
+		var doubleUp = new List<State>();
+		var singleDown = new List<State>();
+		var doubleDown = new List<State>();
+
+		foreach (var first in candidates)
+		{
+			logger.SendVerbose(nameof(Day11), $"    Considering moving {first.component.ShortName}");
+			if (state.ElevatorFloor < 4)
 			{
-				logger.SendVerbose(nameof(Day11), $"    Considering moving {first.component.ShortName}");
+				var newState = CreateNewState(state, new[] { first.component }, 1);
+				bool isFinal = CheckState(newState, singleUp, seen);
+				if (isFinal)
+					return newState;
+			}
+			//  "minor: If floor 0 is empty and you are on floor 1,
+			//  don't bother moving things back down to floor 0.
+			//  Similarly, if floors 0 and 1 are both empty and you are on floor 2,
+			//  don't bother moving things back down to floor 1."
+			if (state.Components.Any(c => c.floor < state.ElevatorFloor))
+			{
+				var newState = CreateNewState(state, new[] { first.component }, -1);
+				bool isFinal = CheckState(newState, singleDown, seen);
+				if (isFinal)
+					return newState;
+			}
+
+			foreach (var second in candidates)
+			{
+				logger.SendVerbose(nameof(Day11), $"    Considering moving {first.component.ShortName} and {second.component.ShortName}");
+				if (second == first)
+				{
+					logger.SendVerbose(nameof(Day11), "        Self.");
+					continue;
+				}
+
+				if (pairs.Contains((first.component, second.component)) ||
+					pairs.Contains((second.component, first.component)))
+				{
+					logger.SendVerbose(nameof(Day11), "        Done.");
+					continue;
+				}
+
+				pairs.Add((first.component, second.component));
+
 				if (state.ElevatorFloor < 4)
 				{
-					var newState = CreateNewState(state, new[] { first.component }, 1);
-					bool isFinal = CheckState(newState, singleUp, seen);
+					var newState = CreateNewState(state, new[] { first.component, second.component }, 1);
+					bool isFinal = CheckState(newState, doubleUp, seen);
 					if (isFinal)
 						return newState;
 				}
@@ -315,80 +364,42 @@ public class Day11 : IPuzzle
 				//  don't bother moving things back down to floor 1."
 				if (state.Components.Any(c => c.floor < state.ElevatorFloor))
 				{
-					var newState = CreateNewState(state, new[] { first.component }, -1);
-					bool isFinal = CheckState(newState, singleDown, seen);
+					var newState = CreateNewState(state, new[] { first.component, second.component }, -1);
+					bool isFinal = CheckState(newState, doubleDown, seen);
 					if (isFinal)
 						return newState;
 				}
-
-				foreach (var second in candidates)
-				{
-					logger.SendVerbose(nameof(Day11), $"    Considering moving {first.component.ShortName} and {second.component.ShortName}");
-					if (second == first)
-					{
-						logger.SendVerbose(nameof(Day11), "        Self.");
-						continue;
-					}
-
-					if (pairs.Contains((first.component, second.component)) ||
-						pairs.Contains((second.component, first.component)))
-					{
-						logger.SendVerbose(nameof(Day11), "        Done.");
-						continue;
-					}
-
-					pairs.Add((first.component, second.component));
-
-					if (state.ElevatorFloor < 4)
-					{
-						var newState = CreateNewState(state, new[] { first.component, second.component }, 1);
-						bool isFinal = CheckState(newState, doubleUp, seen);
-						if (isFinal)
-							return newState;
-					}
-					//  "minor: If floor 0 is empty and you are on floor 1,
-					//  don't bother moving things back down to floor 0.
-					//  Similarly, if floors 0 and 1 are both empty and you are on floor 2,
-					//  don't bother moving things back down to floor 1."
-					if (state.Components.Any(c => c.floor < state.ElevatorFloor))
-					{
-						var newState = CreateNewState(state, new[] { first.component, second.component }, -1);
-						bool isFinal = CheckState(newState, doubleDown, seen);
-						if (isFinal)
-							return newState;
-					}
-				}
 			}
+		}
 
-			// "Kind of important:
-			// If you can move two items upstairs, don't bother bringing one item upstairs.
-			// If you can move one item downstairs, don't bother bringing two items downstairs."
-			// https://www.reddit.com/r/adventofcode/comments/5hoia9/comment/db1v1ws/?utm_source=share&utm_medium=web2x&context=3
-			if (doubleUp.Count > 0)
-			{
-				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleUp.Select(s => s.ID))}");
-				foreach (var newState in doubleUp)
-					states.Enqueue(newState);
-			}
-			else if (singleUp.Count > 0)
-			{
-				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleUp.Select(s => s.ID))}");
-				foreach (var newState in singleUp)
-					states.Enqueue(newState);
-			}
+		// "Kind of important:
+		// If you can move two items upstairs, don't bother bringing one item upstairs.
+		// If you can move one item downstairs, don't bother bringing two items downstairs."
+		// https://www.reddit.com/r/adventofcode/comments/5hoia9/comment/db1v1ws/?utm_source=share&utm_medium=web2x&context=3
+		if (doubleUp.Count > 0)
+		{
+			logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleUp.Select(s => s.ID))}");
+			foreach (var newState in doubleUp)
+				states.Enqueue(newState);
+		}
+		else if (singleUp.Count > 0)
+		{
+			logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleUp.Select(s => s.ID))}");
+			foreach (var newState in singleUp)
+				states.Enqueue(newState);
+		}
 
-			if (singleDown.Count > 0)
-			{
-				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleDown.Select(s => s.ID))}");
-				foreach (var newState in singleDown)
-					states.Enqueue(newState);
-			}
-			else if (singleDown.Count > 0)
-			{
-				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleDown.Select(s => s.ID))}");
-				foreach (var newState in doubleDown)
-					states.Enqueue(newState);
-			}
+		if (singleDown.Count > 0)
+		{
+			logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleDown.Select(s => s.ID))}");
+			foreach (var newState in singleDown)
+				states.Enqueue(newState);
+		}
+		else if (singleDown.Count > 0)
+		{
+			logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleDown.Select(s => s.ID))}");
+			foreach (var newState in doubleDown)
+				states.Enqueue(newState);
 		}
 
 		return null;
