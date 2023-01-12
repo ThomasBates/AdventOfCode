@@ -70,7 +70,6 @@ public class Day11 : IPuzzle
 
 	private class State : IEquatable<State>
 	{
-		// TODO: parent state
 		public State Parent;
 		public long ID = 0;
 		public int Steps = 0;
@@ -232,8 +231,7 @@ public class Day11 : IPuzzle
 
 	private int SolvePart1(State initialState)
 	{
-		var states = new List<State> { initialState };
-		var finalState = FindFinalState(states);
+		var finalState = FindFinalState(initialState);
 
 		logger.SendDebug(nameof(Day11), "");
 		logger.SendDebug(nameof(Day11), "Final Solution:");
@@ -252,8 +250,7 @@ public class Day11 : IPuzzle
 
 		logger.SendDebug(nameof(Day11), $"Real Initial state: {initialState}");
 
-		var states = new List<State> { initialState };
-		var finalState = FindFinalState(states);
+		var finalState = FindFinalState(initialState);
 
 		logger.SendDebug(nameof(Day11), "");
 		logger.SendDebug(nameof(Day11), "Final Solution:");
@@ -262,9 +259,11 @@ public class Day11 : IPuzzle
 		return finalState.Steps;
 	}
 
-	private State FindFinalState(List<State> states)
+	private State FindFinalState(State initialState)
 	{
-		var seen = new List<State>(states);
+		var states = new Queue<State>();
+		states.Enqueue(initialState);
+		var seen = new List<State> { initialState };
 
 		var lastStep = 0;
 		var nextLog = DateTime.Now.AddSeconds(10);
@@ -272,9 +271,9 @@ public class Day11 : IPuzzle
 		var timeStateCount = 0;
 		while (states.Count > 0)
 		{
-			if (states[0].Steps > lastStep)
+			if (states.Peek().Steps > lastStep)
 			{
-				lastStep = states[0].Steps;
+				lastStep = states.Peek().Steps;
 				logger.SendDebug(nameof(Day11), $"Step {lastStep} - {stepStateCount} processed");
 				nextLog = DateTime.Now.AddSeconds(-10);
 				stepStateCount = 0;
@@ -286,8 +285,7 @@ public class Day11 : IPuzzle
 				timeStateCount = 0;
 			}
 
-			var state = states[0];
-			states.RemoveAt(0);
+			var state = states.Dequeue();
 			stepStateCount++;
 			timeStateCount++;
 
@@ -307,7 +305,6 @@ public class Day11 : IPuzzle
 				if (state.ElevatorFloor < 4)
 				{
 					var newState = CreateNewState(state, new[] { first.component }, 1);
-					// TODO: AggregateLogger.SeverityLevel
 					bool isFinal = CheckState(newState, singleUp, seen);
 					if (isFinal)
 						return newState;
@@ -370,23 +367,27 @@ public class Day11 : IPuzzle
 			if (doubleUp.Count > 0)
 			{
 				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleUp.Select(s => s.ID))}");
-				states.AddRange(doubleUp);
+				foreach (var newState in doubleUp)
+					states.Enqueue(newState);
 			}
 			else if (singleUp.Count > 0)
 			{
 				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleUp.Select(s => s.ID))}");
-				states.AddRange(singleUp);
+				foreach (var newState in singleUp)
+					states.Enqueue(newState);
 			}
 
 			if (singleDown.Count > 0)
 			{
 				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", singleDown.Select(s => s.ID))}");
-				states.AddRange(singleDown);
+				foreach (var newState in singleDown)
+					states.Enqueue(newState);
 			}
 			else if (singleDown.Count > 0)
 			{
 				logger.SendVerbose(nameof(Day11), $"    Adding {string.Join(", ", doubleDown.Select(s => s.ID))}");
-				states.AddRange(doubleDown);
+				foreach (var newState in doubleDown)
+					states.Enqueue(newState);
 			}
 		}
 
