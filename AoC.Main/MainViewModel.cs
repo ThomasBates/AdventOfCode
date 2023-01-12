@@ -21,8 +21,6 @@ class MainViewModel : ViewModel
 {
 	#region Private Members
 
-	private readonly ILogger messengerLogger;
-	private readonly ILogger fileLogger;
 	private readonly ILogger logger;
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
@@ -49,12 +47,11 @@ class MainViewModel : ViewModel
 
 	public MainViewModel()
 	{
-		var logMessenger = new Messenger();
-		messengerLogger = new MessengerLogger(logMessenger, SeverityLevel.Debug);
-		fileLogger = new FileLogger(SeverityLevel.Verbose);
-		logger = new AggregateLogger(new ILogger[] { messengerLogger, fileLogger });
-
-		logMessenger.OnMessageSent += LogMessenger_OnMessageSent;
+		logger = new AggregateLogger(new ILogger[] 
+		{
+			new MessengerLogger(new Messenger(LogMessenger_OnMessageSent)),
+			new FileLogger()
+		});
 
 		CopyOutputCommand = new RelayCommand(CopyOutput, CanCopyOutput);
 		CopyLogCommand = new RelayCommand(CopyLog, CanCopyLog);
@@ -85,7 +82,7 @@ class MainViewModel : ViewModel
 
 		foreach (SeverityLevel level in Enum.GetValues(typeof(SeverityLevel)))
 			SeverityLevels.Add(level);
-		SelectedSeverityLevel = messengerLogger.Severity;
+		SelectedSeverityLevel = logger.Severity;
 	}
 
 	#endregion Constructors
@@ -208,6 +205,7 @@ class MainViewModel : ViewModel
 					OutputText = selectedPuzzle.Solvers[value](InputText);
 					var end = DateTime.Now;
 					logger.SendInfo("Core", $"End: {end - begin}");
+					logger.SendInfo("Core", $"Result: {OutputText}");
 				}).Start();
 			}
 
@@ -226,7 +224,7 @@ class MainViewModel : ViewModel
 			selectedSeverityLevel = value;
 			NotifyPropertyChanged();
 
-			messengerLogger.Severity = value;
+			logger.Severity = value;
 		}
 	}
 

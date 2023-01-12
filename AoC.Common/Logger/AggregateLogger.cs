@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 
 namespace AoC.Common.Logger;
 
@@ -7,13 +8,22 @@ namespace AoC.Common.Logger;
 public class AggregateLogger : ILogger
 {
 	private readonly IEnumerable<ILogger> loggers;
+	private SeverityLevel severity;
 
 	public AggregateLogger(IEnumerable<ILogger> loggers)
 	{
 		this.loggers = loggers;
 	}
 
-	public SeverityLevel Severity { get; set; }
+	public SeverityLevel Severity
+	{
+		get => loggers.First().Severity;
+		set
+		{
+			foreach (var logger in loggers)
+				logger.Severity = value;
+		}
+	}
 
 	public void SendVerbose(string category, string message)
 	{

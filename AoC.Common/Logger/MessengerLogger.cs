@@ -8,7 +8,7 @@ public class MessengerLogger : ILogger
 {
 	private readonly IMessenger logMessenger;
 
-	public MessengerLogger(IMessenger logMessenger, SeverityLevel severity)
+	public MessengerLogger(IMessenger logMessenger, SeverityLevel severity = SeverityLevel.Info)
 	{
 		this.logMessenger = logMessenger;
 		Severity = severity;

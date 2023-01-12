@@ -9,7 +9,7 @@ public class FileLogger : ILogger
 {
 	private string location;
 
-	public FileLogger(SeverityLevel severity)
+	public FileLogger(SeverityLevel severity = SeverityLevel.Info)
 	{
 		Severity = severity;
 	}
