@@ -268,10 +268,10 @@ namespace AoC.Puzzles2016.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
-        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
-        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
-        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        ///line            = &quot;value&quot; Integer &quot;goes&quot; &quot;to&quot; &quot;bot&quot; Integer c_value
+        ///                | &quot;bot&quot; Integer &quot;gives&quot; &quot;low&quot; &quot;to&quot; target &quot;and&quot; &quot;high&quot; &quot;to&quot; target c_bot
+        ///
+        ///target          = &quot;bot [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day10Grammar {
             get {
@@ -280,11 +280,52 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to value 5 goes to bot 2
+        ///bot 2 gives low to bot 1 and high to bot 0
+        ///value 3 goes to bot 1
+        ///bot 1 gives low to output 1 and high to bot 0
+        ///bot 0 gives low to output 2 and high to output 0
+        ///value 2 goes to bot 2.
         /// </summary>
         internal static string Day10Inputs {
             get {
                 return ResourceManager.GetString("Day10Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
+        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
+        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
+        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day11Grammar {
+            get {
+                return ResourceManager.GetString("Day11Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day11Inputs {
+            get {
+                return ResourceManager.GetString("Day11Inputs", resourceCulture);
             }
         }
     }

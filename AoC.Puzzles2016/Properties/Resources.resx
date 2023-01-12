@@ -163,4 +163,10 @@
   <data name="Day10Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\day10inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Day11Grammar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day11grammar.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day11Inputs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\day11inputs.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

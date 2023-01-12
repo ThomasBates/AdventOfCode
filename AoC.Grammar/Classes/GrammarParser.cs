@@ -150,28 +150,29 @@ public class GrammarParser : IGrammarParser
                 {
                     testValue += nextChar;
 
-					if (grammar.Terminals.Contains(testValue))
-					{
-						scanToken = testValue;
-						nextValue = testValue;
-						nextChar = GetChar(input);
-						return;
-					}
-
 					int count = 0;
                     if (" \t\r\n".IndexOf(nextChar) < 0)
                     {
-                        foreach (string token in grammar.Intrinsics.Keys)
+                        if (grammar.Terminals.Contains(testValue))
                         {
-                            string pattern = grammar.Intrinsics[token];
-                            if (Regex.IsMatch(testValue, "^" + pattern + "$"))
+                            lastToken = testValue;
+                            lastValue = testValue;
+                            count++;
+                        }
+                        else
+                        {
+                            foreach (string token in grammar.Intrinsics.Keys)
                             {
-                                lastToken = token;
-                                lastValue = testValue;
-                                count++;
+                                string pattern = grammar.Intrinsics[token];
+                                if (Regex.IsMatch(testValue, "^" + pattern + "$"))
+                                {
+                                    lastToken = token;
+                                    lastValue = testValue;
+                                    count++;
+                                }
                             }
                         }
-                    }
+					}
 					if (!foundStart && count > 0)
 					{
 						foundStart = true;

@@ -84,7 +84,7 @@ public class Day00 : IPuzzle
 		});
 
 		GrammarHelper.ParseInput(logger, input, Resources.Day00Grammar,
-			(token, valueStack) =>
+			scopeControllerAction: (token, valueStack) =>
 			{
 				switch (token)
 				{
@@ -95,7 +95,7 @@ public class Day00 : IPuzzle
 						break;
 				}
 			},
-			(token, valueStack) =>
+			typeCheckerAction: (token, valueStack) =>
 			{
 				switch (token)
 				{
@@ -106,7 +106,7 @@ public class Day00 : IPuzzle
 						break;
 				}
 			},
-			(token, valueStack) =>
+			codeGeneratorAction: (token, valueStack) =>
 			{
 				switch (token)
 				{

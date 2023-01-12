@@ -1,0 +1,40 @@
+
+#DEFINITIONS
+
+Id              = [_A-Za-z][_A-Za-z0-9]*
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "The" numberWord "floor" s_floor "contains" floorContents "."
+
+numberWord      = "first" t_first
+                | "second" t_second
+                | "third" t_third
+                | "fourth" t_fourth
+
+floorContents   = article contents moreContents
+                | "nothing" "relevant"  c_nothing
+
+article         = "a"
+                | "an"
+
+listSeparator   =
+                | ","
+
+listAnd         =
+                | "and"
+
+moreContents    = 
+                | listSeparator listAnd article contents moreContents
+
+contents        = Id t_element contentType
+
+contentType     = "generator" c_generator
+                | "-" "compatible" "microchip" c_microchip
+
+#END
