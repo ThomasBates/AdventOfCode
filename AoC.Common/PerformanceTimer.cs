@@ -47,8 +47,7 @@ namespace AoC.Common
 		/// <author>Thomas_Bates</author>
 		public static void Start(ref long timer)
 		{
-			long counter;
-			QueryPerformanceCounter(out counter);
+			QueryPerformanceCounter(out long counter);
 			timer -= counter;
 		}
 
@@ -60,8 +59,7 @@ namespace AoC.Common
 		/// <author>Thomas_Bates</author>
 		public static void Stop(ref long timer)
 		{
-			long counter;
-			QueryPerformanceCounter(out counter);
+			QueryPerformanceCounter(out long counter);
 			timer += counter;
 		}
 
@@ -75,11 +73,10 @@ namespace AoC.Common
 		/// <author>Thomas_Bates</author>
 		public static string Show(long timer, long count, string description)
 		{
-			long frequency;
-			QueryPerformanceFrequency(out frequency);
+			QueryPerformanceFrequency(out long frequency);
 			count = Math.Max(count, 1);
-			string result = string.Format("{0:F6} [s] / {1} [iter.] = {2:F6} [ms/iter.]  -  {3}",
-								timer * 1.0 / frequency, count, timer * 1000.0 / (frequency * count), description);
+			string result = string.Format("{0:F6} [s] / {1} [iter.] = {2:F6} [us/iter.]  -  {3}",
+								timer * 1.0 / frequency, count, timer * 1000000.0 / (frequency * count), description);
 			return result;
 		}
 

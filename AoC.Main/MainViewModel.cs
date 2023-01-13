@@ -22,6 +22,7 @@ class MainViewModel : ViewModel
 	#region Private Members
 
 	private readonly ILogger logger;
+	private readonly object loggerLock = new();
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
 #pragma warning disable IDE0044 // Add readonly modifier
@@ -52,6 +53,7 @@ class MainViewModel : ViewModel
 			new MessengerLogger(new Messenger(LogMessenger_OnMessageSent)),
 			new FileLogger()
 		});
+		logger.Severity = SeverityLevel.Debug;
 
 		CopyOutputCommand = new RelayCommand(CopyOutput, CanCopyOutput);
 		CopyLogCommand = new RelayCommand(CopyLog, CanCopyLog);
@@ -293,7 +295,12 @@ class MainViewModel : ViewModel
 	{
 		App.Current.Dispatcher.Invoke(() =>
 		{
-			MessageLog.Add(message);
+			lock (loggerLock)
+			{
+				var messages = message.Replace("\r", "").Split(new[] { "\n" }, StringSplitOptions.None);
+				foreach(var msg in messages)
+					MessageLog.Add(msg);
+			}
 		});
 	}
 

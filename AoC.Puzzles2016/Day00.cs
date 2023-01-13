@@ -49,6 +49,13 @@ public class Day00 : IPuzzle
 
 	#endregion Constructors
 
+	#region Helpers
+
+	void LoggerSendDebug(string message) => logger.SendDebug(nameof(Day00), message);
+	void LoggerSendVerbose(string message) => logger.SendVerbose(nameof(Day00), message);
+
+	#endregion Helpers
+
 	#region Solvers
 
 	private string SolvePart1(string input)
