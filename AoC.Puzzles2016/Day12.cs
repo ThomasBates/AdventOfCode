@@ -165,17 +165,11 @@ public class Day12 : IPuzzle
 		return registry["a"];
 	}
 
-	private enum Operation { cpyn, cpyr, inc, dec, jnznn, jnzrn, jnznr, jnzrr }
+	private enum Op { cpyn, cpyr, inc, dec, jnznn, jnzrn, jnznr, jnzrr }
 
-	private class Instruction
+	private List<(Op, int, int)> LoadDataOptimized(string input)
 	{
-		public Operation Op;
-		public int[] Args;
-	}
-
-	private List<Instruction> LoadDataOptimized(string input)
-	{
-		var program = new List<Instruction>();
+		var program = new List<(Op, int, int)>();
 
 		GrammarHelper.ParseInput(logger, input, Resources.Day12Grammar,
 			scopeControllerAction: null,
@@ -187,36 +181,24 @@ public class Day12 : IPuzzle
 					case "c_cpy":
 						var target = valueStack.Pop();
 						var source = valueStack.Pop();
-						var cpyOp = Operation.cpyn;
+						var cpyOp = Op.cpyn;
 						if (!int.TryParse(source, out var sourceValue))
 						{
 							sourceValue = source[0] - 'a';
-							cpyOp = Operation.cpyr;
+							cpyOp = Op.cpyr;
 						}
 						var targetValue = target[0] - 'a';
-						program.Add(new Instruction
-						{
-							Op = cpyOp,
-							Args = new[] { sourceValue, targetValue }
-						});
+						program.Add((cpyOp, sourceValue, targetValue));
 						break;
 					case "c_inc":
 						var incReg = valueStack.Pop();
 						var incValue = incReg[0] - 'a';
-						program.Add(new Instruction 
-						{
-							Op = Operation.inc, 
-							Args = new int[] { incValue } 
-						});
+						program.Add((Op.inc, incValue, 0));
 						break;
 					case "c_dec":
 						var decReg = valueStack.Pop();
 						var decValue = decReg[0] - 'a';
-						program.Add(new Instruction
-						{
-							Op = Operation.dec,
-							Args = new int[] { decValue }
-						});
+						program.Add((Op.dec, decValue, 0));
 						break;
 					case "c_jnz":
 						var jump = valueStack.Pop();
@@ -235,27 +217,23 @@ public class Day12 : IPuzzle
 						}
 						var jnzOp = (testReg, jumpReg) switch
 						{
-							(false, false) => Operation.jnznn,
-							(true, false) => Operation.jnzrn,
-							(false, true) => Operation.jnznr,
-							(true, true) => Operation.jnzrr,
+							(false, false) => Op.jnznn,
+							(true, false) => Op.jnzrn,
+							(false, true) => Op.jnznr,
+							(true, true) => Op.jnzrr,
 						};
-						program.Add(new Instruction
-						{
-							Op = jnzOp,
-							Args = new[] { testValue, jumpValue }
-						});
+						program.Add((jnzOp, testValue, jumpValue));
 						break;
 				}
 			});
 
-		foreach (var instruction in program)
-			LoggerSendDebug($"{instruction.Op,-5} {string.Join(" ", instruction.Args),-5}");
+		foreach (var (op, arg1, arg2) in program)
+			LoggerSendDebug($"{op,-5} {arg1} {arg2}");
 
 		return program;
 	}
 
-	private int RunProgramOptimized(List<Instruction> program, int[] registers)
+	private int RunProgramOptimized(List<(Op,int,int)> program, int[] registers)
 	{
 		if (registers.Length < 4)
 			return 0;
@@ -264,52 +242,52 @@ public class Day12 : IPuzzle
 
 		while (pc < program.Count)
 		{
-			var instruction = program[pc];
-			switch (instruction.Op)
+			var (op, arg1, arg2) = program[pc];
+			switch (op)
 			{
-				case Operation.cpyn:
-					registers[instruction.Args[1]] = instruction.Args[0];
+				case Op.cpyn:
+					registers[arg2] = arg1;
 					pc++;
 					break;
-				case Operation.cpyr:
-					registers[instruction.Args[1]] = registers[instruction.Args[0]];
+				case Op.cpyr:
+					registers[arg2] = registers[arg1];
 					pc++;
 					break;
-				case Operation.inc:
-					registers[instruction.Args[0]]++;
+				case Op.inc:
+					registers[arg1]++;
 					pc++;
 					break;
-				case Operation.dec:
-					registers[instruction.Args[0]]--;
+				case Op.dec:
+					registers[arg1]--;
 					pc++;
 					break;
-				case Operation.jnznn:
-					if (instruction.Args[0] != 0)
-						pc += instruction.Args[1];
+				case Op.jnznn:
+					if (arg1 != 0)
+						pc += arg2;
 					else
 						pc++;
 					break;
-				case Operation.jnzrn:
-					if (registers[instruction.Args[0]] != 0)
-						pc += instruction.Args[1];
+				case Op.jnzrn:
+					if (registers[arg1] != 0)
+						pc += arg2;
 					else
 						pc++;
 					break;
-				case Operation.jnznr:
-					if (instruction.Args[0] != 0)
-						pc += registers[instruction.Args[1]];
+				case Op.jnznr:
+					if (arg1 != 0)
+						pc += registers[arg2];
 					else
 						pc++;
 					break;
-				case Operation.jnzrr:
-					if (registers[instruction.Args[0]] != 0)
-						pc += registers[instruction.Args[1]];
+				case Op.jnzrr:
+					if (registers[arg1] != 0)
+						pc += registers[arg2];
 					else
 						pc++;
 					break;
 			}
 
-			//LoggerSendVerbose($"{instruction.Op,-5} {string.Join(" ", instruction.Args),-5} pc = {pc,2}, [{string.Join(", ", registers)}]");
+			//LoggerSendVerbose($"{op,-5} {arg1,-3} {arg2,-3} pc = {pc,2}, [{string.Join(", ", registers)}]");
 		}
 
 		return registers[0];
