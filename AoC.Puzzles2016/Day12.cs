@@ -44,8 +44,10 @@ public class Day12 : IPuzzle
 	{
 		this.logger = logger;
 
-		Solvers.Add("Solve Part 1", SolvePart1);
-		Solvers.Add("Solve Part 2", SolvePart2);
+		Solvers.Add("Solve Part 1 (basic)", SolvePart1);
+		Solvers.Add("Solve Part 2 (basic)", SolvePart2);
+		Solvers.Add("Solve Part 1 (optimized)", SolvePart1Optimized);
+		Solvers.Add("Solve Part 2 (optimized)", SolvePart2Optimized);
 	}
 
 	#endregion Constructors
@@ -61,7 +63,7 @@ public class Day12 : IPuzzle
 
 	private string SolvePart1(string input)
 	{
-		var program = LoadDataFromInput(input);
+		var program = LoadData(input);
 
 		var result = RunProgram(program, new[] { 0, 0, 0, 0 });
 
@@ -70,14 +72,98 @@ public class Day12 : IPuzzle
 
 	private string SolvePart2(string input)
 	{
-		var program = LoadDataFromInput(input);
+		var program = LoadData(input);
 
 		var result = RunProgram(program, new[] { 0, 0, 1, 0 });
 
 		return result.ToString();
 	}
 
+	private string SolvePart1Optimized(string input)
+	{
+		var program = LoadDataOptimized(input);
+
+		var result = RunProgramOptimized(program, new[] { 0, 0, 0, 0 });
+
+		return result.ToString();
+	}
+
+	private string SolvePart2Optimized(string input)
+	{
+		var program = LoadDataOptimized(input);
+
+		var result = RunProgramOptimized(program, new[] { 0, 0, 1, 0 });
+
+		return result.ToString();
+	}
+
 	#endregion Solvers
+
+	private List<(string,string ,string)> LoadData(string input)
+	{
+		var program = new List<(string,string ,string)>();
+
+		InputHelper.TraverseInputLines(input, line =>
+		{
+			var parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+			var op = parts.Length > 0 ? parts[0] : "";
+			var arg1 = parts.Length > 1 ? parts[1] : "";
+			var arg2 = parts.Length > 2 ? parts[2] : "";
+			if (!string.IsNullOrEmpty(op))
+				program.Add((op, arg1, arg2));
+		});
+
+		return program;
+	}
+
+	private int RunProgram(List<(string, string, string)> program, int[] registryValues)
+	{
+		if (registryValues.Length < 4)
+			return 0;
+
+		var registry = new Dictionary<string, int>
+		{
+			{ "a", registryValues[0] },
+			{ "b", registryValues[1] },
+			{ "c", registryValues[2] },
+			{ "d", registryValues[3] },
+		};
+
+		int pc = 0;
+
+		while (pc < program.Count)
+		{
+			var (op, arg1, arg2) = program[pc];
+			switch(op)
+			{
+				case "cpy":
+					if (!registry.TryGetValue(arg1, out var value))
+						value = int.Parse(arg1);
+					registry[arg2] = value;
+					pc++;
+					break;
+				case "inc":
+					registry[arg1]++;
+					pc++;
+					break;
+				case "dec":
+					registry[arg1]--;
+					pc++;
+					break;
+				case "jnz":
+					if (!registry.TryGetValue(arg1, out var test))
+						test = int.Parse(arg1);
+					if (!registry.TryGetValue(arg2, out var jump))
+						jump = int.Parse(arg2);
+					if (test != 0)
+						pc += jump;
+					else
+						pc++;
+					break;
+			}
+		}
+		return registry["a"];
+	}
 
 	private enum Operation { cpyn, cpyr, inc, dec, jnznn, jnzrn, jnznr, jnzrr }
 
@@ -87,7 +173,7 @@ public class Day12 : IPuzzle
 		public int[] Args;
 	}
 
-	private List<Instruction> LoadDataFromInput(string input)
+	private List<Instruction> LoadDataOptimized(string input)
 	{
 		var program = new List<Instruction>();
 
@@ -169,7 +255,7 @@ public class Day12 : IPuzzle
 		return program;
 	}
 
-	private int RunProgram(List<Instruction> program, int[] registers)
+	private int RunProgramOptimized(List<Instruction> program, int[] registers)
 	{
 		if (registers.Length < 4)
 			return 0;
