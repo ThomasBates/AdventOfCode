@@ -48,12 +48,14 @@ class MainViewModel : ViewModel
 
 	public MainViewModel()
 	{
-		logger = new AggregateLogger(new ILogger[] 
+		logger = new AggregateLogger(new ILogger[]
 		{
 			new MessengerLogger(new Messenger(LogMessenger_OnMessageSent)),
 			new FileLogger()
-		});
-		logger.Severity = SeverityLevel.Debug;
+		})
+		{
+			Severity = SeverityLevel.Debug
+		};
 
 		CopyOutputCommand = new RelayCommand(CopyOutput, CanCopyOutput);
 		CopyLogCommand = new RelayCommand(CopyLog, CanCopyLog);
@@ -203,7 +205,7 @@ class MainViewModel : ViewModel
 				{
 					Thread.CurrentThread.IsBackground = true;
 					var begin = DateTime.Now;
-					logger.SendInfo("Core", $"Begin");
+					logger.SendInfo("Core", $"Begin {value} with {SelectedInputs}");
 					OutputText = selectedPuzzle.Solvers[value](InputText);
 					var end = DateTime.Now;
 					logger.SendInfo("Core", $"End: {end - begin}");

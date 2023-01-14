@@ -297,6 +297,49 @@ namespace AoC.Puzzles2016.Properties {
         ///   Looks up a localized string similar to 
         ///#DEFINITIONS
         ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;The&quot; numberWord &quot;floor&quot; s_floor &quot;contains&quot; floorContents &quot;.&quot;
+        ///
+        ///numberWord      = &quot;first&quot; t_first
+        ///                | &quot;second&quot; t_second
+        ///                | &quot;third&quot; t_third
+        ///                | &quot;fourth&quot; t_fourth
+        ///
+        ///floorContents   = article contents moreContents
+        ///                | &quot;nothing&quot; &quot;relevant&quot;  c_nothing
+        ///
+        ///article          [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day11Grammar {
+            get {
+                return ResourceManager.GetString("Day11Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The first floor contains a hydrogen-compatible microchip and a lithium-compatible microchip.
+        ///The second floor contains a hydrogen generator.
+        ///The third floor contains a lithium generator.
+        ///The fourth floor contains nothing relevant..
+        /// </summary>
+        internal static string Day11Inputs {
+            get {
+                return ResourceManager.GetString("Day11Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
         ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
         ///String          = &quot;a string&quot; | &apos;[.]*&apos;
         ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
@@ -314,18 +357,18 @@ namespace AoC.Puzzles2016.Properties {
         ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
         ///                | &quot;Tes [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Day11Grammar {
+        internal static string Day12Grammar {
             get {
-                return ResourceManager.GetString("Day11Grammar", resourceCulture);
+                return ResourceManager.GetString("Day12Grammar", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string Day11Inputs {
+        internal static string Day12Inputs {
             get {
-                return ResourceManager.GetString("Day11Inputs", resourceCulture);
+                return ResourceManager.GetString("Day12Inputs", resourceCulture);
             }
         }
     }
