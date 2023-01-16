@@ -181,10 +181,9 @@ public class Day16 : IPuzzle
 		if (source.Distances.TryGetValue(target, out var distance))
 			return distance;
 
-		var path = PathfindingHelper.FindPath(allValves,
+		var path = PathfindingHelper.FindPath(source, target,
 			(valve) => valve.Tunnels,
-			(source, target) => 1, 
-			source, target);
+			(source, target) => 1);
 
 		distance = path.Count();
 

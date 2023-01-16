@@ -6,71 +6,69 @@ namespace AoC.Common.Helpers;
 public class PathfindingHelper
 {
 	public static IEnumerable<TNode> FindPath<TNode>(
-		IEnumerable<TNode> allNodes,
+		TNode origin,
+		TNode target,
 		Func<TNode, IEnumerable<TNode>> getNeighbors,
 		Func<TNode, TNode, double> getDistance,
-		TNode source,
-		TNode target)
+		Action<TNode, double> setDistance = null)
 		where TNode : class
 	{
-		Dictionary<TNode, bool> visited = new();
-		Dictionary<TNode, double> distance = new();
-		Dictionary<TNode, TNode> prev = new();
+		var unvisited = new HashSet<TNode>();
+		var visited = new HashSet<TNode>();
+		var distance = new Dictionary<TNode, double>();
+		var prev = new Dictionary<TNode, TNode>();
 
-		foreach (var node in allNodes)
-		{
-			visited[node] = false;
-			distance[node] = double.MaxValue;
-			prev[node] = default;
-		}
-
-		distance[source] = 0;
-		TNode current = source;
+		unvisited.Add(origin);
+		distance[origin] = 0;
+		TNode current = origin;
 
 		while (true)
 		{
 			foreach (var neighbor in getNeighbors(current))
 			{
-				if (visited[neighbor])
+				if (visited.Contains(neighbor))
 					continue;
 
-				double d = distance[current] + getDistance(current, neighbor);
-				if (d < distance[neighbor])
+				if (!distance.TryGetValue(neighbor, out var neighborDistance))
 				{
-					distance[neighbor] = d;
+					neighborDistance = double.MaxValue;
+					distance[neighbor] = neighborDistance;
+					unvisited.Add(neighbor);
+				}
+
+				double newDistance = distance[current] + getDistance(current, neighbor);
+
+				if (newDistance < neighborDistance)
+				{
+					distance[neighbor] = newDistance;
 					prev[neighbor] = current;
 				}
 			}
 
-			visited[current] = true;
+			unvisited.Remove(current);
+			visited.Add(current);
+			setDistance?.Invoke(current, distance[current]);
 
 			if (current == target)
-			{
-				return GetPath(prev, source, target);
-			}
+				return GetPath(prev, origin, target);
 
-			current = GetCurrent(visited, distance);
+			current = GetCurrent(unvisited, distance);
 
 			if (current == null)
-			{
 				return null;
-			}
 		}
 
-		TNode GetCurrent(Dictionary<TNode, bool> visited, Dictionary<TNode, double> distance)
+		TNode GetCurrent(HashSet<TNode> unvisited, Dictionary<TNode, double> distance)
 		{
 			double minDistance = double.MaxValue;
 			TNode result = null;
 
-			foreach (var valve in visited.Keys)
+			foreach (var node in unvisited)
 			{
-				if (visited[valve])
-					continue;
-
-				if (distance[valve] < minDistance)
+				if (distance[node] < minDistance)
 				{
-					minDistance = distance[valve];
-					result = valve;
+					minDistance = distance[node];
+					result = node;
 				}
 			}
 
@@ -85,17 +83,13 @@ public class PathfindingHelper
 			while (true)
 			{
 				if (current == source)
-				{
 					return path;
-				}
 
 				path.Insert(0, current);
 
 				current = prev[current];
 				if (current == null)
-				{
 					return null;
-				}
 			}
 		}
 	}

@@ -341,9 +341,7 @@ namespace AoC.Puzzles2016.Properties {
         ///#DEFINITIONS
         ///
         ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
-        ///String          = &quot;a string&quot; | &apos;[.]*&apos;
         ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
-        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
         ///
         ///#GRAMMAR
         ///
@@ -352,10 +350,15 @@ namespace AoC.Puzzles2016.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
-        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
-        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
-        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        ///line            = &quot;cpy&quot; value register c_cpy
+        ///                | &quot;inc&quot; register c_inc
+        ///                | &quot;dec&quot; register c_dec
+        ///                | &quot;jnz&quot; value value c_jnz
+        ///
+        ///value           = Integer c_numberValue
+        ///                | Id c_registerValue
+        ///
+        ///register        = Id c_regist [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day12Grammar {
             get {
@@ -364,11 +367,25 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to cpy 41 a
+        ///inc a
+        ///inc a
+        ///dec a
+        ///jnz a 2
+        ///dec a.
         /// </summary>
         internal static string Day12Inputs {
             get {
                 return ResourceManager.GetString("Day12Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day13Inputs {
+            get {
+                return ResourceManager.GetString("Day13Inputs", resourceCulture);
             }
         }
     }

@@ -8,7 +8,6 @@ namespace AoC.Common.Logger;
 public class AggregateLogger : ILogger
 {
 	private readonly IEnumerable<ILogger> loggers;
-	private SeverityLevel severity;
 
 	public AggregateLogger(IEnumerable<ILogger> loggers)
 	{
