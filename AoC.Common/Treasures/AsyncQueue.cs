@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-/// <summary>
-/// 
-/// </summary>
-/// <typeparam name="T"></typeparam>
-/// <remarks>
-/// https://stackoverflow.com/a/48963786
-/// </remarks>
+namespace AoC.Common.Treasures;
+
+// https://stackoverflow.com/a/48963786
 public class AsyncQueue<T>
 {
 	private readonly SemaphoreSlim _sem;

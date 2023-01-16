@@ -43,8 +43,8 @@ public class Day00 : IPuzzle
 	{
 		this.logger = logger;
 
-		Solvers.Add("Solve Part 1", SolvePart1);
-		Solvers.Add("Solve Part 2", SolvePart2);
+		Solvers.Add("Solve Part 1", input => SolvePart1(LoadData(input)).ToString());
+		Solvers.Add("Solve Part 2", input => SolvePart2(LoadData(input)).ToString());
 	}
 
 	#endregion Constructors
@@ -56,29 +56,7 @@ public class Day00 : IPuzzle
 
 	#endregion Helpers
 
-	#region Solvers
-
-	private string SolvePart1(string input)
-	{
-		var data = LoadDataFromInput(input);
-
-		var result = ProcessDataForPart1(data);
-
-		return result.ToString();
-	}
-
-	private string SolvePart2(string input)
-	{
-		var data = LoadDataFromInput(input);
-
-		var result = ProcessDataForPart2(data);
-
-		return result.ToString();
-	}
-
-	#endregion Solvers
-
-	private object LoadDataFromInput(string input)
+	private object LoadData(string input)
 	{
 		var data = new object();
 
@@ -128,12 +106,12 @@ public class Day00 : IPuzzle
 		return data;
 	}
 
-	private object ProcessDataForPart1(object data)
+	private object SolvePart1(object data)
 	{
 		return null;
 	}
 
-	private object ProcessDataForPart2(object data)
+	private object SolvePart2(object data)
 	{
 		return null;
 	}

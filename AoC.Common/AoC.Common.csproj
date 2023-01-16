@@ -62,7 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async\AsyncQueue.cs" />
+    <Compile Include="Treasures\MD5Managed.cs" />
+    <Compile Include="Treasures\AsyncQueue.cs" />
     <Compile Include="Helpers\OptimizationHelper.cs" />
     <Compile Include="Helpers\PathfindingHelper.cs" />
     <Compile Include="Helpers\GrammarHelper.cs" />
