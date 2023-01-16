@@ -390,11 +390,20 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to abc.
         /// </summary>
         internal static string Day14Inputs {
             get {
                 return ResourceManager.GetString("Day14Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day15Inputs {
+            get {
+                return ResourceManager.GetString("Day15Inputs", resourceCulture);
             }
         }
     }
