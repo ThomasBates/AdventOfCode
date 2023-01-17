@@ -117,10 +117,10 @@ public class Day11 : IPuzzle
 					var ordered = pairs.OrderBy(p => p.genFloor).ThenBy(p => p.chipFloor);
 
 					longHashCode = ElevatorFloor - 1;
-					foreach (var pair in ordered)
+					foreach (var (genFloor, chipFloor) in ordered)
 					{
-						longHashCode = longHashCode * 4 + pair.genFloor - 1;
-						longHashCode = longHashCode * 4 + pair.chipFloor - 1;
+						longHashCode = longHashCode * 4 + genFloor - 1;
+						longHashCode = longHashCode * 4 + chipFloor - 1;
 					}
 				}
 				return longHashCode.Value;
@@ -291,7 +291,7 @@ public class Day11 : IPuzzle
 
 	private int lastStep = 0;
 	private int stepStateCount = 0;
-	private object locker = new();
+	private readonly object locker = new();
 
 	private void FindFinalStatesLinear(State initialState)
 	{
