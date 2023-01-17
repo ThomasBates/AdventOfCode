@@ -399,11 +399,21 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Disc #1 has 5 positions; at time=0, it is at position 4.
+        ///Disc #2 has 2 positions; at time=0, it is at position 1..
         /// </summary>
         internal static string Day15Inputs {
             get {
                 return ResourceManager.GetString("Day15Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day16Inputs {
+            get {
+                return ResourceManager.GetString("Day16Inputs", resourceCulture);
             }
         }
     }
