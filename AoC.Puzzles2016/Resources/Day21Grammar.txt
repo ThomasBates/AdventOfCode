@@ -1,0 +1,32 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [a-z]+
+String          = "a string" | '[.]*'
+Integer         = "an integer" | [0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "start" "with" Id c_start
+                | "swap" afterSwap
+                | "rotate" afterRotate
+                | "reverse" "positions" Integer "through" Integer c_reverse
+                | "move" "position" Integer "to" "position" Integer c_move
+                | "end" "with" Id c_end
+
+afterSwap       = "position" Integer "with" "position" Integer c_swapPosition
+                | "letter" Id "with" "letter" Id c_swapLetter
+
+afterRotate     = "left" Integer rotateSteps c_rotateLeft
+                | "right" Integer rotateSteps c_rotateRight
+                | "based" "on" "position" "of" "letter" Id c_rotateBased
+
+rotateSteps     = "step"
+                | "steps"
+
+#END
