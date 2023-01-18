@@ -433,10 +433,9 @@ namespace AoC.Puzzles2016.Properties {
         ///   Looks up a localized string similar to 
         ///#DEFINITIONS
         ///
-        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///Id              = &quot;an identifier&quot; | [a-z]+
         ///String          = &quot;a string&quot; | &apos;[.]*&apos;
-        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
-        ///Real            = &quot;a real number&quot; | (\+|-)?[0-9]+\.[0-9]+
+        ///Integer         = &quot;an integer&quot; | [0-9]+
         ///
         ///#GRAMMAR
         ///
@@ -445,10 +444,11 @@ namespace AoC.Puzzles2016.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = &quot;Monkey&quot; Integer &quot;:&quot; s_monkey
-        ///                | &quot;Starting&quot; &quot;items&quot; &quot;:&quot; starting
-        ///                | &quot;Operation&quot; &quot;:&quot; &quot;new&quot; &quot;=&quot; &quot;old&quot; operation
-        ///                | &quot;Tes [rest of string was truncated]&quot;;.
+        ///line            = &quot;start&quot; &quot;with&quot; Id c_start
+        ///                | &quot;swap&quot; afterSwap
+        ///                | &quot;rotate&quot; afterRotate
+        ///                | &quot;reverse&quot; &quot;positions&quot; Integer &quot;through&quot; Integer c_reverse
+        ///                | &quot;move&quot; &quot;position&quot; Integer &quot;to&quot; &quot;position&quot; Integer [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day21Grammar {
             get {
@@ -457,11 +457,29 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to start with abcde
+        ///swap position 4 with position 0
+        ///swap letter d with letter b
+        ///reverse positions 0 through 4
+        ///rotate left 1 step
+        ///move position 1 to position 4
+        ///move position 3 to position 0
+        ///rotate based on position of letter b
+        ///rotate based on position of letter d
+        ///end with decab.
         /// </summary>
         internal static string Day21Inputs {
             get {
                 return ResourceManager.GetString("Day21Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day22Inputs {
+            get {
+                return ResourceManager.GetString("Day22Inputs", resourceCulture);
             }
         }
     }
