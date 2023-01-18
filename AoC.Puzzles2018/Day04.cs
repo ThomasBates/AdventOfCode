@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 
 using AoC.Common;
 using AoC.Common.Helpers;
-using AoC.Common.SegmentList;
+using AoC.Common.SegmentList.Continuous;
 using AoC.Grammar;
 using AoC.Puzzles2018.Properties;
 

@@ -1,4 +1,4 @@
-﻿namespace AoC.Common.SegmentList;
+﻿namespace AoC.Common.SegmentList.Continuous;
 
 public interface ISegmentListItem
 {

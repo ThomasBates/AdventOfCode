@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using AoC.Common;
 using AoC.Common.Helpers;
 using AoC.Common.Logger;
-using AoC.Common.SegmentList;
+using AoC.Common.SegmentList.Discrete;
 using AoC.Puzzles2016.Properties;
 
 namespace AoC.Puzzles2016;
@@ -74,14 +74,18 @@ public class Day20 : IPuzzle
 	{
 		var segmentList = SegmentData(data);
 
-		return (UInt32)(segmentList[0].MaxMeasure + 0.5);
+		return (UInt32)segmentList[0].MaxMeasure + 1;
 	}
 
-	private int SolvePart2(List<(UInt32, UInt32)> data)
+	private UInt32 SolvePart2(List<(UInt32, UInt32)> data)
 	{
 		var segmentList = SegmentData(data);
 
-		return segmentList.Count - 1;
+		long count = 0;
+		for (int i=1;i<segmentList.Count;i++)
+			count += segmentList[i].MinMeasure - segmentList[i - 1].MaxMeasure - 1; 
+
+		return (UInt32)count;
 	}
 
 	private ISegmentList SegmentData(List<(UInt32, UInt32)> data)
@@ -89,12 +93,12 @@ public class Day20 : IPuzzle
 		ISegmentList segmentList = new MergingSegmentList();
 
 		foreach (var (lo, hi) in data)
-			segmentList.AddSegment(lo - 0.5, hi + 0.5);
+			segmentList.AddSegment(lo, hi);
 
 		for (int i = 0; i < segmentList.Count; i++)
 		{
 			var segment = segmentList[i];
-			LoggerSendDebug($"{segment.MinMeasure + 0.5} - {segment.MaxMeasure - 0.5}");
+			LoggerSendDebug($"{segment.MinMeasure,10} - {segment.MaxMeasure,10}");
 		}
 
 		return segmentList;

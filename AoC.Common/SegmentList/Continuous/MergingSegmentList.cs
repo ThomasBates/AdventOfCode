@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AoC.Common.SegmentList;
+namespace AoC.Common.SegmentList.Continuous;
 
 public class MergingSegmentList : ISegmentList
 {
@@ -25,7 +25,7 @@ public class MergingSegmentList : ISegmentList
 		ISegmentListItem segment2 = null;
 
 		if (maxMeasure < minMeasure)
-		(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
+			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		int segmentIndex = 0;
 
@@ -80,7 +80,7 @@ public class MergingSegmentList : ISegmentList
 		ISegmentListItem segment2 = null;
 
 		if (maxMeasure < minMeasure)
-		(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
+			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		int segmentIndex = 0;
 
@@ -144,7 +144,7 @@ public class MergingSegmentList : ISegmentList
 	public ISegmentListItem FindSegment(double minMeasure, double maxMeasure)
 	{
 		if (maxMeasure < minMeasure)
-		(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
+			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		foreach (var segment in segmentList)
 		{
