@@ -510,11 +510,10 @@ namespace AoC.Puzzles2016.Properties {
         ///                | &quot;inc&quot; register c_inc
         ///                | &quot;dec&quot; register c_dec
         ///                | &quot;jnz&quot; value value c_jnz
+        ///                | &quot;tgl&quot; value c_tgl
         ///
         ///value           = Integer c_numberValue
-        ///                | Id c_registerValue
-        ///
-        ///register        = Id c_regist [rest of string was truncated]&quot;;.
+        ///                | Id c_registerV [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day23Grammar {
             get {
@@ -523,11 +522,26 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to cpy 2 a
+        ///tgl a
+        ///tgl a
+        ///tgl a
+        ///cpy 1 a
+        ///dec a
+        ///dec a.
         /// </summary>
         internal static string Day23Inputs {
             get {
                 return ResourceManager.GetString("Day23Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day24Inputs {
+            get {
+                return ResourceManager.GetString("Day24Inputs", resourceCulture);
             }
         }
     }
