@@ -475,11 +475,59 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Filesystem            Size  Used  Avail  Use%
+        ////dev/grid/node-x0-y0   10T    8T     2T   80%
+        ////dev/grid/node-x0-y1   11T    6T     5T   54%
+        ////dev/grid/node-x0-y2   32T   28T     4T   87%
+        ////dev/grid/node-x1-y0    9T    7T     2T   77%
+        ////dev/grid/node-x1-y1    8T    0T     8T    0%
+        ////dev/grid/node-x1-y2   11T    7T     4T   63%
+        ////dev/grid/node-x2-y0   10T    6T     4T   60%
+        ////dev/grid/node-x2-y1    9T    8T     1T   88%
+        ////dev/grid/node-x2-y2    9T    6T     3T   66%.
         /// </summary>
         internal static string Day22Inputs {
             get {
                 return ResourceManager.GetString("Day22Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;cpy&quot; value register c_cpy
+        ///                | &quot;inc&quot; register c_inc
+        ///                | &quot;dec&quot; register c_dec
+        ///                | &quot;jnz&quot; value value c_jnz
+        ///
+        ///value           = Integer c_numberValue
+        ///                | Id c_registerValue
+        ///
+        ///register        = Id c_regist [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day23Grammar {
+            get {
+                return ResourceManager.GetString("Day23Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Day23Inputs {
+            get {
+                return ResourceManager.GetString("Day23Inputs", resourceCulture);
             }
         }
     }
