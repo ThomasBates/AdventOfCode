@@ -97,11 +97,41 @@ namespace AoC.Puzzles2017.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 1122
+        ///1111
+        ///1234
+        ///91212129
+        ///1212
+        ///1221
+        ///123425
+        ///123123
+        ///12131415.
         /// </summary>
         internal static string Day01Inputs {
             get {
                 return ResourceManager.GetString("Day01Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 1 9 5
+        ///7 5 3
+        ///2 4 6 8.
+        /// </summary>
+        internal static string Day02Inputs01 {
+            get {
+                return ResourceManager.GetString("Day02Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 9 2 8
+        ///9 4 7 3
+        ///3 8 6 5.
+        /// </summary>
+        internal static string Day02Inputs02 {
+            get {
+                return ResourceManager.GetString("Day02Inputs02", resourceCulture);
             }
         }
     }
