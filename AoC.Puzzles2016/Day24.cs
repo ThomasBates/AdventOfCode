@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
+
 using AoC.Common;
 using AoC.Common.Helpers;
 using AoC.Common.Logger;
@@ -89,67 +90,58 @@ public class Day24 : IPuzzle
 		return length;
 	}
 
-	private class Point
-	{
-		public int Row;
-		public int Col;
-		public char Type;
-
-		public override int GetHashCode() => Row * 1000 + Col;
-	}
-
 	private class Node
 	{
 		public char Name;
 		public Dictionary<char, int> Neighbors = new();
 	}
 
-	private List<Point> GetStops(List<char[]> map)
+	private List<(char,Point)> GetStops(List<char[]> map)
 	{
-		var stops = new List<Point>();
+		var stops = new List<(char c, Point p)>();
 
-		for (var row = 0; row < map.Count; row++)
+		for (var x = 0; x < map.Count; x++)
 		{
-			for (var col = 0; col < map[row].Length; col++)
+			for (var y = 0; y < map[x].Length; y++)
 			{
-				char c = map[row][col];
+				char c = map[x][y];
 				if (c >= '0' && c <= '9')
-					stops.Add(new Point { Type = c, Row = row, Col = col });
+					stops.Add((c, new Point(x, y)));
 			}
 		}
 
-		var ordered = stops.OrderBy(stop => stop.Type).ToList();
+		var ordered = stops.OrderBy(stop => stop.c).ToList();
 
 		foreach(var stop in ordered)
-			LoggerSendDebug($"{stop.Type} is at ({stop.Row,3}, {stop.Col,3})");
+			LoggerSendDebug($"{stop.c} is at ({stop.p.X,3}, {stop.p.Y,3})");
 
 		return ordered;
 	}
 
-	private List<Node> CreateGraph(List<char[]> map, List<Point> stops)
+	private List<Node> CreateGraph(List<char[]> map, List<(char c, Point p)> stops)
 	{
 		var nodes = new List<Node>();
 
 		foreach (var stop in stops)
-			nodes.Add(new Node { Name = stop.Type });
+			nodes.Add(new Node { Name = stop.c });
 
-		foreach (var stop in stops)
+		foreach (var origin in stops)
 		{
-			var node = nodes.FirstOrDefault(node => node.Name == stop.Type);
+			var originNode = nodes.FirstOrDefault(node => node.Name == origin.c);
 
-			foreach (var neighbor in stops)
+			foreach (var target in stops)
 			{
-				if (neighbor.Type == stop.Type)
+				if (target.c == origin.c)
 					continue;
 
-				if (node.Neighbors.ContainsKey(neighbor.Type))
+				if (originNode.Neighbors.ContainsKey(target.c))
 					continue;
 
-				var distance = GetDistance(map, stop, neighbor);
+				var distance = GetDistance(map, origin.p, target.p);
 
-				node.Neighbors.Add(neighbor.Type, distance);
-				var neighborNode = nodes.FirstOrDefault(node => node.Name == neighbor.Type);
-				neighborNode.Neighbors.Add(stop.Type, distance);
+				originNode.Neighbors.Add(target.c, distance);
+				var targetNode = nodes.FirstOrDefault(node => node.Name == target.c);
+				targetNode.Neighbors.Add(origin.c, distance);
 			}
 		}
 
@@ -162,12 +154,6 @@ public class Day24 : IPuzzle
 
 	private int GetDistance(List<char[]> map, Point origin, Point target)
 	{
-		var points = new Dictionary<int, Point> 
-		{
-			{ origin.GetHashCode(), origin },
-			{ target.GetHashCode(), target }
-		};
-
 		var path = PathfindingHelper.FindPath(origin, target, 
 			getNeighbors: (point) =>
 			{
@@ -184,18 +170,12 @@ public class Day24 : IPuzzle
 
 		return path.Count();
 
-		void AddNeighbor(Point point, List<Point> neighbors, int dRow, int dCol)
+		void AddNeighbor(Point point, List<Point> neighbors, int dx, int dy)
 		{
-			int row = point.Row + dRow;
-			int col = point.Col + dCol;
-			int hash = row * 1000 + col;
-			if (!points.TryGetValue(hash, out var neighbor))
-			{
-				neighbor = new Point { Row = row, Col = col, Type = map[row][col] };
-				points.Add(hash, neighbor);
-			}
-			if (neighbor.Type != '#')
-				neighbors.Add(neighbor);
+			int x = point.X + dx;
+			int y = point.Y + dy;
+			if (map[x][y] != '#')
+				neighbors.Add(new Point(x, y));
 		}
 	}
 
