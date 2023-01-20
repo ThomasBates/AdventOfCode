@@ -537,11 +537,45 @@ namespace AoC.Puzzles2016.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ###########
+        ///#0.1.....2#
+        ///#.#######.#
+        ///#4.......3#
+        ///###########.
         /// </summary>
         internal static string Day24Inputs {
             get {
                 return ResourceManager.GetString("Day24Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = &quot;an identifier&quot; | [_A-Za-z][_A-Za-z0-9]*
+        ///Integer         = &quot;an integer&quot; | (\+|-)?[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;cpy&quot; value register c_cpy
+        ///                | &quot;inc&quot; register c_inc
+        ///                | &quot;dec&quot; register c_dec
+        ///                | &quot;jnz&quot; value value c_jnz
+        ///
+        ///value           = Integer c_numberValue
+        ///                | Id c_registerValue
+        ///
+        ///register        = Id c_regist [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day25Grammar {
+            get {
+                return ResourceManager.GetString("Day25Grammar", resourceCulture);
             }
         }
     }

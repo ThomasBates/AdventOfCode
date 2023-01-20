@@ -1,0 +1,25 @@
+
+#DEFINITIONS
+
+Id              = "an identifier" | [_A-Za-z][_A-Za-z0-9]*
+Integer         = "an integer" | (\+|-)?[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "cpy" value register c_cpy
+                | "inc" register c_inc
+                | "dec" register c_dec
+                | "jnz" value value c_jnz
+                | "out" value c_out
+
+value           = Integer c_numberValue
+                | Id c_registerValue
+
+register        = Id c_register
+
+#END
