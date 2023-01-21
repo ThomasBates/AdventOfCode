@@ -173,11 +173,63 @@ namespace AoC.Puzzles2017.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 0 2 7 0.
         /// </summary>
         internal static string Day06Inputs {
             get {
                 return ResourceManager.GetString("Day06Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &apos;[.]*&apos;
+        ///Integer         = (\+|-)?[0-9]+
+        ///Real            = (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = Id s_newElf &quot;(&quot; Integer &quot;)&quot; c_weight supports
+        ///
+        ///supports        =
+        ///                | &quot;-&gt;&quot; Id c_addSupports supports
+        ///                | &quot;,&quot; Id c_addSupports supports
+        ///
+        ///#END
+        ///.
+        /// </summary>
+        internal static string Day07Grammar {
+            get {
+                return ResourceManager.GetString("Day07Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pbga (66)
+        ///xhth (57)
+        ///ebii (61)
+        ///havc (66)
+        ///ktlj (57)
+        ///fwft (72) -&gt; ktlj, cntj, xhth
+        ///qoyq (66)
+        ///padx (45) -&gt; pbga, havc, qoyq
+        ///tknk (41) -&gt; ugml, padx, fwft
+        ///jptl (61)
+        ///ugml (68) -&gt; gyxo, ebii, jptl
+        ///gyxo (61)
+        ///cntj (57).
+        /// </summary>
+        internal static string Day07Inputs {
+            get {
+                return ResourceManager.GetString("Day07Inputs", resourceCulture);
             }
         }
     }
