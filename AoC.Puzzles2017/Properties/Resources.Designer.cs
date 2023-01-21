@@ -197,11 +197,11 @@ namespace AoC.Puzzles2017.Properties {
         ///moreLines       =
         ///                | line moreLines
         ///
-        ///line            = Id s_newElf &quot;(&quot; Integer &quot;)&quot; c_weight supports
+        ///line            = Id s_node &quot;(&quot; Integer &quot;)&quot; c_weight above
         ///
-        ///supports        =
-        ///                | &quot;-&gt;&quot; Id c_addSupports supports
-        ///                | &quot;,&quot; Id c_addSupports supports
+        ///above           =
+        ///                | &quot;-&gt;&quot; Id c_above above
+        ///                | &quot;,&quot; Id c_above above
         ///
         ///#END
         ///.
@@ -230,6 +230,19 @@ namespace AoC.Puzzles2017.Properties {
         internal static string Day07Inputs {
             get {
                 return ResourceManager.GetString("Day07Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to b inc 5 if a &gt; 1
+        ///a inc 1 if b &lt; 5
+        ///c dec -10 if a &gt;= 1
+        ///c inc -20 if c == 10
+        ///.
+        /// </summary>
+        internal static string Day08Inputs {
+            get {
+                return ResourceManager.GetString("Day08Inputs", resourceCulture);
             }
         }
     }
