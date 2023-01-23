@@ -245,5 +245,21 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day08Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {}
+        ///{{{}}}
+        ///{{},{}}
+        ///{{{},{},{{}}}}
+        ///{&lt;a&gt;,&lt;a&gt;,&lt;a&gt;,&lt;a&gt;}
+        ///{{&lt;ab&gt;},{&lt;ab&gt;},{&lt;ab&gt;},{&lt;ab&gt;}}
+        ///{{&lt;!!&gt;},{&lt;!!&gt;},{&lt;!!&gt;},{&lt;!!&gt;}}
+        ///{{&lt;a!&gt;},{&lt;a!&gt;},{&lt;a!&gt;},{&lt;ab&gt;}}.
+        /// </summary>
+        internal static string Day09Inputs {
+            get {
+                return ResourceManager.GetString("Day09Inputs", resourceCulture);
+            }
+        }
     }
 }
