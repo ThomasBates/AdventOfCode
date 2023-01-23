@@ -261,5 +261,14 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day09Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3, 4, 1, 5.
+        /// </summary>
+        internal static string Day10Inputs {
+            get {
+                return ResourceManager.GetString("Day10Inputs", resourceCulture);
+            }
+        }
     }
 }
