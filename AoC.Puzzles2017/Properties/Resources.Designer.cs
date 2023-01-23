@@ -263,11 +263,27 @@ namespace AoC.Puzzles2017.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3, 4, 1, 5.
+        ///   Looks up a localized string similar to 3, 4, 1, 5
+        ///
+        ///AoC 2017
+        ///1,2,3
+        ///1,2,4.
         /// </summary>
         internal static string Day10Inputs {
             get {
                 return ResourceManager.GetString("Day10Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ne,ne,ne
+        ///ne,ne,sw,sw
+        ///ne,ne,s,s
+        ///se,sw,se,sw,sw.
+        /// </summary>
+        internal static string Day11Inputs {
+            get {
+                return ResourceManager.GetString("Day11Inputs", resourceCulture);
             }
         }
     }
