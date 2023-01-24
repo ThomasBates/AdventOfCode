@@ -5,6 +5,7 @@ namespace AoC.Common.Helpers;
 
 public class PathfindingHelper
 {
+	//  https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 	public static IEnumerable<TNode> FindPath<TNode>(
 		TNode origin,
 		TNode target,

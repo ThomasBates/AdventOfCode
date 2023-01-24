@@ -313,5 +313,15 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day13Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generator A starts with 65
+        ///Generator B starts with 8921.
+        /// </summary>
+        internal static string Day15Inputs {
+            get {
+                return ResourceManager.GetString("Day15Inputs", resourceCulture);
+            }
+        }
     }
 }

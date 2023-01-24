@@ -51,8 +51,8 @@ public class Day00 : IPuzzle
 
 	#region Helpers
 
-	void SendDebug(string message) => logger.SendDebug(nameof(Day00), message);
-	void SendVerbose(string message) => logger.SendVerbose(nameof(Day00), message);
+	void SendDebug(string message = "") => logger.SendDebug(nameof(Day00), message);
+	void SendVerbose(string message = "") => logger.SendVerbose(nameof(Day00), message);
 
 	#endregion Helpers
 
