@@ -99,11 +99,15 @@ public class Day00 : IPuzzle
 
 	private object SolvePart1(object data)
 	{
-		return new object();
+		var score = 0;
+
+		return score;
 	}
 
 	private object SolvePart2(object data)
 	{
-		return new object();
+		var score = 0;
+
+		return score;
 	}
 }
