@@ -86,7 +86,7 @@ public class Day10 : IPuzzle
 				SendDebug($"Lengths = {string.Join(",", lengths)}");
 
 				var listSize = lengths.Count < 5 ? 5 : 256;
-				var hash = GetSparseHash(listSize, lengths, 1).ToArray();
+				var hash = HashHelper.GetSparseHash(listSize, lengths, 1).ToArray();
 				SendDebug($"Hash    = {string.Join(",", hash)}");
 
 				result = hash[0] * hash[1];
@@ -106,59 +106,10 @@ public class Day10 : IPuzzle
 		foreach (var line in lines)
 		{
 			SendDebug($"Line    = {line}");
-			hash = GetKnotHash(line);
+			hash = HashHelper.GetKnotHash(line);
 			SendDebug($"Hash    = {hash}");
 		}
 		return hash;
 	}
 
-	private string GetKnotHash(string line)
-	{
-		var lengths = new List<int>();
-		foreach (var c in line)
-			lengths.Add(c);
-		lengths.AddRange(new[] { 17, 31, 73, 47, 23 });
-		SendVerbose($"Lengths = {string.Join(",", lengths)}");
-
-		var sparse = GetSparseHash(256, lengths, 64).ToArray();
-		SendVerbose($"Sparse  = {string.Join(",", sparse)}");
-
-		var dense = new StringBuilder();
-		for (var i = 0; i < 16; i++)
-		{
-			var n = 0;
-			for (var j = 0; j < 16; j++)
-				n ^= sparse[i * 16 + j];
-			dense.Append($"{n:x2}");
-		}
-		return dense.ToString();
-	}
-
-	private IEnumerable<int> GetSparseHash(int listSize, IEnumerable<int> lengths, int rounds)
-	{
-		var list = new int[listSize];
-		for (var i = 0; i < listSize; i++)
-			list[i] = i;
-		var position = 0;
-		var skipSize = 0;
-
-		for (var round = 0; round < rounds; round++)
-		{
-			foreach (var length in lengths)
-			{
-				var newList = list.ToArray();
-				for (var i = 0; i < length; i++)
-				{
-					var oldPos = (position + i) % listSize;
-					var newPos = (position + length - i - 1) % listSize;
-					newList[newPos] = list[oldPos];
-				}
-				list = newList;
-				position = (position + length + skipSize) % listSize;
-				skipSize++;
-			}
-		}
-
-		return list;
-	}
 }

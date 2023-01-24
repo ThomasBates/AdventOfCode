@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="SegmentList\Continuous\AccumulatingSegmentList.cs" />
     <Compile Include="SegmentList\Continuous\ISegmentList.cs" />
     <Compile Include="SegmentList\Continuous\ISegmentListItem.cs" />
