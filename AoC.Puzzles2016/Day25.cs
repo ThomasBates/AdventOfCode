@@ -136,7 +136,7 @@ public class Day25 : IPuzzle
 		return program;
 	}
 
-	private object SolvePart1(List<(Op, int, int)> program)
+	private int SolvePart1(List<(Op, int, int)> program)
 	{
 		int signalType = 0;
 		while (true)
@@ -148,7 +148,7 @@ public class Day25 : IPuzzle
 		}
 	}
 
-	private object SolvePart2(List<(Op, int, int)> program)
+	private int SolvePart2(List<(Op, int, int)> program)
 	{
 		int signalType = 0;
 		while (true)

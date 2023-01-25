@@ -1,0 +1,27 @@
+
+#DEFINITIONS
+
+Id              = [_A-Za-z][_A-Za-z0-9]*
+Integer         = (\+|-)?[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "snd" value c_snd
+                | "set" register value c_set
+                | "add" register value c_add
+                | "mul" register value c_mul
+                | "mod" register value c_mod
+                | "rcv" register c_rcv
+                | "jgz" value value c_jgz
+
+value           = Integer t_number
+                | Id t_register
+
+register        = Id t_register
+
+#END

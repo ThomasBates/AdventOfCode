@@ -332,5 +332,68 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day16Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///Integer         = (\+|-)?[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;snd&quot; value c_snd
+        ///                | &quot;set&quot; register value c_set
+        ///                | &quot;add&quot; register value c_add
+        ///                | &quot;mul&quot; register value c_mul
+        ///                | &quot;mod&quot; register value c_mod
+        ///                | &quot;rcv&quot; register c_rcv
+        ///                | &quot;jgz&quot; value value c_jgz
+        ///
+        ///value    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day18Grammar {
+            get {
+                return ResourceManager.GetString("Day18Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to set a 1
+        ///add a 2
+        ///mul a a
+        ///mod a 5
+        ///snd a
+        ///set a 0
+        ///rcv a
+        ///jgz a -1
+        ///set a 1
+        ///jgz a -2.
+        /// </summary>
+        internal static string Day18Inputs01 {
+            get {
+                return ResourceManager.GetString("Day18Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to snd 1
+        ///snd 2
+        ///snd p
+        ///rcv a
+        ///rcv b
+        ///rcv c
+        ///rcv d.
+        /// </summary>
+        internal static string Day18Inputs02 {
+            get {
+                return ResourceManager.GetString("Day18Inputs02", resourceCulture);
+            }
+        }
     }
 }
