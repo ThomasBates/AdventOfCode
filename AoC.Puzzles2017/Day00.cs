@@ -56,9 +56,13 @@ public class Day00 : IPuzzle
 
 	#endregion Helpers
 
-	private object LoadData(string input)
+	private class Data
 	{
-		var data = new object();
+	}
+
+	private Data LoadData(string input)
+	{
+		var data = new Data();
 
 		InputHelper.TraverseInputTokens(input, value =>
 		{
@@ -97,14 +101,14 @@ public class Day00 : IPuzzle
 		return data;
 	}
 
-	private object SolvePart1(object data)
+	private object SolvePart1(Data data)
 	{
 		var score = 0;
 
 		return score;
 	}
 
-	private object SolvePart2(object data)
+	private object SolvePart2(Data data)
 	{
 		var score = 0;
 
