@@ -403,11 +403,33 @@ namespace AoC.Puzzles2017.Properties {
         /// F---|----E|--+ 
         ///     |  |  |  D 
         ///     +B-+  +--+ 
-        ///.
+        ///                .
         /// </summary>
         internal static string Day19Inputs {
             get {
                 return ResourceManager.GetString("Day19Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to p=&lt;3,0,0&gt;, v=&lt;2,0,0&gt;, a=&lt;-1,0,0&gt;
+        ///p=&lt;4,0,0&gt;, v=&lt;0,0,0&gt;, a=&lt;-2,0,0&gt;.
+        /// </summary>
+        internal static string Day20Inputs01 {
+            get {
+                return ResourceManager.GetString("Day20Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to p=&lt;-6,0,0&gt;, v=&lt; 3,0,0&gt;, a=&lt; 0,0,0&gt;
+        ///p=&lt;-4,0,0&gt;, v=&lt; 2,0,0&gt;, a=&lt; 0,0,0&gt;
+        ///p=&lt;-2,0,0&gt;, v=&lt; 1,0,0&gt;, a=&lt; 0,0,0&gt;
+        ///p=&lt; 3,0,0&gt;, v=&lt;-1,0,0&gt;, a=&lt; 0,0,0&gt;.
+        /// </summary>
+        internal static string Day20Inputs02 {
+            get {
+                return ResourceManager.GetString("Day20Inputs02", resourceCulture);
             }
         }
     }
