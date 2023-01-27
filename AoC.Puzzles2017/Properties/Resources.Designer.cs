@@ -453,5 +453,38 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day22Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///Integer         = (\+|-)?[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;set&quot; register value c_set
+        ///                | &quot;sub&quot; register value c_sub
+        ///                | &quot;mul&quot; register value c_mul
+        ///                | &quot;jnz&quot; value value c_jnz
+        ///
+        ///value           = Integer t_number
+        ///                | Id t_register
+        ///
+        ///register        = Id t_register
+        ///
+        ///#END
+        ///.
+        /// </summary>
+        internal static string Day23Grammar {
+            get {
+                return ResourceManager.GetString("Day23Grammar", resourceCulture);
+            }
+        }
     }
 }
