@@ -502,5 +502,63 @@ namespace AoC.Puzzles2017.Properties {
                 return ResourceManager.GetString("Day24Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &apos;[.]*&apos;
+        ///Integer         = (\+|-)?[0-9]+
+        ///Real            = (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;In&quot; &quot;state&quot; Id &quot;:&quot; s_newState
+        ///                | &quot;If&quot; &quot;the&quot; &quot;current&quot; &quot;value&quot; &quot;is&quot; Integer &quot;:&quot; s_currentValue
+        ///                | &quot;-&quot; action
+        ///
+        ///action          = &quot;Write&quot; &quot;the&quot; &quot;value&quot; Integer &quot;.&quot; c_writeValue
+        ///                | &quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day25Grammar {
+            get {
+                return ResourceManager.GetString("Day25Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Begin in state A.
+        ///Perform a diagnostic checksum after 6 steps.
+        ///
+        ///In state A:
+        ///  If the current value is 0:
+        ///    - Write the value 1.
+        ///    - Move one slot to the right.
+        ///    - Continue with state B.
+        ///  If the current value is 1:
+        ///    - Write the value 0.
+        ///    - Move one slot to the left.
+        ///    - Continue with state B.
+        ///
+        ///In state B:
+        ///  If the current value is 0:
+        ///    - Write the value 1.
+        ///    - Move one slot to the left.
+        ///    - Continue with state A.
+        ///  If the current value is 1:
+        ///    - Write the value 1.
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day25Inputs {
+            get {
+                return ResourceManager.GetString("Day25Inputs", resourceCulture);
+            }
+        }
     }
 }

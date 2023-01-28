@@ -169,7 +169,7 @@ public class Day23 : IPuzzle
 
 	private int SolvePart2(Data data)
 	{
-		var process = new Process();
+		var process = new Process() { ID = 0 };
 		process.Registers[0] = 1;
 
 		while (ClockProgram(process, data.Program)) ;

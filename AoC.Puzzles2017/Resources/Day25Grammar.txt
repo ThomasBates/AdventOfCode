@@ -1,0 +1,29 @@
+
+#DEFINITIONS
+
+Id              = [_A-Za-z][_A-Za-z0-9]*
+String          = '[.]*'
+Integer         = (\+|-)?[0-9]+
+Real            = (\+|-)?[0-9]+\.[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "Begin" "in" "state" Id c_initialState "."
+                | "Perform" "a" "diagnostic" "checksum" "after" Integer c_iterations "steps" "."
+                | "In" "state" Id s_newState ":"
+                | "If" "the" "current" "value" "is" Integer s_currentValue ":"
+                | "-" action
+
+action          = "Write" "the" "value" Integer c_writeValue "."
+                | "Move" "one" "slot" "to" "the" slotDirection "."
+                | "Continue" "with" "state" Id c_nextState "."
+
+slotDirection   = "left" c_moveLeft
+                | "right" c_moveRight
+
+#END
