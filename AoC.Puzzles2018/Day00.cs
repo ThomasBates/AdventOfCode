@@ -22,7 +22,7 @@ public class Day00 : IPuzzle
 
 	public int Year => 2018;
 
-	public int Day => 0;
+	public int Day => 00;
 
 	public string Name => "Day 00";
 
