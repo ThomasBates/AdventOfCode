@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Text;
 
 using AoC.Common;
 using AoC.Common.Helpers;
@@ -13,6 +12,12 @@ namespace AoC.Puzzles2018;
 [Export(typeof(IPuzzle))]
 public class Day00 : IPuzzle
 {
+	#region Private Members
+
+	private readonly ILogger logger;
+
+	#endregion Private Members
+
 	#region IPuzzle Properties
 
 	public int Year => 2018;
@@ -33,38 +38,32 @@ public class Day00 : IPuzzle
 
 	#region Constructors
 
-	public Day00()
+	[ImportingConstructor]
+	public Day00(ILogger logger)
 	{
-		Solvers.Add("Solve Part 1", SolvePart1);
-		Solvers.Add("Solve Part 2", SolvePart2);
+		this.logger = logger;
+
+		Solvers.Add("Solve Part 1", input => SolvePart1(LoadData(input)).ToString());
+		Solvers.Add("Solve Part 2", input => SolvePart2(LoadData(input)).ToString());
 	}
 
 	#endregion Constructors
 
-	public string SolvePart1(string input)
+	#region Helpers
+
+	void SendDebug(string message = "") => logger.SendDebug(nameof(Day00), message);
+	void SendVerbose(string message = "") => logger.SendVerbose(nameof(Day00), message);
+
+	#endregion Helpers
+
+	private class Data
 	{
-		var result = new StringBuilder();
-
-		LoadDataFromInput(input);
-
-		//
-
-		return result.ToString();
 	}
 
-	public string SolvePart2(string input)
+	private Data LoadData(string input)
 	{
-		var result = new StringBuilder();
+		var data = new Data();
 
-		LoadDataFromInput(input);
-
-		//
-
-		return result.ToString();
-	}
-
-	private void LoadDataFromInput(string input)
-	{
 		InputHelper.TraverseInputTokens(input, value =>
 		{
 		});
@@ -72,5 +71,47 @@ public class Day00 : IPuzzle
 		InputHelper.TraverseInputLines(input, line =>
 		{
 		});
+
+		GrammarHelper.ParseInput(logger, input, Resources.Day00Grammar,
+			scopeControllerAction: (token, valueStack) =>
+			{
+				switch (token)
+				{
+					case "s_scope":
+						break;
+				}
+			},
+			typeCheckerAction: (token, valueStack) =>
+			{
+				switch (token)
+				{
+					case "t_type":
+						break;
+				}
+			},
+			codeGeneratorAction: (token, valueStack) =>
+			{
+				switch (token)
+				{
+					case "c_code":
+						break;
+				}
+			});
+
+		return data;
+	}
+
+	private object SolvePart1(Data data)
+	{
+		var score = 0;
+
+		return score;
+	}
+
+	private object SolvePart2(Data data)
+	{
+		var score = 0;
+
+		return score;
 	}
 }

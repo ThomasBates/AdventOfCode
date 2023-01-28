@@ -24,7 +24,7 @@ public class Day00 : IPuzzle
 
 	public int Day => 00;
 
-	public string Name => $"Day 00";
+	public string Name => "Day 00";
 
 	public Dictionary<string, string> Inputs { get; } = new()
 	{

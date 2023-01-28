@@ -61,6 +61,33 @@ namespace AoC.Puzzles2018.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &apos;[.]*&apos;
+        ///Integer         = (\+|-)?[0-9]+
+        ///Real            = (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;line&quot;
+        ///
+        ///#END
+        ///.
+        /// </summary>
+        internal static string Day00Grammar {
+            get {
+                return ResourceManager.GetString("Day00Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string Day00Inputs {
