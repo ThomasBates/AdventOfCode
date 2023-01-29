@@ -699,5 +699,15 @@ namespace AoC.Puzzles2018.Properties {
                 return ResourceManager.GetString("Day20Inputs05", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to depth: 510
+        ///target: 10,10.
+        /// </summary>
+        internal static string Day22Inputs {
+            get {
+                return ResourceManager.GetString("Day22Inputs", resourceCulture);
+            }
+        }
     }
 }

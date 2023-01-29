@@ -85,10 +85,10 @@ public class PathfindingHelper
 
 			while (true)
 			{
+				path.Insert(0, current);
+
 				if (source.Equals(current))
 					return path;
-
-				path.Insert(0, current);
 
 				current = prev[current];
 				if (current == null)
