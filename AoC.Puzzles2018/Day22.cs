@@ -154,14 +154,14 @@ public class Day22 : IPuzzle
 				};
 				neighbors.Add((node.point, newGear));
 
-				CheckNeighbor(dx: -1);
-				CheckNeighbor(dx: 1);
-				CheckNeighbor(dy: -1);
-				CheckNeighbor(dy: 1);
+				AddNeighbor(dx: -1);
+				AddNeighbor(dx: 1);
+				AddNeighbor(dy: -1);
+				AddNeighbor(dy: 1);
 
 				return neighbors;
 
-				void CheckNeighbor(int dx = 0, int dy = 0)
+				void AddNeighbor(int dx = 0, int dy = 0)
 				{
 					var newPoint = node.point;
 					newPoint.Offset(dx, dy);
@@ -182,13 +182,9 @@ public class Day22 : IPuzzle
 						neighbors.Add((newPoint, node.gear));
 				}
 			},
-			getDistance: (node1, node2) =>
-			{
-				if (node1.point == node2.point && node1.gear != node2.gear)
-					return 7;
-				return 1;
-			},
-			setDistance: null).ToList();
+			getCost: (node1, node2) => (node1.point == node2.point && node1.gear != node2.gear) ? 7 : 1,
+			getHeuristic: node => Math.Abs(node.point.X - target.point.X) + Math.Abs(node.point.Y - target.point.Y))
+			.ToList();
 
 		var total = 0;
 		var node2 = path[0];

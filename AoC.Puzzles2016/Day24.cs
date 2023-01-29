@@ -159,24 +159,23 @@ public class Day24 : IPuzzle
 			{
 				var neighbors = new List<Point>();
 
-				AddNeighbor(point, neighbors, 0, -1);
-				AddNeighbor(point, neighbors, 0, +1);
-				AddNeighbor(point, neighbors, -1, 0);
-				AddNeighbor(point, neighbors, +1, 0);
+				AddNeighbor(dy: -1);
+				AddNeighbor(dy: +1);
+				AddNeighbor(dx: -1);
+				AddNeighbor(dx: +1);
 
 				return neighbors;
-			}, 
-			getDistance: (p1, p2) => 1);
+
+				void AddNeighbor(int dx = 0, int dy = 0)
+				{
+					int x = point.X + dx;
+					int y = point.Y + dy;
+					if (map[x][y] != '#')
+						neighbors.Add(new Point(x, y));
+				}
+			});
 
 		return path.Count();
-
-		void AddNeighbor(Point point, List<Point> neighbors, int dx, int dy)
-		{
-			int x = point.X + dx;
-			int y = point.Y + dy;
-			if (map[x][y] != '#')
-				neighbors.Add(new Point(x, y));
-		}
 	}
 
 	private List<Node> FindBestPathUsingBruteForce(List<Node> graph, bool doReturn)

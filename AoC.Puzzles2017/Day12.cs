@@ -80,8 +80,7 @@ public class Day12 : IPuzzle
 		foreach (var target in data.Keys)
 		{
 			var path = PathfindingHelper.FindPath(source, target,
-				getNeighbors: (current) => data[current],
-				getDistance: (current, neighbor) => 1);
+				getNeighbors: (current) => data[current]);
 
 			if (path != null)
 				count++;
@@ -102,8 +101,7 @@ public class Day12 : IPuzzle
 			foreach (var target in available.ToList())
 			{
 				var path = PathfindingHelper.FindPath(source, target,
-					getNeighbors: (current) => data[current],
-					getDistance: (current, neighbor) => 1);
+					getNeighbors: (current) => data[current]);
 
 				if (path != null)
 					available.Remove(target);

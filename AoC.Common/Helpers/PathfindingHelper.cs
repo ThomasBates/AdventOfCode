@@ -6,20 +6,23 @@ namespace AoC.Common.Helpers;
 public class PathfindingHelper
 {
 	//  https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+	//  https://en.wikipedia.org/wiki/A*_search_algorithm
 	public static IEnumerable<TNode> FindPath<TNode>(
 		TNode origin,
 		TNode target,
 		Func<TNode, IEnumerable<TNode>> getNeighbors,
-		Func<TNode, TNode, double> getDistance,
-		Action<TNode, double> setDistance = null)
+		Func<TNode, TNode, double> getCost = null,
+		Func<TNode, double> getHeuristic = null,
+		Action<TNode, double> setCost = null)
 	{
 		var unvisited = new HashSet<TNode>();
 		var visited = new HashSet<TNode>();
-		var distance = new Dictionary<TNode, double>();
+		var cost = new Dictionary<TNode, double>();
 		var prev = new Dictionary<TNode, TNode>();
+		var heuristic = new Dictionary<TNode, double>();
 
 		unvisited.Add(origin);
-		distance[origin] = 0;
+		cost[origin] = 0;
 		TNode current = origin;
 
 		while (true)
@@ -29,47 +32,50 @@ public class PathfindingHelper
 				if (visited.Contains(neighbor))
 					continue;
 
-				if (!distance.TryGetValue(neighbor, out var neighborDistance))
+				if (!cost.TryGetValue(neighbor, out var neighborCost))
 				{
-					neighborDistance = double.MaxValue;
-					distance[neighbor] = neighborDistance;
+					neighborCost = double.MaxValue;
+					cost[neighbor] = neighborCost;
 					unvisited.Add(neighbor);
+					heuristic[neighbor] = getHeuristic?.Invoke(neighbor) ?? 0;
 				}
 
-				double newDistance = distance[current] + getDistance(current, neighbor);
 
-				if (newDistance < neighborDistance)
+				var transitionCost = getCost?.Invoke(current, neighbor) ?? 1;
+				double newCost = cost[current] + transitionCost;
+
+				if (newCost < neighborCost)
 				{
-					distance[neighbor] = newDistance;
+					cost[neighbor] = newCost;
 					prev[neighbor] = current;
 				}
 			}
 
 			unvisited.Remove(current);
 			visited.Add(current);
-			setDistance?.Invoke(current, distance[current]);
+			setCost?.Invoke(current, cost[current]);
 
 			if (target.Equals(current))
-				return GetPath(prev, origin, target);
+				return GetPath();
 
-			current = GetCurrent(unvisited, distance, out var found);
+			current = GetCurrent(out var found);
 
 			if (!found)
 				return null;
 		}
 
-		TNode GetCurrent(HashSet<TNode> unvisited, Dictionary<TNode, double> distance, out bool found)
+		TNode GetCurrent(out bool found)
 		{
 			found = false;
 
-			double minDistance = double.MaxValue;
+			double minCost = double.MaxValue;
 			TNode result = default;
 
 			foreach (var node in unvisited)
 			{
-				if (distance[node] < minDistance)
+				if (cost[node] + heuristic[node] < minCost)
 				{
-					minDistance = distance[node];
+					minCost = cost[node] + heuristic[node];
 					result = node;
 					found = true;
 				}
@@ -78,7 +84,7 @@ public class PathfindingHelper
 			return result;
 		}
 
-		List<TNode> GetPath(Dictionary<TNode, TNode> prev, TNode source, TNode target)
+		List<TNode> GetPath()
 		{
 			var path = new List<TNode>();
 			TNode current = target;
@@ -87,7 +93,7 @@ public class PathfindingHelper
 			{
 				path.Insert(0, current);
 
-				if (source.Equals(current))
+				if (origin.Equals(current))
 					return path;
 
 				current = prev[current];

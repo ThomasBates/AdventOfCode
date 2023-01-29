@@ -148,17 +148,30 @@ public class Day13 : IPuzzle
 			{
 				var neighbors = new List<Node>();
 
-				AddNeighbor(neighbors, seen, favoriteNumber, node, 0, -1);
-				AddNeighbor(neighbors, seen, favoriteNumber, node, -1, 0);
-				AddNeighbor(neighbors, seen, favoriteNumber, node, 0, 1);
-				AddNeighbor(neighbors, seen, favoriteNumber, node, 1, 0);
+				AddNeighbor(dy: -1);
+				AddNeighbor(dy: +1);
+				AddNeighbor(dx: -1);
+				AddNeighbor(dx: +1);
 
 				LoggerSendVerbose($"{node} => {string.Join(", ", neighbors)}");
 
 				return neighbors;
+
+				void AddNeighbor(int dx = 0, int dy = 0)
+				{
+					int x = node.X + dx;
+					int y = node.Y + dy;
+
+					if (x < 0 || y < 0)
+						return;
+
+					var neighbor = CreateNode(seen, favoriteNumber, x, y);
+
+					if (neighbor.IsSpace)
+						neighbors.Add(neighbor);
+				}
 			},
-			getDistance: (a, b) => 1,
-			setDistance: (node, distance) => 
+			setCost: (node, distance) => 
 			{ 
 				node.Steps = (int)distance;
 
@@ -190,19 +203,5 @@ public class Day13 : IPuzzle
 			seen[hash] = node;
 		}
 		return node;
-	}
-
-	private void AddNeighbor(List<Node> neighbors, Dictionary<long, Node> seen, int favoriteNumber, Node node, int dx, int dy)
-	{
-		int x = node.X + dx;
-		int y = node.Y + dy;
-
-		if (x < 0 || y < 0)
-			return;
-
-		var neighbor = CreateNode(seen, favoriteNumber, x, y);
-
-		if (neighbor.IsSpace)
-			neighbors.Add(neighbor);
 	}
 }
