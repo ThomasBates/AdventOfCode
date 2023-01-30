@@ -1,43 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace AoC.Common.SegmentList.Discrete;
 
 public class MergingSegmentList : ISegmentList
 {
-	private readonly List<ISegmentListItem> segmentList = new();
+	private readonly List<ISegment> segments = new();
 
-	public ISegmentListItem this[int index]
+	public ISegment this[int index]
 	{
-		get => segmentList[index];
-		set => segmentList[index] = value;
+		get => segments[index];
+		set => segments[index] = value;
 	}
 
-	public int Count => segmentList.Count;
+	public int Count => segments.Count;
 
 	public void Clear()
 	{
-		segmentList.Clear();
+		segments.Clear();
 	}
 
-	public void AddSegment(long minMeasure, long maxMeasure, double value = 0)
+	public void AddSegment(long minMeasure, long maxMeasure, long value = 0)
 	{
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		if (Count == 0)
 		{
-			segmentList.Add(new SegmentListItem(minMeasure, maxMeasure));
+			segments.Add(new Segment(minMeasure, maxMeasure));
 			return;
 		}
 
-		ISegmentListItem segment1 = null;
-		ISegmentListItem segment2 = null;
+		ISegment segment1 = null;
+		ISegment segment2 = null;
 
 		int segmentIndex = 0;
 
-		while (segmentIndex < segmentList.Count)
+		while (segmentIndex < segments.Count)
 		{
-			ISegmentListItem segment = segmentList[segmentIndex];
+			ISegment segment = segments[segmentIndex];
 			if ((segment.MinMeasure <= minMeasure) && (minMeasure <= segment.MaxMeasure + 1))
 			{
 				segment1 = segment;
@@ -49,7 +50,7 @@ public class MergingSegmentList : ISegmentList
 
 			if ((minMeasure < segment.MinMeasure) && (segment.MaxMeasure < maxMeasure)) //	segment inside minMeasure and maxMeasure
 			{
-				segmentList.RemoveAt(segmentIndex);
+				segments.RemoveAt(segmentIndex);
 			}
 			else
 			{
@@ -59,8 +60,8 @@ public class MergingSegmentList : ISegmentList
 
 		if ((segment1 == null) && (segment2 == null))	//	no overlap. Create new segment.
 		{
-			ISegmentListItem segment = new SegmentListItem(minMeasure, maxMeasure);
-			segmentList.Add(segment);
+			ISegment segment = new Segment(minMeasure, maxMeasure);
+			segments.Add(segment);
 		}
 		else if (segment2 == null)	//	minMeasure in existing segment. Extend Segment.
 		{
@@ -73,26 +74,26 @@ public class MergingSegmentList : ISegmentList
 		else if (segment1 != segment2)	//	minMeasure and maxMeasure in different segments. Merge segments.
 		{
 			segment1.MaxMeasure = segment2.MaxMeasure;
-			segmentList.Remove(segment2);
+			segments.Remove(segment2);
 		}
 		//  else  //  minMeasure and maxMeasure both in same segment.  Ignore.
 
-		segmentList.Sort(SegmentListItem.Compare);
+		segments.Sort(Segment.Compare);
 	}
 
 	public void RemoveSegment(long minMeasure, long maxMeasure)
 	{
-		ISegmentListItem segment1 = null;
-		ISegmentListItem segment2 = null;
+		ISegment segment1 = null;
+		ISegment segment2 = null;
 
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		int segmentIndex = 0;
 
-		while (segmentIndex < segmentList.Count)
+		while (segmentIndex < segments.Count)
 		{
-			ISegmentListItem segment = segmentList[segmentIndex];
+			ISegment segment = segments[segmentIndex];
 			if ((segment.MinMeasure <= minMeasure) && (minMeasure <= segment.MaxMeasure))
 			{
 				segment1 = segment;
@@ -104,7 +105,7 @@ public class MergingSegmentList : ISegmentList
 
 			if ((minMeasure < segment.MinMeasure) && (segment.MaxMeasure < maxMeasure)) //	segment inside minMeasure and maxMeasure - remove it.
 			{
-				segmentList.RemoveAt(segmentIndex);
+				segments.RemoveAt(segmentIndex);
 			}
 			else
 			{
@@ -114,8 +115,8 @@ public class MergingSegmentList : ISegmentList
 
 		if ((segment1 == segment2) && (segment1 != null))   //	minMeasure and maxMeasure both in same segment. Split segment.
 		{
-			ISegmentListItem segment = new SegmentListItem(maxMeasure + 1, segment1.MaxMeasure);
-			segmentList.Add(segment);
+			ISegment segment = new Segment(maxMeasure + 1, segment1.MaxMeasure);
+			segments.Add(segment);
 			segment1.MaxMeasure = minMeasure - 1;
 		}
 		else	//	minMeasure and maxMeasure in separate segments or no segments
@@ -131,12 +132,12 @@ public class MergingSegmentList : ISegmentList
 		}
 
 		segmentIndex = 0;
-		while (segmentIndex < segmentList.Count)
+		while (segmentIndex < segments.Count)
 		{
-			ISegmentListItem segment = segmentList[segmentIndex];
+			ISegment segment = segments[segmentIndex];
 			if (segment.MinMeasure > segment.MaxMeasure)
 			{
-				segmentList.RemoveAt(segmentIndex);
+				segments.RemoveAt(segmentIndex);
 			}
 			else
 			{
@@ -144,15 +145,15 @@ public class MergingSegmentList : ISegmentList
 			}
 		}
 
-		segmentList.Sort(SegmentListItem.Compare);
+		segments.Sort(Segment.Compare);
 	}
 
-	public ISegmentListItem FindSegment(long minMeasure, long maxMeasure)
+	public ISegment FindSegment(long minMeasure, long maxMeasure)
 	{
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
-		foreach (var segment in segmentList)
+		foreach (var segment in segments)
 		{
 			//	Are minMeasure and maxMeasure wholly within the segment?
 			if ((segment.MinMeasure <= minMeasure) && (maxMeasure <= segment.MaxMeasure))
@@ -196,5 +197,15 @@ public class MergingSegmentList : ISegmentList
 		{
 			RemoveSegment(list[i].MinMeasure, list[i].MaxMeasure);
 		}
+	}
+
+	public IEnumerator<ISegment> GetEnumerator()
+	{
+		return segments.GetEnumerator();
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return segments.GetEnumerator();
 	}
 }

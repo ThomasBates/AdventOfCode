@@ -1,10 +1,10 @@
 ﻿namespace AoC.Common.SegmentList.Discrete;
 
-public interface ISegmentListItem
+public interface ISegment
 {
 	long MinMeasure { get; set; }
 
 	long MaxMeasure { get; set; }
 
-	double Value { get; set; }
+	long Value { get; set; }
 }

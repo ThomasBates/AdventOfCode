@@ -86,9 +86,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SegmentList\Discrete\AccumulatingSegmentList.cs" />
     <Compile Include="SegmentList\Discrete\ISegmentList.cs" />
-    <Compile Include="SegmentList\Discrete\ISegmentListItem.cs" />
+    <Compile Include="SegmentList\Discrete\ISegment.cs" />
     <Compile Include="SegmentList\Discrete\MergingSegmentList.cs" />
-    <Compile Include="SegmentList\Discrete\SegmentListItem.cs" />
+    <Compile Include="SegmentList\Discrete\Segment.cs" />
     <Compile Include="Types\Point3D.cs" />
     <Compile Include="Types\Point2D.cs" />
   </ItemGroup>

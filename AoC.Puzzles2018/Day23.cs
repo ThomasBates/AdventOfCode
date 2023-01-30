@@ -118,7 +118,6 @@ public class Day23 : IPuzzle
 	private object SolvePart2(Data data)
 	{
 		ISegmentList segmentList = new AccumulatingSegmentList();
-		segmentList.AddSegment(long.MinValue, long.MaxValue);
 
 		foreach (var nanobot in data.Nanobots)
 		{
@@ -126,18 +125,8 @@ public class Day23 : IPuzzle
 			segmentList.AddSegment(size - nanobot.Radius, size + nanobot.Radius, 1);
 		}
 
-		double maxValue = 0;
-		ISegmentListItem maxSegment = null;
-
-		for (var i=0;i<segmentList.Count;i++)
-		{
-			var segment = segmentList[i];
-			if (segment.Value > maxValue)
-			{
-				maxValue = segment.Value;
-				maxSegment = segment;
-			}
-		}
+		var maxValue = segmentList.Max(s => s.Value);
+		var maxSegment = segmentList.FirstOrDefault(s => s.Value == maxValue);
 
 		return maxSegment.MinMeasure;
 	}

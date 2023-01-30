@@ -106,7 +106,7 @@ public class Day22 : IPuzzle
 
 	private Map LoadData(string input)
 	{
-		var data = new Map();
+		var data = new Map { Origin = new Point(0, 0) };
 
 		InputHelper.TraverseInputLines(input, line =>
 		{

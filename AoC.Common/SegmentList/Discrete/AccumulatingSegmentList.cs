@@ -1,114 +1,132 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AoC.Common.SegmentList.Discrete;
 
 public class AccumulatingSegmentList : ISegmentList
 {
-	private readonly List<ISegmentListItem> segmentList = new();
+	private readonly List<ISegment> segments = new();
 
-	public ISegmentListItem this[int index]
+	public ISegment this[int index]
 	{
-		get => segmentList[index];
-		set => segmentList[index] = value;
+		get => segments[index];
+		set => segments[index] = value;
 	}
 
-	public int Count => segmentList.Count;
+	public int Count => segments.Count;
 
 	public void Clear()
 	{
-		segmentList.Clear();
+		segments.Clear();
 	}
 
-	public void AddSegment(long minMeasure, long maxMeasure, double value = 0)
+	public void AddSegment(long minMeasure, long maxMeasure, long value = 0)
 	{
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
-		if (Count == 0)
+		if (segments.Count == 0)
 		{
-			segmentList.Add(new SegmentListItem(minMeasure, maxMeasure, value));
+			segments.Add(new Segment(minMeasure, maxMeasure, value));
 			return;
 		}
+		//  Assert: at least one segment exists.
+		var firstSegment = segments[0];
+		var lastSegment = segments[segments.Count - 1];
 
-		int startIndex = -1;
-		int endIndex = -1;
-
-		for (int itemIndex = 0; itemIndex < Count; itemIndex++)
+		if (maxMeasure < firstSegment.MinMeasure)
 		{
-			ISegmentListItem item = segmentList[itemIndex];
-
-			if (item.MinMeasure == minMeasure)
-			{
-				startIndex = itemIndex;
-				break;
-			}
-			if (item.MaxMeasure == minMeasure - 1)
-			{
-				startIndex = itemIndex + 1;
-				break;
-			}
-			if (item.MaxMeasure >= minMeasure)
-			{
-				ISegmentListItem newItem = new SegmentListItem(item.MinMeasure, item.MaxMeasure, item.Value);
-				item.MaxMeasure = minMeasure - 1;
-				newItem.MinMeasure = minMeasure;
-
-				startIndex = itemIndex + 1;
-				segmentList.Insert(startIndex, newItem);
-				break;
-			}
+			segments.Insert(0, new Segment(minMeasure, maxMeasure, value));
+			return;
 		}
-
-		if (startIndex >= 0)
+		if (minMeasure > lastSegment.MaxMeasure)
 		{
-			for (int itemIndex = startIndex; itemIndex < Count; itemIndex++)
-			{
-				ISegmentListItem item = segmentList[itemIndex];
+			segments.Add(new Segment(minMeasure, maxMeasure, value));
+			return;
+		}
+		//  Assert: new segment interacts with at least one existing segment.
 
-				if (item.MaxMeasure == maxMeasure)
+		if (minMeasure < firstSegment.MinMeasure)
+		{
+			segments.Insert(0, new Segment(minMeasure, firstSegment.MinMeasure - 1, 0));
+		}
+		if (maxMeasure > lastSegment.MaxMeasure)
+		{
+			segments.Add(new Segment(lastSegment.MaxMeasure + 1, maxMeasure, 0));
+		}
+		//	Assert: existing segments span breadth of new segment. Could still be gaps.
+
+
+		for (int itemIndex = 0; itemIndex < segments.Count; itemIndex++)
+		{
+			var thisSegment = segments[itemIndex];
+
+			if (thisSegment.MaxMeasure < minMeasure)
+				continue;
+			if (thisSegment.MinMeasure > maxMeasure)
+				break;
+			//	Assert: thisSegment interacts with new segment.
+
+			if (thisSegment.MinMeasure < minMeasure)
+			{
+				var newSegment = new Segment(minMeasure, thisSegment.MaxMeasure, thisSegment.Value);
+				segments.Insert(itemIndex + 1, newSegment);
+				thisSegment.MaxMeasure = minMeasure - 1;
+				continue;
+			}
+			if (thisSegment.MaxMeasure > maxMeasure)
+			{
+				var newSegment = new Segment(thisSegment.MinMeasure, maxMeasure, thisSegment.Value + value);
+				segments.Insert(itemIndex, newSegment);
+				thisSegment.MinMeasure = maxMeasure + 1;
+				break;
+			}
+
+			//	Assert: thisSegment.MinMeasure >= minMeasure.
+			//	Assert: thisSegment.MinMeasure <= maxMeasure.
+			//	Assert: thisSegment.MaxMeasure >= minMeasure.
+			//  Assert: thisSegment.MaxMeasure <= maxMeasure.
+			//	i.e.: thisSegment is completely contained by new segment.
+
+			if (itemIndex > 0)
+			{
+				var prevSegment = segments[itemIndex - 1];
+				var gapMinMeasure = Math.Max(prevSegment.MaxMeasure, minMeasure);
+				if (gapMinMeasure < thisSegment.MinMeasure - 1)
 				{
-					endIndex = itemIndex;
-					break;
-				}
-				if (item.MaxMeasure > maxMeasure)
-				{
-					ISegmentListItem newItem = new SegmentListItem(item.MinMeasure, item.MaxMeasure, item.Value);
-					item.MinMeasure = maxMeasure + 1;
-					newItem.MaxMeasure = maxMeasure;
-
-					endIndex = itemIndex;
-					segmentList.Insert(endIndex, newItem);
-					break;
+					segments.Insert(itemIndex, new Segment(gapMinMeasure, thisSegment.MinMeasure - 1, value));
+					continue;
 				}
 			}
-		}
 
-		//  if maxMeasure is greater than the last item.maxMeasure, just go to the end of the last item.
-		if ((startIndex != -1) && (endIndex == -1))
-		{
-			endIndex = Count - 1;
-		}
+			thisSegment.Value += value;
 
-		for (int itemIndex = startIndex; itemIndex <= endIndex; itemIndex++)
-		{
-			ISegmentListItem item = segmentList[itemIndex];
-			item.Value += value;
+			if (itemIndex < segments.Count - 1)
+			{
+				var nextSegment = segments[itemIndex + 1];
+				var gapMaxMeasure = Math.Min(nextSegment.MinMeasure, maxMeasure);
+				if (gapMaxMeasure > thisSegment.MaxMeasure + 1)
+				{
+					segments.Insert(itemIndex + 1, new Segment(thisSegment.MaxMeasure + 1, gapMaxMeasure, 0));
+				}
+			}
 		}
 	}
 
 	public void RemoveSegment(long minMeasure, long maxMeasure)
 	{
-		ISegmentListItem segment1 = null;
-		ISegmentListItem segment2 = null;
+		ISegment segment1 = null;
+		ISegment segment2 = null;
 
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
 		int segmentIndex = 0;
 
-		while (segmentIndex < segmentList.Count)
+		while (segmentIndex < segments.Count)
 		{
-			ISegmentListItem segment = segmentList[segmentIndex];
+			ISegment segment = segments[segmentIndex];
 			if ((segment.MinMeasure <= minMeasure) && (minMeasure <= segment.MaxMeasure))
 			{
 				segment1 = segment;
@@ -120,7 +138,7 @@ public class AccumulatingSegmentList : ISegmentList
 
 			if ((minMeasure < segment.MinMeasure) && (segment.MaxMeasure < maxMeasure)) //	segment inside minMeasure and maxMeasure - remove it.
 			{
-				segmentList.RemoveAt(segmentIndex);
+				segments.RemoveAt(segmentIndex);
 			}
 			else
 			{
@@ -130,8 +148,8 @@ public class AccumulatingSegmentList : ISegmentList
 
 		if ((segment1 == segment2) && (segment1 != null))   //	minMeasure and maxMeasure both in same segment. Split segment.
 		{
-			ISegmentListItem segment = new SegmentListItem(maxMeasure + 1, segment1.MaxMeasure);
-			segmentList.Add(segment);
+			ISegment segment = new Segment(maxMeasure + 1, segment1.MaxMeasure);
+			segments.Add(segment);
 			segment1.MaxMeasure = minMeasure - 1;
 		}
 		else	//	minMeasure and maxMeasure in separate segments or no segments
@@ -147,12 +165,12 @@ public class AccumulatingSegmentList : ISegmentList
 		}
 
 		segmentIndex = 0;
-		while (segmentIndex < segmentList.Count)
+		while (segmentIndex < segments.Count)
 		{
-			ISegmentListItem segment = segmentList[segmentIndex];
+			ISegment segment = segments[segmentIndex];
 			if (segment.MinMeasure > segment.MaxMeasure)
 			{
-				segmentList.RemoveAt(segmentIndex);
+				segments.RemoveAt(segmentIndex);
 			}
 			else
 			{
@@ -160,15 +178,15 @@ public class AccumulatingSegmentList : ISegmentList
 			}
 		}
 
-		segmentList.Sort(SegmentListItem.Compare);
+		segments.Sort(Segment.Compare);
 	}
 
-	public ISegmentListItem FindSegment(long minMeasure, long maxMeasure)
+	public ISegment FindSegment(long minMeasure, long maxMeasure)
 	{
 		if (maxMeasure < minMeasure)
 			(maxMeasure, minMeasure) = (minMeasure, maxMeasure);
 
-		foreach (var segment in segmentList)
+		foreach (var segment in segments)
 		{
 			//	Are minMeasure and maxMeasure wholly within the segment?
 			if ((segment.MinMeasure <= minMeasure) && (maxMeasure <= segment.MaxMeasure))
@@ -212,5 +230,15 @@ public class AccumulatingSegmentList : ISegmentList
 		{
 			RemoveSegment(list[i].MinMeasure, list[i].MaxMeasure);
 		}
+	}
+
+	public IEnumerator<ISegment> GetEnumerator()
+	{
+		return segments.GetEnumerator();
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return segments.GetEnumerator();
 	}
 }
