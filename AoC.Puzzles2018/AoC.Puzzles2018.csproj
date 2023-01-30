@@ -48,6 +48,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -64,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Day23.cs" />
     <Compile Include="Day22.cs" />
     <Compile Include="Day21.cs" />
     <Compile Include="Day20.cs" />
@@ -232,6 +234,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Day22Inputs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day23Inputs01.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Day23Inputs02.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

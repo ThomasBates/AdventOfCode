@@ -709,5 +709,36 @@ namespace AoC.Puzzles2018.Properties {
                 return ResourceManager.GetString("Day22Inputs", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pos=&lt;0,0,0&gt;, r=4
+        ///pos=&lt;1,0,0&gt;, r=1
+        ///pos=&lt;4,0,0&gt;, r=3
+        ///pos=&lt;0,2,0&gt;, r=1
+        ///pos=&lt;0,5,0&gt;, r=3
+        ///pos=&lt;0,0,3&gt;, r=1
+        ///pos=&lt;1,1,1&gt;, r=1
+        ///pos=&lt;1,1,2&gt;, r=1
+        ///pos=&lt;1,3,1&gt;, r=1.
+        /// </summary>
+        internal static string Day23Inputs01 {
+            get {
+                return ResourceManager.GetString("Day23Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pos=&lt;10,12,12&gt;, r=2
+        ///pos=&lt;12,14,12&gt;, r=2
+        ///pos=&lt;16,12,12&gt;, r=4
+        ///pos=&lt;14,14,14&gt;, r=6
+        ///pos=&lt;50,50,50&gt;, r=200
+        ///pos=&lt;10,10,10&gt;, r=5.
+        /// </summary>
+        internal static string Day23Inputs02 {
+            get {
+                return ResourceManager.GetString("Day23Inputs02", resourceCulture);
+            }
+        }
     }
 }

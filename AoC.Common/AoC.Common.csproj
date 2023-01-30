@@ -89,6 +89,8 @@
     <Compile Include="SegmentList\Discrete\ISegmentListItem.cs" />
     <Compile Include="SegmentList\Discrete\MergingSegmentList.cs" />
     <Compile Include="SegmentList\Discrete\SegmentListItem.cs" />
+    <Compile Include="Types\Point3D.cs" />
+    <Compile Include="Types\Point2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AoC.Grammar\AoC.Grammar.csproj">
