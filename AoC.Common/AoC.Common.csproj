@@ -91,6 +91,7 @@
     <Compile Include="SegmentList\Discrete\Segment.cs" />
     <Compile Include="Types\Point3D.cs" />
     <Compile Include="Types\Point2D.cs" />
+    <Compile Include="Types\Point4D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AoC.Grammar\AoC.Grammar.csproj">

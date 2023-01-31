@@ -759,11 +759,10 @@ namespace AoC.Puzzles2018.Properties {
         ///
         ///line            = &quot;Immune&quot; &quot;System&quot; &quot;:&quot; s_immuneSystem
         ///                | &quot;Infection&quot; &quot;:&quot; s_infection
-        ///                | unitsPart hitPointsPart specialPart attackPart initiativePart
+        ///                | s_newGroup unitsPart hitPointsPart specialPart attackPart initiativePart
         ///
         ///unitsPart       = Integer &quot;units&quot; &quot;each&quot; c_units
-        ///
-        ///hitPoints [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Day24Grammar {
             get {
@@ -783,6 +782,76 @@ namespace AoC.Puzzles2018.Properties {
         internal static string Day24Inputs {
             get {
                 return ResourceManager.GetString("Day24Inputs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  0,0,0,0
+        /// 3,0,0,0
+        /// 0,3,0,0
+        /// 0,0,3,0
+        /// 0,0,0,3
+        /// 0,0,0,6
+        /// 9,0,0,0
+        ///12,0,0,0.
+        /// </summary>
+        internal static string Day25Inputs01 {
+            get {
+                return ResourceManager.GetString("Day25Inputs01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -1,2,2,0
+        ///0,0,2,-2
+        ///0,0,0,-2
+        ///-1,2,0,0
+        ///-2,-2,-2,2
+        ///3,0,2,-1
+        ///-1,3,2,2
+        ///-1,0,-1,0
+        ///0,2,1,-2
+        ///3,0,0,0.
+        /// </summary>
+        internal static string Day25Inputs02 {
+            get {
+                return ResourceManager.GetString("Day25Inputs02", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1,-1,0,1
+        ///2,0,-1,0
+        ///3,2,-1,0
+        ///0,0,3,1
+        ///0,0,-1,-1
+        ///2,3,-2,0
+        ///-2,2,0,0
+        ///2,-2,0,-1
+        ///1,-1,0,-1
+        ///3,2,0,2.
+        /// </summary>
+        internal static string Day25Inputs03 {
+            get {
+                return ResourceManager.GetString("Day25Inputs03", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1,-1,-1,-2
+        ///-2,-2,0,1
+        ///0,2,1,3
+        ///-2,3,-2,1
+        ///0,2,3,-2
+        ///-1,-1,1,-2
+        ///0,-2,-1,0
+        ///-2,2,3,-1
+        ///1,2,2,0
+        ///-1,-2,0,-2.
+        /// </summary>
+        internal static string Day25Inputs04 {
+            get {
+                return ResourceManager.GetString("Day25Inputs04", resourceCulture);
             }
         }
     }
