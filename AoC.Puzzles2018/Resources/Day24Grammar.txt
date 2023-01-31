@@ -1,0 +1,42 @@
+
+#DEFINITIONS
+
+Id              = [_A-Za-z][_A-Za-z0-9]*
+String          = '[.]*'
+Integer         = (\+|-)?[0-9]+
+Real            = (\+|-)?[0-9]+\.[0-9]+
+
+#GRAMMAR
+
+program         = line moreLines
+
+moreLines       =
+                | line moreLines
+
+line            = "Immune" "System" ":" s_immuneSystem
+                | "Infection" ":" s_infection
+                | s_newGroup unitsPart hitPointsPart specialPart attackPart initiativePart
+
+unitsPart       = Integer "units" "each" c_units
+
+hitPointsPart   = "with" Integer "hit" "points" c_hitPoints
+
+specialPart     =
+                | "(" special moreSpecial ")"
+
+special         = "weak" s_weakness "to" specialType moreSpecialType
+                | "immune" s_immunity "to" specialType moreSpecialType
+
+specialType     = Id c_specialType
+
+moreSpecialType =
+                | "," specialType moreSpecialType
+
+moreSpecial     =
+                | ";" special moreSpecial
+
+attackPart      = "with" "an" "attack" "that" "does" Integer c_damage Id c_attackType "damage"
+
+initiativePart  = "at" "initiative" Integer c_initiative
+
+#END

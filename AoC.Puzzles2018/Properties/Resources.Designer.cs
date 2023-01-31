@@ -740,5 +740,50 @@ namespace AoC.Puzzles2018.Properties {
                 return ResourceManager.GetString("Day23Inputs02", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///#DEFINITIONS
+        ///
+        ///Id              = [_A-Za-z][_A-Za-z0-9]*
+        ///String          = &apos;[.]*&apos;
+        ///Integer         = (\+|-)?[0-9]+
+        ///Real            = (\+|-)?[0-9]+\.[0-9]+
+        ///
+        ///#GRAMMAR
+        ///
+        ///program         = line moreLines
+        ///
+        ///moreLines       =
+        ///                | line moreLines
+        ///
+        ///line            = &quot;Immune&quot; &quot;System&quot; &quot;:&quot; s_immuneSystem
+        ///                | &quot;Infection&quot; &quot;:&quot; s_infection
+        ///                | unitsPart hitPointsPart specialPart attackPart initiativePart
+        ///
+        ///unitsPart       = Integer &quot;units&quot; &quot;each&quot; c_units
+        ///
+        ///hitPoints [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day24Grammar {
+            get {
+                return ResourceManager.GetString("Day24Grammar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immune System:
+        ///17 units each with 5390 hit points (weak to radiation, bludgeoning) with an attack that does 4507 fire damage at initiative 2
+        ///989 units each with 1274 hit points (immune to fire; weak to bludgeoning, slashing) with an attack that does 25 slashing damage at initiative 3
+        ///
+        ///Infection:
+        ///801 units each with 4706 hit points (weak to radiation) with an attack that does 116 bludgeoning damage at initiative 1
+        ///4485 units each with 2961 hit points (immune to radiation; weak to fire, cold) with an at [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Day24Inputs {
+            get {
+                return ResourceManager.GetString("Day24Inputs", resourceCulture);
+            }
+        }
     }
 }
