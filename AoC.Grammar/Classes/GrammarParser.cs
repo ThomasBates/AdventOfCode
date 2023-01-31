@@ -6,6 +6,17 @@ using System.Text.RegularExpressions;
 
 namespace AoC.Grammar;
 
+//	TODO: Support BNF, EBNF, ABNF, etc.
+//	https://en.wikipedia.org/wiki/Context-free_grammar
+//	https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+//	https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
+
+//	https://matt.might.net/articles/grammars-bnf-ebnf/
+
+//	https://en.wikipedia.org/wiki/Chomsky_normal_form
+//	https://en.wikipedia.org/wiki/CYK_algorithm
+//	https://www.informaticadidactica.de/index.php?page=LangeLeiss2009
+
 public class GrammarParser : IGrammarParser
 {
     private readonly GrammarData grammar;
